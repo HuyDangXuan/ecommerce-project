@@ -1,0 +1,88 @@
+doctype html
+html(
+  data-bs-theme="light" 
+  data-startbar="light" 
+  dir="ltr" 
+  lang="en"
+  )
+  head
+    meta(charset="utf-8")
+    title #{pageTitle}
+    meta(
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" 
+      name="viewport"
+      )
+    meta(
+      name="description" 
+      content="Premium Multipurpose Admin & Dashboard Template"
+      )
+    meta(
+      name="author" 
+      content=""
+      )
+    meta(
+      content="IE=edge" 
+      http-equiv="X-UA-Compatible"
+      )
+    // App favicon
+    link(
+      href="/admin/assets/images/favicon.ico" 
+      rel="shortcut icon"
+      )
+    link(
+      href="/admin/assets/libs/jsvectormap/css/jsvectormap.min.css" 
+      rel="stylesheet"
+      )
+    // App css
+    link(
+      type="text/css" 
+      rel="stylesheet" 
+      href="/admin/assets/css/bootstrap.min.css"
+      )
+    link(
+      type="text/css" 
+      rel="stylesheet" 
+      href="/admin/assets/css/icons.min.css"
+      )
+    link(
+      type="text/css" 
+      rel="stylesheet" 
+      href="/admin/assets/css/app.min.css"
+      )
+  body
+    // Top Bar Start
+    include ../partials/topbar
+    // Top Bar End
+    // leftbar-tab-menu
+    include ../partials/startbar
+    // end startbar
+    .startbar-overlay.d-print-none
+    // end leftbar-tab-menu
+    .page-wrapper
+      // Page Content
+      .page-content
+        //- MAIN
+        .container-xxl
+          block main
+        //- END MAIN
+        // Start Rightbar
+        // Start Rightbar/offcanvas
+        include ../partials/start-rightbar
+        // end Rightbar/offcanvas
+        // end Rightbar
+        // Start Footer
+        include ../partials/footer
+        // end footer
+      // end page content
+    // end page-wrapper
+    // Javascript
+    // vendor js
+    script(src="/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js")
+    script(src="/admin/assets/libs/simplebar/simplebar.min.js")
+    script(src="/admin/assets/libs/apexcharts/apexcharts.min.js")
+    script(src="/admin/assets/data/stock-prices.js")
+    script(src="/admin/assets/libs/jsvectormap/js/jsvectormap.min.js")
+    script(src="/admin/assets/libs/jsvectormap/maps/world.js")
+    script(src="/admin/assets/js/pages/index.init.js")
+    script(src="/admin/assets/js/app.js")
+  // end body

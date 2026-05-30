@@ -1,0 +1,491 @@
+extends ../layouts/default.pug
+
+block main
+  .row.justify-content-center
+    .col-md-6.col-lg-4
+      .card
+        .card-body
+          .row.d-flex.justify-content-center.border-dashed-bottom.pb-3
+            .col-9
+              p.text-dark.mb-0.fw-semibold.fs-14 Sessions
+              h3.mt-2.mb-0.fw-bold 24k
+            // end col
+            .col-3.align-self-center
+              .d-flex.justify-content-center.align-items-center.thumb-xl.bg-light.rounded-circle.mx-auto
+                i.iconoir-hexagon-dice.h1.align-self-center.mb-0.text-secondary
+            // end col
+          // end row
+          p.mb-0.text-truncate.text-muted.mt-3
+            span.text-success 8.5%
+            | New Sessions Today
+        // end card-body
+      // end card
+    // end col
+    .col-md-6.col-lg-4
+      .card
+        .card-body
+          .row.d-flex.justify-content-center.border-dashed-bottom.pb-3
+            .col-9
+              p.text-dark.mb-0.fw-semibold.fs-14 Avg.Sessions
+              h3.mt-2.mb-0.fw-bold 00:18
+            // end col
+            .col-3.align-self-center
+              .d-flex.justify-content-center.align-items-center.thumb-xl.bg-light.rounded-circle.mx-auto
+                i.iconoir-clock.h1.align-self-center.mb-0.text-secondary
+            // end col
+          // end row
+          p.mb-0.text-truncate.text-muted.mt-3
+            span.text-success 1.5%
+            | Weekly Avg.Sessions
+        // end card-body
+      // end card
+    // end col
+    .col-md-6.col-lg-4
+      .card
+        .card-body
+          .row.d-flex.justify-content-center.border-dashed-bottom.pb-3
+            .col-9
+              p.text-dark.mb-0.fw-semibold.fs-14
+                | Bounce
+                |   Rate
+              h3.mt-2.mb-0.fw-bold 36.45%
+            // end col
+            .col-3.align-self-center
+              .d-flex.justify-content-center.align-items-center.thumb-xl.bg-light.rounded-circle.mx-auto
+                i.iconoir-percentage-circle.h1.align-self-center.mb-0.text-secondary
+            // end col
+          // end row
+          p.mb-0.text-truncate.text-muted.mt-3
+            span.text-danger 8%
+            | Up Bounce Rate Weekly
+        // end card-body
+      // end card
+    // end col
+  // end row
+  .row.justify-content-center
+    .col-md-6.col-lg-8
+      .card
+        .card-header
+          .row.align-items-center
+            .col
+              h4.card-title Audience Overview
+            // end col
+            .col-auto
+              .dropdown
+                a.btn.bt.btn-light.dropdown-toggle(
+                  aria-expanded="false" 
+                  aria-haspopup="true" 
+                  data-bs-toggle="dropdown" 
+                  href="#"
+                  )
+                  i.icofont-calendar.fs-5.me-1
+                  | This Year
+                  i.las.la-angle-down.ms-1
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item(href="#") Today
+                  a.dropdown-item(href="#") Last Week
+                  a.dropdown-item(href="#") Last Month
+                  a.dropdown-item(href="#") This Year
+            // end col
+          // end row
+        // end card-header
+        .card-body.pt-0
+          .apex-charts(id="audience_overview")
+        // end card-body
+      // end card
+    // end col
+    .col-md-6.col-lg-4
+      .card
+        .card-body
+          .row.align-items-center
+            .col
+              p.text-dark.mb-0.fw-semibold.fs-14 New Visitors
+              h2.mt-0.mb-0.fw-bold 1,282
+            // end col
+            .col-auto.align-self-center
+              .img-group.d-flex
+                a.user-avatar.position-relative.d-inline-block(href="#")
+                  img.thumb-md.shadow-sm.rounded-circle(
+                    alt="avatar" 
+                    src="/admin/assets/images/users/avatar-1.jpg"
+                    )
+                a.user-avatar.position-relative.d-inline-block.ms-n2(href="#")
+                  img.thumb-md.shadow-sm.rounded-circle(
+                    alt="avatar" 
+                    src="/admin/assets/images/users/avatar-2.jpg"
+                    )
+                a.user-avatar.position-relative.d-inline-block.ms-n2(href="#")
+                  img.thumb-md.shadow-sm.rounded-circle(
+                    alt="avatar" 
+                    src="/admin/assets/images/users/avatar-4.jpg"
+                    )
+                a.user-avatar.position-relative.d-inline-block.ms-n2(href="#")
+                  img.thumb-md.shadow-sm.rounded-circle(
+                    alt="avatar" 
+                    src="/admin/assets/images/users/avatar-3.jpg"
+                    )
+                a.user-avatar.position-relative.d-inline-block.ms-1(href="")
+                  span.thumb-md.shadow-sm.justify-content-center.d-flex.align-items-center.bg-info-subtle.rounded-circle.fw-semibold.fs-6 +6
+              small.text-muted
+                | Logined
+                |   Visitors
+            // end col
+          // end row
+          .apex-charts.mb-2(id="visitors_report")
+          button.btn.btn-primary.w-100.btn-lg.fs-14(type="button")
+            | More
+            |   Detail
+            i.fa-solid.fa-arrow-right-long
+        // end card-body
+      // end card
+    // end col
+  // end row
+  .row
+    .col-lg-6
+      .card.card-h-100
+        .card-header
+          .row.align-items-center
+            .col
+              h4.card-title Browser Used & Traffic Reports
+            // end col
+          // end row
+        // end card-header
+        .card-body.pt-0
+          .table-responsive(class="browser_users")
+            table.table.mb-0
+              thead.table-light
+                tr
+                  th.border-top-0 Browser
+                  th.border-top-0 Sessions
+                  th.border-top-0 Bounce Rate
+                  th.border-top-0 Transactions
+                // end tr
+              tbody
+                tr
+                  td
+                    img.me-2(
+                      height="24" 
+                      alt="" 
+                      src="/admin/assets/images/logos/chrome.png"
+                      )
+                    | Chrome
+                  td
+                    | 10853
+                    small.text-muted (52%)
+                  td 52.80%
+                  td
+                    | 566
+                    small.text-muted (92%)
+                // end tr
+                tr
+                  td
+                    img.me-2(
+                      height="24" 
+                      alt="" 
+                      src="/admin/assets/images/logos/micro-edge.png"
+                      )
+                    | Microsoft
+                    |   Edge
+                  td
+                    | 2545
+                    small.text-muted (47%)
+                  td 47.54%
+                  td
+                    | 498
+                    small.text-muted (81%)
+                // end tr
+                tr
+                  td
+                    img.me-2(
+                      height="24" 
+                      alt="" 
+                      src="/admin/assets/images/logos/in-explorer.png"
+                      )
+                    | Internet-Explorer
+                  td
+                    | 1836
+                    small.text-muted (38%)
+                  td 41.12%
+                  td
+                    | 455
+                    small.text-muted (74%)
+                // end tr
+                tr
+                  td
+                    img.me-2(
+                      height="24" 
+                      alt="" 
+                      src="/admin/assets/images/logos/opera.png"
+                      )
+                    | Opera
+                  td
+                    | 1958
+                    small.text-muted (31%)
+                  td 36.82%
+                  td
+                    | 361
+                    small.text-muted (61%)
+                // end tr
+                tr
+                  td
+                    img.me-2(
+                      height="24" 
+                      alt="" 
+                      src="/admin/assets/images/logos/chrome.png"
+                      )
+                    | Chrome
+                  td
+                    | 10853
+                    small.text-muted (52%)
+                  td 52.80%
+                  td
+                    | 566
+                    small.text-muted (92%)
+                // end tr
+            // end table
+          // end /div
+        // end card-body
+      // end card
+    // end col
+    .col-lg-6
+      .card.card-h-100
+        .card-header
+          .row.align-items-center
+            .col
+              h4.card-title Total Visits
+            // end col
+          // end row
+        // end card-header
+        .card-body.pt-0
+          .table-responsive
+            table.table.mb-0
+              thead.table-light
+                tr
+                  th.border-top-0 Channel
+                  th.border-top-0 Sessions
+                  th.border-top-0 Prev.Period
+                  th.border-top-0 % Change
+                // end tr
+              tbody
+                tr
+                  td
+                    a.text-primary(href="") Organic search
+                  td
+                    | 10853
+                    small.text-muted (52%)
+                  td
+                    | 566
+                    small.text-muted (92%)
+                  td
+                    | 52.80%
+                    i.fas.fa-caret-up.text-success.font-16
+                // end tr
+                tr
+                  td
+                    a.text-primary(href="") Direct
+                  td
+                    | 2545
+                    small.text-muted (47%)
+                  td
+                    | 498
+                    small.text-muted (81%)
+                  td
+                    | -17.20%
+                    i.fas.fa-caret-down.text-danger.font-16
+                // end tr
+                tr
+                  td
+                    a.text-primary(href="") Referal
+                  td
+                    | 1836
+                    small.text-muted (38%)
+                  td
+                    | 455
+                    small.text-muted (74%)
+                  td
+                    | 41.12%
+                    i.fas.fa-caret-up.text-success.font-16
+                // end tr
+                tr
+                  td
+                    a.text-primary(href="") Email
+                  td
+                    | 1958
+                    small.text-muted (31%)
+                  td
+                    | 361
+                    small.text-muted (61%)
+                  td
+                    | -8.24%
+                    i.fas.fa-caret-down.text-danger.font-16
+                // end tr
+                tr
+                  td
+                    a.text-primary(href="") Social
+                  td
+                    | 1566
+                    small.text-muted (26%)
+                  td
+                    | 299
+                    small.text-muted (49%)
+                  td
+                    | 29.33%
+                    i.fas.fa-caret-up.text-success
+                // end tr
+            // end table
+          // end /div
+          p.m-0.fs-12.fst-italic.ps-2.text-muted
+            | Last data updated - 13min ago
+            a.link-danger.ms-1(href="#!")
+              i.align-middle.iconoir-refresh
+        // end card-body
+      // end card
+    // end col
+  // end row
+  .row.justify-content-center
+    .col-md-6.col-lg-4
+      .card
+        .card-header
+          .row.align-items-center
+            .col
+              h4.card-title Traffic Sources
+            // end col
+            .col-auto
+              .dropdown
+                a.btn.bt.btn-light.dropdown-toggle(
+                  aria-expanded="false" 
+                  aria-haspopup="true" 
+                  data-bs-toggle="dropdown" 
+                  href="#"
+                  )
+                  i.icofont-search-user.fs-5.me-1
+                  | Direct
+                  i.las.la-angle-down.ms-1
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item(href="#") Email
+                  a.dropdown-item(href="#") Referral
+                  a.dropdown-item(href="#") Direct
+                  a.dropdown-item(href="#") Organic
+                  a.dropdown-item(href="#") Campaign
+            // end col
+          // end row
+        // end card-header
+        .card-body.pt-0
+          div
+            .apex-charts.d-block.w-90.mx-auto(id="traffic_sources")
+            hr.hr-dashed.border-secondary.w-25.mt-0.mx-auto
+          .text-center
+            h4 Direct Visitors
+            p.text-muted.mt-2
+              | This is a
+              |   simple hero unit, a simple
+              |   jumbotron-style component
+            button.btn.btn-outline-primary.px-3.mt-2(type="button")
+              | More
+              |   details
+        // end card-body
+      // end card
+    // end col
+    .col-md-6.col-lg-8
+      .card
+        .card-header
+          .row.align-items-center
+            .col
+              h4.card-title
+                | Organic
+                |   Traffic In World
+            // end col
+            .col-auto
+              .dropdown
+                a.btn.bt.btn-light.dropdown-toggle(
+                  aria-expanded="false" 
+                  aria-haspopup="true" 
+                  data-bs-toggle="dropdown" 
+                  href="#"
+                  )
+                  i.icofont-calendar.fs-5.me-1
+                  | Today
+                  i.las.la-angle-down.ms-1
+                .dropdown-menu.dropdown-menu-end
+                  a.dropdown-item(href="#") Today
+                  a.dropdown-item(href="#") Last Week
+                  a.dropdown-item(href="#") Last Month
+                  a.dropdown-item(href="#") This Year
+            // end col
+          // end row
+        // end card-header
+        .card-body.pt-0
+          .row
+            .col-lg-8
+              div(
+                style="height:320px" 
+                id="map_2"
+                )
+            // end col
+            .col-lg-4.align-self-center
+              .d-flex.align-items-center.my-3
+                img.thumb-sm.align-self-center.rounded-circle(
+                  alt="..." 
+                  src="/admin/assets/images/flags/us_flag.jpg"
+                  )
+                .flex-grow-1.ms-2
+                  h5.mb-1 35,365
+                  p.text-muted.mb-0
+                    | USA
+                    |   . Last Month
+                    span.text-success
+                      | 2.5%
+                      i.mdi.mdi-arrow-up
+                // end media-body
+              // end media
+              .d-flex.align-items-center.my-3
+                img.thumb-sm.align-self-center.rounded-circle(
+                  alt="..." 
+                  src="/admin/assets/images/flags/germany_flag.jpg"
+                  )
+                .flex-grow-1.ms-2
+                  h5.mb-1 24,865
+                  p.text-muted.mb-0
+                    | Germany
+                    |   . Last Month
+                    span.text-success
+                      | 1.2%
+                      i.mdi.mdi-arrow-up
+                // end media-body
+              // end media
+              .d-flex.align-items-center.my-3
+                img.thumb-sm.align-self-center.rounded-circle(
+                  alt="..." 
+                  src="/admin/assets/images/flags/spain_flag.jpg"
+                  )
+                .flex-grow-1.ms-2
+                  h5.mb-1 18,369
+                  p.text-muted.mb-0
+                    | Spain
+                    |   . Last Month
+                    span.text-success
+                      | 0.8%
+                      i.mdi.mdi-arrow-up
+                // end media-body
+              // end media
+              .d-flex.align-items-center.my-3
+                img.thumb-sm.align-self-center.rounded-circle(
+                  alt="..." 
+                  src="/admin/assets/images/flags/baha_flag.jpg"
+                  )
+                .flex-grow-1.ms-2
+                  h5.mb-1 11,325
+                  p.text-muted.mb-0
+                    | Bahamas
+                    |   . Last Month
+                    span.text-success
+                      | 2.5%
+                      i.mdi.mdi-arrow-up
+                // end media-body
+              // end media
+            // end col
+          // end row
+        // end card-body
+      // end card
+    // end col
+  // end row

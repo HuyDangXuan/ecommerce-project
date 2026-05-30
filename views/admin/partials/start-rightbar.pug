@@ -1,0 +1,49 @@
+#Appearance.offcanvas.offcanvas-end(
+  aria-labelledby="AppearanceLabel" 
+  tabindex="-1"
+  )
+  .offcanvas-header.border-bottom.justify-content-between
+    h5#AppearanceLabel.m-0.font-14 Appearance
+    button.btn-close.text-reset.p-0.m-0.align-self-center(
+      aria-label="Close" 
+      data-bs-dismiss="offcanvas" 
+      type="button"
+      )
+  .offcanvas-body
+    h6 Account Settings
+    .p-2.text-start.mt-3
+      .form-check.form-switch.mb-2
+        input#settings-switch1.form-check-input(type="checkbox")
+        label.form-check-label(for="settings-switch1") Auto updates
+      // end form-switch
+      .form-check.form-switch.mb-2
+        input#settings-switch2.form-check-input(
+          checked="" 
+          type="checkbox"
+          )
+        label.form-check-label(for="settings-switch2") Location Permission
+      // end form-switch
+      .form-check.form-switch
+        input#settings-switch3.form-check-input(type="checkbox")
+        label.form-check-label(for="settings-switch3") Show offline Contacts
+      // end form-switch
+    // end /div
+    h6 General Settings
+    .p-2.text-start.mt-3
+      .form-check.form-switch.mb-2
+        input#settings-switch4.form-check-input(type="checkbox")
+        label.form-check-label(for="settings-switch4") Show me Online
+      // end form-switch
+      .form-check.form-switch.mb-2
+        input#settings-switch5.form-check-input(
+          checked="" 
+          type="checkbox"
+          )
+        label.form-check-label(for="settings-switch5") Status visible to all
+      // end form-switch
+      .form-check.form-switch
+        input#settings-switch6.form-check-input(type="checkbox")
+        label.form-check-label(for="settings-switch6") Notifications Popup
+      // end form-switch
+    // end /div
+  // end offcanvas-body
