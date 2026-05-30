@@ -1,5 +1,8 @@
-import express, {Request, Response} from 'express'
+import express from 'express'
 import path from 'path'
+
+import adminRouter from './routers/admin/index.route'
+import clientRouter from './routers/client/index.route'
 
 const app = express()
 const port = 3000
@@ -11,15 +14,9 @@ app.set('view engine', 'pug')
 
 app.use(express.static(publicPath))
 
-app.get('/', (req: Request, res: Response) => {
-  res.render('client/pages/home')
-})
+app.use('/admin', adminRouter)
 
-app.get('/admin/dashboard', (req: Request, res: Response) => {
-  res.render('admin/pages/dashboard', {
-    title: 'Trang tổng quan',
-  })
-})
+app.use('/', clientRouter)
 
 app.listen(port, () => {
   console.log(`Website đang chạy trên cổng ${port}`)
