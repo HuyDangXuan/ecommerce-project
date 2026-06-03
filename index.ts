@@ -1,5 +1,6 @@
 import express from 'express'
 import path from 'path'
+import { pathAdmin } from './config/variable.config'
 
 import adminRouter from './routers/admin/index.route'
 import clientRouter from './routers/client/index.route'
@@ -9,12 +10,15 @@ const port = 3000
 const viewsPath = path.join(__dirname, 'views')
 const publicPath = path.join(__dirname, 'public')
 
+// Thiết lập biến toàn cục
+app.locals.pathAdmin = pathAdmin
+
 app.set('views', viewsPath)
 app.set('view engine', 'pug')
 
 app.use(express.static(publicPath))
 
-app.use('/admin', adminRouter)
+app.use(`/${pathAdmin}`, adminRouter)
 
 app.use('/', clientRouter)
 
