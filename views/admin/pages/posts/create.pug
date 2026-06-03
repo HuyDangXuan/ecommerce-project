@@ -1,0 +1,36 @@
+extend ../../layouts/default.pug
+
+block main 
+  .container
+    .row
+      .col-12
+        h1 Tạo bài viết
+    .card-body.pt-0
+      form(id="createPostForm")
+        .row
+          .col-md-6.col-lg-6
+            .mb-3
+              label.form-label(for="name") Tên bài viết *
+              input.form-control(
+                id="name"
+                type="text"
+                )
+          .col-md-6.col-lg-6
+            .mb-3
+              label.form-label(for="parentCategory") Tên danh mục cha
+              select.form-control(
+                id="parentCategory"
+                )
+                option(value="") -- Chọn danh mục cha --
+                option(value="Danh mục 1") Danh mục 1
+                option(value="Danh mục 2") Danh mục 2
+                option(value="Danh mục 3") Danh mục 3
+          .col-md-12.col-lg-12
+            .mb-3
+              label.form-label(for="description") Mô tả bài viết
+              textarea.form-control(
+                id="description"
+                rows="3"
+                )
+        button.btn.btn-primary(type="submit") Submit
+        button.btn.btn-danger.ms-2(type="button") Cancel

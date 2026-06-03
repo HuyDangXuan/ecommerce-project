@@ -6,8 +6,10 @@ html(
   lang="en"
   )
   head
+    script.
+      const pathAdmin = "#{pathAdmin}";
     meta(charset="utf-8")
-    title #{pageTitle}
+    title #{title}
     meta(
       content="width=device-width, initial-scale=1, shrink-to-fit=no" 
       name="viewport"
@@ -79,10 +81,11 @@ html(
     // vendor js
     script(src="/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js")
     script(src="/admin/assets/libs/simplebar/simplebar.min.js")
-    script(src="/admin/assets/libs/apexcharts/apexcharts.min.js")
     script(src="/admin/assets/data/stock-prices.js")
     script(src="/admin/assets/libs/jsvectormap/js/jsvectormap.min.js")
     script(src="/admin/assets/libs/jsvectormap/maps/world.js")
-    script(src="/admin/assets/js/pages/index.init.js")
+    script(src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js")
+    block scripts
     script(src="/admin/assets/js/app.js")
+    script(src="/admin/assets/js/main.js")
   // end body

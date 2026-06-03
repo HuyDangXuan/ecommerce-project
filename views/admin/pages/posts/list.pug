@@ -1,0 +1,505 @@
+extend ../../layouts/default.pug
+
+block main 
+  .container
+    .row
+      .col-12
+        .card
+          .card-header
+            .row.align-items-center
+              .col
+                h4.card-title Products
+              // end col
+              .col-auto
+                form.row.g-2
+                  .col-auto
+                    a.btn.bg-primary-subtle.text-primary.dropdown-toggle.d-flex.align-items-center.arrow-none(
+                      data-bs-auto-close="outside" 
+                      aria-expanded="false" 
+                      aria-haspopup="false" 
+                      role="button" 
+                      href="#" 
+                      data-bs-toggle="dropdown"
+                      )
+                      i.iconoir-filter-alt.me-1
+                      | Filter
+                    .dropdown-menu.dropdown-menu-start
+                      .p-2
+                        .form-check.mb-2
+                          input#filter-all.form-check-input(
+                            checked="" 
+                            type="checkbox"
+                            )
+                          label.form-check-label(for="filter-all") All
+                        .form-check.mb-2
+                          input#filter-one.form-check-input(
+                            checked="" 
+                            type="checkbox"
+                            )
+                          label.form-check-label(for="filter-one") Fashion
+                        .form-check.mb-2
+                          input#filter-two.form-check-input(
+                            checked="" 
+                            type="checkbox"
+                            )
+                          label.form-check-label(for="filter-two") Plants
+                        .form-check.mb-2
+                          input#filter-three.form-check-input(
+                            checked="" 
+                            type="checkbox"
+                            )
+                          label.form-check-label(for="filter-three") Toys
+                        .form-check.mb-2
+                          input#filter-four.form-check-input(
+                            checked="" 
+                            type="checkbox"
+                            )
+                          label.form-check-label(for="filter-four") Gadgets
+                        .form-check.mb-2
+                          input#filter-five.form-check-input(
+                            checked="" 
+                            type="checkbox"
+                            )
+                          label.form-check-label(for="filter-five") Food
+                        .form-check
+                          input#filter-six.form-check-input(
+                            checked="" 
+                            type="checkbox"
+                            )
+                          label.form-check-label(for="filter-six") Drinks
+                  // end col
+                  .col-auto
+                    button.btn.btn-primary(
+                      data-bs-target="#addBoard" 
+                      data-bs-toggle="modal" 
+                      type="button"
+                      )
+                      i.fa-solid.fa-plus.me-1
+                      | Add Product
+                  // end col
+              // end col
+            // end row
+          // end card-header
+          .card-body.pt-0
+            .table-responsive
+              table.table.mb-0.checkbox-all(id="datatable_1")
+                thead.table-light
+                  tr
+                    th(style="width: 16px;")
+                      .form-check.mb-0
+                        input#select-all.form-check-input(
+                          name="select-all" 
+                          type="checkbox"
+                          )
+                    th.ps-0 Product Name
+                    th Category
+                    th Pics
+                    th Price
+                    th Status
+                    th Created At
+                    th.text-end Action
+                tbody
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck1.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/04.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Apple Watch
+                        br
+                        span.text-muted.font-13 Size-05 (Model 2021)
+                    td Sports
+                    td 32
+                    td $39
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 14 Jan 2024, 10:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck2.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/01.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Morden Chair
+                        br
+                        span.text-muted.font-13 Size-Mediam (Model 2021)
+                    td Interior
+                    td 10
+                    td $99
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 18 Jan 2024, 12:10am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck3.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/05.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Reebok Shoes
+                        br
+                        span.text-muted.font-13 size-08 (Model 2021)
+                    td Footwear
+                    td 24
+                    td $49
+                    td
+                      span.badge.bg-danger-subtle.text-danger
+                        i.fas.fa-xmark.me-1
+                        | Inactive
+                    td
+                      span 24 Jan 2024, 09:10pm
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck4.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/06.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Cosco Vollyboll
+                        br
+                        span.text-muted.font-13 size-04 (Model 2021)
+                    td Sports
+                    td 8
+                    td $49
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 08 Feb 2024, 03:30pm
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck5.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/04.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Royal Purse
+                        br
+                        span.text-muted.font-13 Pure Lether 100%
+                    td Life Style
+                    td 52
+                    td $89
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 20 Feb 2024, 11:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck6.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/03.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") New Morden Chair
+                        br
+                        span.text-muted.font-13 size-05 (Model 2021)
+                    td Interior
+                    td 6
+                    td $20
+                    td
+                      span.badge.bg-secondary-subtle.text-secondary
+                        i.fas.fa-box-archive.me-1
+                        | Draft
+                    td
+                      span 14 Jan 2024, 10:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck7.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/02.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Important Chair
+                        br
+                        span.text-muted.font-13 size-05 (Model 2021)
+                    td Interior
+                    td 32
+                    td $39
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 02 Mar 2024, 10:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck8.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/02.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Nivya Footboll
+                        br
+                        span.text-muted.font-13 Size-05 (Model 2021)
+                    td Sports
+                    td 32
+                    td $39
+                    td
+                      span.badge.bg-danger-subtle.text-danger
+                        i.fas.fa-xmark.me-1
+                        | Inactive
+                    td
+                      span 11 Mar 2024, 05:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck9.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/01.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Green Morden Chair
+                        br
+                        span.text-muted.font-13 Size-Mediam (Model 2021)
+                    td Interior
+                    td 10
+                    td $99
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 28 Mar 2024, 08:45am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck10.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/01.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Bata Shoes
+                        br
+                        span.text-muted.font-13 size-08 (Model 2021)
+                    td Footwear
+                    td 24
+                    td $49
+                    td
+                      span.badge.bg-secondary-subtle.text-secondary
+                        i.fas.fa-box-archive.me-1
+                        | Draft
+                    td
+                      span 05 Apr 2024, 12:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck11.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/06.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Cosco Vollyboll
+                        br
+                        span.text-muted.font-13 size-04 (Model 2021)
+                    td Sports
+                    td 8
+                    td $49
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 10 Apr 2024, 10:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck12.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/04.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") Royal Purse
+                        br
+                        span.text-muted.font-13 Pure Lether 100%
+                    td Life Style
+                    td 52
+                    td $89
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 20 Apr 2024, 10:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+                  tr
+                    td(style="width: 16px;")
+                      .form-check
+                        input#customCheck13.form-check-input(
+                          name="check" 
+                          type="checkbox"
+                          )
+                    td.ps-0
+                      img(
+                        height="40" 
+                        alt="" 
+                        src="assets/images/products/03.png"
+                        )
+                      p.d-inline-block.align-middle.mb-0
+                        a.d-inline-block.align-middle.mb-0.product-name(href="ecommerce-order-details.html") New Morden Chair
+                        br
+                        span.text-muted.font-13 size-05 (Model 2021)
+                    td Interior
+                    td 6
+                    td $20
+                    td
+                      span.badge.bg-success-subtle.text-success
+                        i.fas.fa-check.me-1
+                        | Published
+                    td
+                      span 08 May 2024, 01:30am
+                    td.text-end
+                      a(href="#")
+                        i.las.la-pen.text-secondary.fs-18
+                      a(href="#")
+                        i.las.la-trash-alt.text-secondary.fs-18
+      // end col
