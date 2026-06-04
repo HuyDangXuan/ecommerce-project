@@ -7,13 +7,12 @@ const router = Router();
 
 const upload = multer();
 
-router.get('/', postController.posts)
+router.get('/post-list', postController.GETpostList)
+router.get('/post-create', postController.GETcreatePost)
+router.post('/post-create', upload.none(), postValidate.createPost, postController.POSTcreatePost)
 
-router.get('/create', postController.create)
-router.post('/create', upload.none(), postValidate.createPost, postController.createPost)
-
-router.get('/categories', postController.categories)
-
-
+router.get('/category-list', postController.GETcategoryList)
+router.get('/category-create', postController.GETcreateCategory)
+router.post('/category-create', upload.none(), postValidate.createCategory, postController.POSTcreateCategory)
 
 export default router;

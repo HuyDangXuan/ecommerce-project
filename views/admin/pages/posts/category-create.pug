@@ -4,15 +4,16 @@ block main
   .container
     .row
       .col-12
-        h1 Tạo bài viết
+        h1 Tạo danh mục bài viết
     .card-body.pt-0
-      form(id="createPostForm")
+      form(id="createCategoryForm")
         .row
           .col-md-6.col-lg-6
             .mb-3
-              label.form-label(for="name") Tên bài viết *
+              label.form-label(for="name") Tên danh mục *
               input.form-control(
                 id="name"
+                name="name"
                 type="text"
                 )
           .col-md-6.col-lg-6
@@ -20,16 +21,17 @@ block main
               label.form-label(for="parentCategory") Tên danh mục cha
               select.form-control(
                 id="parentCategory"
+                name="parentCategory"
                 )
                 option(value="") -- Chọn danh mục cha --
-                option(value="Danh mục 1") Danh mục 1
-                option(value="Danh mục 2") Danh mục 2
-                option(value="Danh mục 3") Danh mục 3
+                each category in categories
+                  option(value=category._id)= category.name
           .col-md-12.col-lg-12
             .mb-3
-              label.form-label(for="description") Mô tả bài viết
+              label.form-label(for="description") Mô tả danh mục
               textarea.form-control(
                 id="description"
+                name="description"
                 rows="3"
                 )
         button.btn.btn-primary(type="submit") Submit

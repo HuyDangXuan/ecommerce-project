@@ -1,19 +1,25 @@
 import { Request, Response } from 'express'
+import Post from '../../models/posts.model'
+import Category from '../../models/categories.model'
 
-export const posts = (req: Request, res: Response) => {
-  res.render('admin/pages/posts/list', {
+export const GETpostList = (req: Request, res: Response) => {
+  res.render('admin/pages/posts/post-list', {
     title: 'Danh sách bài viết',
   })
 }
 
-export const create = (req: Request, res: Response) => {
-  res.render('admin/pages/posts/create', {
+export const GETcreatePost = async (req: Request, res: Response) => {
+  const categories = await Category.find();
+
+  res.render('admin/pages/posts/post-create', {
     title: 'Tạo bài viết',
+    categories: categories
   })
 }
 
-export const createPost = (req: Request, res: Response) => {
-  console.log(req.body);
+export const POSTcreatePost = async (req: Request, res: Response) => {
+  const newRecord = new Post(req.body);
+  await newRecord.save();
 
   res.json({
     code: "success",
@@ -21,8 +27,27 @@ export const createPost = (req: Request, res: Response) => {
   })
 }
 
-export const categories = (req: Request, res: Response) => {
-  res.render('admin/pages/posts/categories', {
-    title: 'Danh mục bài viết',
+export const GETcategoryList = (req: Request, res: Response) => {
+  res.render('admin/pages/posts/category-list', {
+    title: 'Danh sách danh mục',
+  })
+}
+
+export const GETcreateCategory = async (req: Request, res: Response) => {
+  const categories = await Category.find();
+
+  res.render('admin/pages/posts/category-create', {
+    title: 'Tạo danh mục bài viết',
+    categories: categories
+  })
+}
+
+export const POSTcreateCategory = async (req: Request, res: Response) => {
+  const newRecord = new Category(req.body);
+  await newRecord.save();
+
+  res.json({
+    code: "success",
+    message: "Danh mục đã được tạo thành công",
   })
 }
