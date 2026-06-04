@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import Post from '../../models/posts.model'
 import Category from '../../models/categories.model'
+import buildCategoryTree from '../../helpers/category.helper'
 
 export const GETpostList = (req: Request, res: Response) => {
   res.render('admin/pages/posts/post-list', {
@@ -10,10 +11,11 @@ export const GETpostList = (req: Request, res: Response) => {
 
 export const GETcreatePost = async (req: Request, res: Response) => {
   const categories = await Category.find();
+  const categoryTree = buildCategoryTree(categories, "");
 
   res.render('admin/pages/posts/post-create', {
     title: 'Tạo bài viết',
-    categories: categories
+    categories: categoryTree
   })
 }
 
@@ -35,10 +37,11 @@ export const GETcategoryList = (req: Request, res: Response) => {
 
 export const GETcreateCategory = async (req: Request, res: Response) => {
   const categories = await Category.find();
+  const categoryTree = buildCategoryTree(categories, "");
 
   res.render('admin/pages/posts/category-create', {
     title: 'Tạo danh mục bài viết',
-    categories: categories
+    categories: categoryTree
   })
 }
 

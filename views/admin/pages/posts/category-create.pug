@@ -1,4 +1,5 @@
 extend ../../layouts/default.pug
+include ../../mixins/options.pug
 
 block main 
   .container
@@ -24,8 +25,7 @@ block main
                 name="parentCategory"
                 )
                 option(value="") -- Chọn danh mục cha --
-                each category in categories
-                  option(value=category._id)= category.name
+                +options(categories, 0)
           .col-md-12.col-lg-12
             .mb-3
               label.form-label(for="description") Mô tả danh mục
