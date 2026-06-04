@@ -20,6 +20,15 @@ export const GETcreatePost = async (req: Request, res: Response) => {
 }
 
 export const POSTcreatePost = async (req: Request, res: Response) => {
+  const existingCategory = await Category.findOne({ slug: req.body.slug });
+  if (existingCategory) {
+    res.json({
+      code: "error",
+      message: "Slug đã tồn tại, vui lòng chọn slug khác",
+    });
+    return;
+  }
+
   const newRecord = new Post(req.body);
   await newRecord.save();
 
@@ -46,6 +55,15 @@ export const GETcreateCategory = async (req: Request, res: Response) => {
 }
 
 export const POSTcreateCategory = async (req: Request, res: Response) => {
+  const existingCategory = await Category.findOne({ slug: req.body.slug });
+  if (existingCategory) {
+    res.json({
+      code: "error",
+      message: "Slug đã tồn tại, vui lòng chọn slug khác",
+    });
+    return;
+  }
+
   const newRecord = new Category(req.body);
   await newRecord.save();
 

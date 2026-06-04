@@ -8,6 +8,9 @@ export const createPost = (req: Request, res: Response, next: NextFunction) => {
     }),
     description: Joi.string().allow(''),
     parentCategory: Joi.string().allow(''),
+    slug: Joi.string().required().messages({
+      'string.empty': 'Slug không được để trống',
+    }),
   });
 
   const { error } = schema.validate(req.body);
@@ -30,6 +33,9 @@ export const createCategory = (req: Request, res: Response, next: NextFunction) 
     }),
     description: Joi.string().allow(''),
     parentCategory: Joi.string().allow(''),
+    slug: Joi.string().required().messages({
+      'string.empty': 'Slug không được để trống',
+    }),
   });
 
   const { error } = schema.validate(req.body);
