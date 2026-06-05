@@ -21,7 +21,11 @@ block main
             .mb-3
               label.form-label(for="slug") Đường dẫn *
               .input-group
-                span.btn.btn-outline-info Tự động
+                span.btn.btn-outline-info(
+                  btn-generate-slug="Post"
+                  from="name"
+                  to="slug"
+                ) Tự động
                 input.form-control(id="slug" name="slug" type="text")
           .col-md-6.col-lg-6
             .mb-3

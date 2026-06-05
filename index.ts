@@ -23,6 +23,9 @@ app.locals.pathAdmin = pathAdmin
 app.set('views', viewsPath)
 app.set('view engine', 'pug')
 
+// Cho phép gửi dữ liệu lên dưới dạng JSON
+app.use(express.json())
+
 app.use(express.static(publicPath))
 
 app.use(`/${pathAdmin}`, adminRouter)
