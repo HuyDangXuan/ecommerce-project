@@ -5,9 +5,10 @@ block main
   .container
     .row
       .col-12
-        h1 Tạo danh mục bài viết
+        h1 Chỉnh sửa danh mục bài viết
     .card-body.pt-0
-      form(id="createCategoryForm")
+      form(id="editCategoryForm")
+        input(type="hidden" name="id" value=category ? category._id : "")
         .row
           .col-md-6.col-lg-6
             .mb-3
@@ -26,9 +27,13 @@ block main
                   btn-generate-slug="Category"
                   from="name"
                   to="slug"
-                  value=category ? category.slug : ""
                   ) Tự động
-                input.form-control(id="slug" name="slug" type="text")
+                input.form-control(
+                  id="slug" 
+                  name="slug" 
+                  type="text"
+                  value=category ? category.slug : ""
+                  )
           .col-md-6.col-lg-6
             .mb-3
               label.form-label(for="status") Trạng thái
@@ -36,8 +41,8 @@ block main
                 id="status"
                 name="status"
                 )
-                  option(value="active" selected=category && category.status === "active") Hoạt động
-                  option(value="inactive" selected=category && category.status === "inactive") Dừng hoạt động
+                  option(value="active" selected=category && category.status === 'active') Hoạt động
+                  option(value="inactive" selected=category && category.status === 'inactive') Dừng hoạt động
           .col-md-6.col-lg-6
             .mb-3
               label.form-label(for="parentCategory") Tên danh mục cha

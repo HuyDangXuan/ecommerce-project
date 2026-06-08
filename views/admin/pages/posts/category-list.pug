@@ -54,8 +54,8 @@ block main
                       td #{category && typeof category.views !== 'undefined' ? category.views : 0}
                       td.text-end
                         if category && category._id
-                          a.btn.btn-sm.btn-primary.me-1(href=`/admin/posts/edit/${category._id}`)
+                          a.btn.btn-sm.btn-primary.me-1(href=`/admin/posts/category-edit/${category._id}`)
                             i.fa-solid.fa-pen-to-square
-                          a.btn.btn-sm.btn-danger(href=`/admin/posts/delete/${category._id}`)
+                          a.btn.btn-sm.btn-danger(href=`/admin/posts/category-delete/${category._id}`)
                             i.fa-solid.fa-trash
       // end col

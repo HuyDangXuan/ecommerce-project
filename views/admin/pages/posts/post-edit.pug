@@ -5,30 +5,34 @@ block main
   .container
     .row
       .col-12
-        h1 Tạo danh mục bài viết
+        h1 Chỉnh sửa bài viết
     .card-body.pt-0
-      form(id="createCategoryForm")
+      form(id="editPostForm")
+        input(type="hidden" name="id" value=post ? post._id : "")
         .row
           .col-md-6.col-lg-6
             .mb-3
-              label.form-label(for="name") Tên danh mục *
+              label.form-label(for="name") Tên bài viết *
               input.form-control(
                 id="name"
                 name="name"
                 type="text"
-                value=category ? category.name : ""
+                value=post ? post.name : ""
                 )
           .col-md-6.col-lg-6
             .mb-3
               label.form-label(for="slug") Đường dẫn *
               .input-group
                 span.btn.btn-outline-info(
-                  btn-generate-slug="Category"
+                  btn-generate-slug="Post"
                   from="name"
                   to="slug"
-                  value=category ? category.slug : ""
-                  ) Tự động
-                input.form-control(id="slug" name="slug" type="text")
+                ) Tự động
+                input.form-control(
+                  id="slug" 
+                  name="slug" 
+                  type="text" 
+                  value=post ? post.slug : "")
           .col-md-6.col-lg-6
             .mb-3
               label.form-label(for="status") Trạng thái
@@ -36,8 +40,8 @@ block main
                 id="status"
                 name="status"
                 )
-                  option(value="active" selected=category && category.status === "active") Hoạt động
-                  option(value="inactive" selected=category && category.status === "inactive") Dừng hoạt động
+                  option(value="active" selected=post && post.status === "active") Hoạt động
+                  option(value="inactive" selected=post && post.status === "inactive") Dừng hoạt động
           .col-md-6.col-lg-6
             .mb-3
               label.form-label(for="parentCategory") Tên danh mục cha
@@ -46,15 +50,15 @@ block main
                 name="parentCategory"
                 )
                 option(value="") -- Chọn danh mục cha --
-                +options(categories, 0, category ? category.parentCategory : "")
+                +options(categories, 0, post.parentCategory)
           .col-md-12.col-lg-12
             .mb-3
-              label.form-label(for="description") Mô tả danh mục
+              label.form-label(for="description") Mô tả bài viết
               textarea.form-control(
                 id="description"
                 name="description"
                 rows="3"
                 textarea-mce
-                ) #{category ? category.description : ""}
-        button.btn.btn-primary(type="submit") Cập nhật
+                ) #{post ? post.description : ""}
+        button.btn.btn-primary(type="submit") Câp nhật
         button.btn.btn-danger.ms-2(type="button") Hủy

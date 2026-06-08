@@ -113,14 +113,14 @@ block main
                         if post && post.status === 'active'
                           span.badge.bg-success.text-white Hoạt động
                         else if post && post.status === 'inactive'
-                          span.badge.bg-secondary.text-white Dừng hoạt động
+                          span.badge.bg-danger.text-white Dừng hoạt động
                         else
                           span.badge.bg-light.text-dark Không xác định
                       td #{post && typeof post.views !== 'undefined' ? post.views : 0}
                       td.text-end
                         if post && post._id
-                          a.btn.btn-sm.btn-primary.me-1(href=`/admin/posts/edit/${post._id}`)
+                          a.btn.btn-sm.btn-primary.me-1(href=`/admin/posts/post-edit/${post._id}`)
                             i.fa-solid.fa-pen-to-square
-                          a.btn.btn-sm.btn-danger(href=`/admin/posts/delete/${post._id}`)
+                          a.btn.btn-sm.btn-danger(href=`/admin/posts/post-delete/${post._id}`)
                             i.fa-solid.fa-trash
       // end col

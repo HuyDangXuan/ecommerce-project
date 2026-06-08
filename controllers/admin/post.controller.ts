@@ -2,6 +2,10 @@ import { Request, Response } from 'express'
 import Post from '../../models/posts.model'
 import Category from '../../models/categories.model'
 import buildCategoryTree from '../../helpers/category.helper'
+import { pathAdmin } from '../../config/variable.config'
+import slugify from 'slugify';
+
+// POST
 
 export const GETpostList = async (req: Request, res: Response) => {
   const posts: any = await Post.find({ deleted: false }).sort({ createdAt: "desc" });
@@ -31,14 +35,21 @@ export const GETcreatePost = async (req: Request, res: Response) => {
 
 export const POSTcreatePost = async (req: Request, res: Response) => {
   try {
-    const existingCategory = await Category.findOne({ slug: req.body.slug });
-    if (existingCategory) {
+    const existingPost = await Post.findOne({ slug: req.body.slug });
+    if (existingPost) {
       res.json({
         code: "error",
         message: "Slug đã tồn tại, vui lòng chọn slug khác",
       });
       return;
     }
+
+    req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
+      {
+        replacement: '-',
+        lower: true,
+      }
+    );
 
     const newRecord = new Post(req.body);
     await newRecord.save();
@@ -54,6 +65,76 @@ export const POSTcreatePost = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const GETeditPost = async (req: Request, res: Response) => {
+  const postId = req.params.id;
+  const post = await Post.findById(postId);
+
+  if (!post) {
+    res.redirect(`${pathAdmin}/posts/post-list`);
+    return;
+  }
+
+  const categories = await Category.find();
+  const categoryTree = buildCategoryTree(categories, "");
+
+  res.render('admin/pages/posts/post-edit', {
+    title: 'Chỉnh sửa bài viết',
+    categories: categoryTree,
+    post: post
+  })
+}
+
+export const PATCHeditPost = async (req: Request, res: Response) => {
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      res.json({
+        code: "error",
+        message: "Bài viết không tồn tại",
+      });
+      return;
+    }
+
+    const existingPost = await Post.findOne({
+      _id: { $ne: postId },
+      slug: req.body.slug 
+    });
+    if (existingPost) {
+      res.json({
+        code: "error",
+        message: "Slug đã tồn tại, vui lòng chọn slug khác",
+      });
+      return;
+    }
+
+    req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
+      {
+        replacement: '-',
+        lower: true,
+      }
+    );
+
+    await Post.findByIdAndUpdate(postId, req.body);
+
+    res.json({
+      code: "success",
+      message: "Bài viết đã được cập nhật thành công",
+    })
+
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: "Dữ liệu không hợp lệ",
+    })
+  }
+}
+
+// END POST
+
+// CATEGORY
 
 export const GETcategoryList = async (req: Request, res: Response) => {
   const categories: any = await Category.find({ deleted: false }).sort({ createdAt: "desc" });
@@ -92,6 +173,13 @@ export const POSTcreateCategory = async (req: Request, res: Response) => {
       return;
     }
 
+    req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
+      {
+        replacement: '-',
+        lower: true,
+      }
+    );
+
     const newRecord = new Category(req.body);
     await newRecord.save();
 
@@ -106,3 +194,71 @@ export const POSTcreateCategory = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const GETeditCategory = async (req: Request, res: Response) => {
+  const categoryId = req.params.id;
+  const category = await Category.findById(categoryId);
+
+  if (!category) {
+    res.redirect(`${pathAdmin}/posts/category-list`);
+    return;
+  }
+
+  const categories = await Category.find();
+  const categoryTree = buildCategoryTree(categories, "");
+
+  res.render('admin/pages/posts/category-edit', {
+    title: 'Chỉnh sửa danh mục bài viết',
+    categories: categoryTree,
+    category: category
+  })
+}
+
+export const PATCHeditCategory = async (req: Request, res: Response) => {
+  try {
+    const categoryId = req.params.id;
+    const category = await Category.findById(categoryId);
+
+    if (!category) {
+      res.json({
+        code: "error",
+        message: "Danh mục không tồn tại",
+      });
+      return;
+    }
+
+    const existingCategory = await Category.findOne({ 
+      _id: { $ne: categoryId },
+      slug: req.body.slug,
+    });
+    if (existingCategory) {
+      res.json({
+        code: "error",
+        message: "Slug đã tồn tại, vui lòng chọn slug khác",
+      });
+      return;
+    }
+
+    req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
+      {
+        replacement: '-',
+        lower: true,
+      }
+    );
+
+    await Category.findByIdAndUpdate(categoryId, req.body);
+
+    res.json({
+      code: "success",
+      message: "Danh mục đã được cập nhật thành công",
+    })
+
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: "Dữ liệu không hợp lệ",
+    })
+  }
+}
+
+// END CATEGORY
