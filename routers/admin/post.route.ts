@@ -13,6 +13,9 @@ router.post('/post-create', upload.none(), postValidate.createPost, postControll
 
 router.get('/post-edit/:id', postController.GETeditPost)
 router.patch('/post-edit/:id', upload.none(), postValidate.createPost, postController.PATCHeditPost)
+router.patch('/post-delete/:id', postController.PATCHdeletePost)
+
+
 
 router.get('/category-list', postController.GETcategoryList)
 router.get('/category-create', postController.GETcreateCategory)
@@ -20,4 +23,7 @@ router.post('/category-create', upload.none(), postValidate.createCategory, post
 
 router.get('/category-edit/:id', postController.GETeditCategory)
 router.patch('/category-edit/:id', upload.none(), postValidate.createCategory, postController.PATCHeditCategory)
+router.patch('/category-delete/:id', postController.PATCHdeleteCategory)
+
+
 export default router;

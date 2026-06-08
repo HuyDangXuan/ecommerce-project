@@ -132,6 +132,37 @@ export const PATCHeditPost = async (req: Request, res: Response) => {
   }
 }
 
+export const PATCHdeletePost = async (req: Request, res: Response) => {
+  try {
+    const postId = req.params.id;
+    const post = await Post.findById(postId);
+
+    if (!post) {
+      res.json({
+        code: "error",
+        message: "Bài viết không tồn tại",
+      });
+      return;
+    }
+
+    await Post.findByIdAndUpdate(postId, {
+       deleted: true,
+       deletedAt: new Date(),
+      });
+
+    res.json({
+      code: "success",
+      message: "Đã xóa bài viết thành công",
+    })
+
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: "Dữ liệu không hợp lệ",
+    })
+  }
+}
+
 // END POST
 
 // CATEGORY
@@ -251,6 +282,37 @@ export const PATCHeditCategory = async (req: Request, res: Response) => {
     res.json({
       code: "success",
       message: "Danh mục đã được cập nhật thành công",
+    })
+
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: "Dữ liệu không hợp lệ",
+    })
+  }
+}
+
+export const PATCHdeleteCategory = async (req: Request, res: Response) => {
+  try {
+    const categoryId = req.params.id;
+    const category = await Category.findById(categoryId);
+
+    if (!category) {
+      res.json({
+        code: "error",
+        message: "Danh mục không tồn tại",
+      });
+      return;
+    }
+
+    await Category.findByIdAndUpdate(categoryId, {
+      deleted: true,
+      deletedAt: new Date()
+    });
+
+    res.json({
+      code: "success",
+      message: "Đã xóa danh mục thành công",
     })
 
   } catch (error) {
