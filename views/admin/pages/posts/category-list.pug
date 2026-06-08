@@ -43,12 +43,12 @@ block main
                             )
                       td #{index + 1}
                       td #{category && category.name ? category.name : 'Không có'}
-                      td #{category && category.parentCategory ? category.parentCategory : 'Không có'}
+                      td #{category && category.parentName ? category.parentName : 'Không có'}
                       td
                         if category && category.status === 'active'
                           span.badge.bg-success.text-white Hoạt động
                         else if category && category.status === 'inactive'
-                          span.badge.bg-secondary.text-white Dừng hoạt động
+                          span.badge.bg-danger.text-white Dừng hoạt động
                         else
                           span.badge.bg-light.text-dark Không xác định
                       td #{category && typeof category.views !== 'undefined' ? category.views : 0}

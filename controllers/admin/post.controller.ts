@@ -4,7 +4,14 @@ import Category from '../../models/categories.model'
 import buildCategoryTree from '../../helpers/category.helper'
 
 export const GETpostList = async (req: Request, res: Response) => {
-  const posts = await Post.find();
+  const posts: any = await Post.find({ deleted: false }).sort({ createdAt: "desc" });
+
+  for (const item of posts) {
+    if (item.parentCategory) {
+      const parent = await Category.findById(item.parentCategory);
+      item.parentName = parent ? parent.name : "Không có";
+    }
+  }
 
   res.render('admin/pages/posts/post-list', {
     title: 'Danh sách bài viết',
@@ -49,7 +56,14 @@ export const POSTcreatePost = async (req: Request, res: Response) => {
 }
 
 export const GETcategoryList = async (req: Request, res: Response) => {
-  const categories = await Category.find();
+  const categories: any = await Category.find({ deleted: false }).sort({ createdAt: "desc" });
+
+  for (const item of categories) {
+    if (item.parentCategory) {
+      const parent = await Category.findById(item.parentCategory);
+      item.parentName = parent ? parent.name : "Không có";
+    }
+  }
 
   res.render('admin/pages/posts/category-list', {
     title: 'Danh sách danh mục',
