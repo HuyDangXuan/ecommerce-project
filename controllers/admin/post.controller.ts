@@ -20,22 +20,29 @@ export const GETcreatePost = async (req: Request, res: Response) => {
 }
 
 export const POSTcreatePost = async (req: Request, res: Response) => {
-  const existingCategory = await Category.findOne({ slug: req.body.slug });
-  if (existingCategory) {
+  try {
+    const existingCategory = await Category.findOne({ slug: req.body.slug });
+    if (existingCategory) {
+      res.json({
+        code: "error",
+        message: "Slug đã tồn tại, vui lòng chọn slug khác",
+      });
+      return;
+    }
+
+    const newRecord = new Post(req.body);
+    await newRecord.save();
+
+    res.json({
+      code: "success",
+      message: "Bài viết đã được tạo thành công",
+    })
+  } catch (error) {
     res.json({
       code: "error",
-      message: "Slug đã tồn tại, vui lòng chọn slug khác",
-    });
-    return;
+      message: "Dữ liệu không hợp lệ",
+    })
   }
-
-  const newRecord = new Post(req.body);
-  await newRecord.save();
-
-  res.json({
-    code: "success",
-    message: "Bài viết đã được tạo thành công",
-  })
 }
 
 export const GETcategoryList = (req: Request, res: Response) => {
@@ -55,20 +62,27 @@ export const GETcreateCategory = async (req: Request, res: Response) => {
 }
 
 export const POSTcreateCategory = async (req: Request, res: Response) => {
-  const existingCategory = await Category.findOne({ slug: req.body.slug });
-  if (existingCategory) {
+  try {
+    const existingCategory = await Category.findOne({ slug: req.body.slug });
+    if (existingCategory) {
+      res.json({
+        code: "error",
+        message: "Slug đã tồn tại, vui lòng chọn slug khác",
+      });
+      return;
+    }
+
+    const newRecord = new Category(req.body);
+    await newRecord.save();
+
+    res.json({
+      code: "success",
+      message: "Danh mục đã được tạo thành công",
+    })
+  } catch (error) {
     res.json({
       code: "error",
-      message: "Slug đã tồn tại, vui lòng chọn slug khác",
-    });
-    return;
+      message: "Dữ liệu không hợp lệ",
+    })
   }
-
-  const newRecord = new Category(req.body);
-  await newRecord.save();
-
-  res.json({
-    code: "success",
-    message: "Danh mục đã được tạo thành công",
-  })
 }

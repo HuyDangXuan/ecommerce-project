@@ -29,6 +29,15 @@ block main
                 input.form-control(id="slug" name="slug" type="text")
           .col-md-6.col-lg-6
             .mb-3
+              label.form-label(for="status") Trạng thái
+              select.form-control(
+                id="status"
+                name="status"
+                )
+                  option(value="active") Hoạt động
+                  option(value="inactive") Dừng hoạt động
+          .col-md-6.col-lg-6
+            .mb-3
               label.form-label(for="parentCategory") Tên danh mục cha
               select.form-control(
                 id="parentCategory"

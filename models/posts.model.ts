@@ -6,6 +6,20 @@ const schema = new mongoose.Schema(
     description: String,
     parentCategory: String,
     slug: String,
+    status: {
+      type: String,
+      enum: ['active', 'inactive'],
+      default: 'active',
+    },
+    views: {
+      type: Number,
+      default: 0,
+    },
+    deleted: {
+      type: Boolean,
+      default: false,
+    },
+    search: String,
   },
   {
     timestamps: true,
