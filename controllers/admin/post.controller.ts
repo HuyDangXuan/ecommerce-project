@@ -8,7 +8,24 @@ import slugify from 'slugify';
 // POST
 
 export const GETpostList = async (req: Request, res: Response) => {
-  const posts: any = await Post.find({ deleted: false }).sort({ createdAt: "desc" });
+  const find: {
+    deleted: boolean,
+    search?: RegExp
+  } = {
+    deleted: false,
+  }
+
+  if (req.query.keyword) {
+    const keyword = slugify(req.query.keyword as string, {
+      replacement: '-',
+      lower: true,
+    });
+    const keywordRegex = new RegExp(keyword, 'i');
+    find.search = keywordRegex;
+  }
+
+
+  const posts: any = await Post.find(find).sort({ createdAt: "desc" });
 
   for (const item of posts) {
     if (item.parentCategory) {

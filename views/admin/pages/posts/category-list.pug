@@ -15,6 +15,13 @@ block main
               // end col
             // end row
           // end card-header
+          form.input-group.mb-3(form-search)
+            input.form-control(
+              placeholder="Tìm kiếm bài viết..." 
+              type="text"
+              name="keyword"
+              )
+            button.btn.btn-secondary Tìm kiếm
           .card-body.pt-0
             .table-responsive
               table.table.mb-0.checkbox-all(id="datatable_1")
