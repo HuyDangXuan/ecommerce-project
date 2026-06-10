@@ -15,6 +15,8 @@ export const GETpostList = async (req: Request, res: Response) => {
     deleted: false,
   }
 
+  // Search
+
   if (req.query.keyword) {
     const keyword = slugify(req.query.keyword as string, {
       replacement: '-',
@@ -24,8 +26,35 @@ export const GETpostList = async (req: Request, res: Response) => {
     find.search = keywordRegex;
   }
 
+  // End Search
 
-  const posts: any = await Post.find(find).sort({ createdAt: "desc" });
+  // Pagination
+  const limitItem = 2;
+  let page = 1;
+  if (req.query.page && parseInt(`${req.query.page}`) > 0) {
+    page = parseInt(`${req.query.page}`);
+  }
+
+  const totalRecord = await Post.countDocuments(find);
+  const totalPage = Math.ceil(totalRecord / limitItem);
+  const skip = (page - 1) * limitItem;
+
+  const pagination = {
+    totalPage: totalPage,
+    totalRecord: totalRecord,
+    skip: skip,
+  }
+
+  res.locals.pagination = pagination;
+  // End Pagination
+
+  const posts: any = await Post
+    .find(find)
+    .skip(skip)
+    .limit(limitItem)
+    .sort({
+       createdAt: "desc" 
+    });
 
   for (const item of posts) {
     if (item.parentCategory) {
@@ -185,7 +214,51 @@ export const PATCHdeletePost = async (req: Request, res: Response) => {
 // CATEGORY
 
 export const GETcategoryList = async (req: Request, res: Response) => {
-  const categories: any = await Category.find({ deleted: false }).sort({ createdAt: "desc" });
+  const find: {
+    deleted: boolean,
+    search?: RegExp
+  } = {
+    deleted: false,
+  }
+
+  // Search
+
+  if (req.query.keyword) {
+    const keyword = slugify(req.query.keyword as string, {
+      replacement: '-',
+      lower: true,
+    });
+    const keywordRegex = new RegExp(keyword, 'i');
+    find.search = keywordRegex;
+  }
+
+  // End Search
+
+  // Pagination
+  const limitItem = 2;
+  let page = 1;
+  if (req.query.page && parseInt(`${req.query.page}`) > 0) {
+    page = parseInt(`${req.query.page}`);
+  }
+
+  const totalRecord = await Category.countDocuments(find);
+  const totalPage = Math.ceil(totalRecord / limitItem);
+  const skip = (page - 1) * limitItem;
+  const pagination = {
+    totalPage: totalPage,
+    totalRecord: totalRecord,
+    skip: skip,
+  }
+  res.locals.pagination = pagination;
+  // End Pagination
+
+  const categories: any = await Category
+    .find(find)
+    .skip(skip)
+    .limit(limitItem)
+    .sort({
+       createdAt: "desc" 
+    });
 
   for (const item of categories) {
     if (item.parentCategory) {
