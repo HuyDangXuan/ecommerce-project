@@ -41,14 +41,11 @@
               i.iconoir-home-simple.menu-icon
               span Tổng quan
             #sidebarDashboards.collapse
-              //- ul.nav.flex-column
-              //-   li.nav-item
-              //-     a.nav-link(href="index.html") Analytics
-              //-   // end nav-item
-              //-   li.nav-item
-              //-     a.nav-link(href="ecommerce-index.html") Ecommerce
-              //-   // end nav-item
-              //- // end nav
+              ul.nav.flex-column
+                li.nav-item
+                  a.nav-link(href=`/${pathAdmin}/dashboard`) Trang chủ
+                // end nav-item
+              // end nav
             // end startbarDashboards
           // end nav-item
           li.nav-item
@@ -78,6 +75,12 @@
               // end nav
             // end startbarApplications
           // end nav-item
+          li.nav-item
+            a.nav-link(
+              href=`/${pathAdmin}/file-manager`
+              )
+              i.iconoir-page-star.menu-icon
+              span Quản lý file
         //-   li.menu-label.mt-2
         //-     small.label-border
         //-       .hidden-xs(class="border_left")

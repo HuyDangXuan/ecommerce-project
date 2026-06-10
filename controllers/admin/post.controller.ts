@@ -29,7 +29,7 @@ export const GETpostList = async (req: Request, res: Response) => {
   // End Search
 
   // Pagination
-  const limitItem = 2;
+  const limitItem = 10;
   let page = 1;
   if (req.query.page && parseInt(`${req.query.page}`) > 0) {
     page = parseInt(`${req.query.page}`);
@@ -235,7 +235,7 @@ export const GETcategoryList = async (req: Request, res: Response) => {
   // End Search
 
   // Pagination
-  const limitItem = 2;
+  const limitItem = 10;
   let page = 1;
   if (req.query.page && parseInt(`${req.query.page}`) > 0) {
     page = parseInt(`${req.query.page}`);

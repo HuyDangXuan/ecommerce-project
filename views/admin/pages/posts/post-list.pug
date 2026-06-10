@@ -113,7 +113,7 @@ block main
                             name="select-item" 
                             type="checkbox"
                             )
-                      td #{index + 1}
+                      td #{pagination.skip + index + 1}
                       td #{post && post.name ? post.name : 'Không có'}
                       td #{post && post.parentName ? post.parentName : 'Không có'}
                       td
