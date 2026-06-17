@@ -3,9 +3,16 @@ import FormData from "form-data";
 import axios from "axios";
 import Media from "../../models/media.model";
 
-export const GETfileManager = (req: Request, res: Response) => {
+export const GETfileManager = async (req: Request, res: Response) => {
+  const media = await Media
+  .find()
+  .sort({ 
+    createdAt: "desc" 
+  });
+
   res.render('admin/pages/file-manager', {
     title: 'Quản lý file',
+    media: media,
   })
 }
 
