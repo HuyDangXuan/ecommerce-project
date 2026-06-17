@@ -5,6 +5,11 @@ const schema = new mongoose.Schema({
   filename: String,
   mimetype: String,
   size: Number,
+  deleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: Date,
 }, {
   timestamps: true,
 })

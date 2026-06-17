@@ -1,4 +1,5 @@
 extends ../layouts/default.pug
+include ../mixins/pagination.pug
 
 block main
   .card
@@ -10,6 +11,13 @@ block main
       // end row
     // end card-header
     .card-body.pt-0
+      form.input-group.mb-3(form-search)
+        input.form-control(
+          placeholder="Tìm kiếm file..." 
+          type="text"
+          name="keyword"
+          )
+        button.btn.btn-secondary Tìm kiếm
       .table-responsive
         table.table.table-striped.mb-0
           thead.table-light
@@ -27,8 +35,8 @@ block main
                     class="rounded thumb-md me-1 d-inline"
                   )
                   span #{item.filename}
-                td #{item.createdAt}
-                td #{item.size} bytes
+                td #{item.createdAtFormatted}
+                td #{item.sizeFormatted}
                 td.text-end
                   a(href="#")
                     i.las.la-copy.text-secondary.fs-18.ms-1
@@ -40,7 +48,7 @@ block main
                     i.las.la-pen.text-secondary.fs-18.ms-1
                   a( href="#")
                     i.las.la-trash-alt.text-secondary.fs-18.ms-1
-    // end card-body
+      +pagination()
 
   .card
     .card-header
