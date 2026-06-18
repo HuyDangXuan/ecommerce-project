@@ -1,6 +1,6 @@
 import express from 'express'
 import path from 'path'
-import { pathAdmin } from './config/variable.config'
+import { domainCDN, pathAdmin } from './config/variable.config'
 import connectDB from './config/database.config'
 import dotenv from 'dotenv'
 
@@ -19,6 +19,7 @@ const publicPath = path.join(__dirname, 'public')
 
 // Thiết lập biến toàn cục
 app.locals.pathAdmin = pathAdmin
+app.locals.domainCDN = domainCDN
 
 app.set('views', viewsPath)
 app.set('view engine', 'pug')
