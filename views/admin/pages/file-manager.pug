@@ -67,7 +67,14 @@ block main
                     href=`${domainCDN}${item.folder}/${item.filename}?type=download`
                     )
                     i.las.la-download.text-secondary.fs-18.ms-1
-                  a(href="#")
+                  a(
+                    href="javascript:;"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#modalChangeFileName"
+                    button-change-file-name
+                    fileId=`${item._id}`
+                    fileName=`${item.filename}`
+                    )
                     i.las.la-pen.text-secondary.fs-18.ms-1
                   a( href="#")
                     i.las.la-trash-alt.text-secondary.fs-18.ms-1
@@ -90,7 +97,31 @@ block main
         // end modal-header
         .modal-body
           .inner-preview
-
+          
+  #modalChangeFileName.modal.fade.bd-example-modal-lg(
+    aria-hidden="true" 
+    role="dialog" 
+    tabindex="-1"
+    )
+    .modal-dialog.modal-lg(role="document")
+      .modal-content
+        .modal-header
+          h6.modal-title.m-0 Thay đổi tên file
+          button.btn-close(
+            aria-label="Close" 
+            data-bs-dismiss="modal" 
+            type="button"
+            )
+        // end modal-header
+        .modal-body
+          form(action="")
+            .mb-3.d-none
+              label(class="form-label") Id
+              input(type="text" class="form-control" name="fileId" readonly)
+            .mb-3
+              label(class="form-label") Tên file
+              input(type="text" class="form-control" name="fileName")
+            button.btn.btn-primary(type="submit") Lưu thay đổi
   .card
     .card-header
       .row.align-items-center

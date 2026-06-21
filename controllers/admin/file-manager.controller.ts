@@ -5,6 +5,7 @@ import Media from "../../models/media.model";
 import moment from "moment";
 import { formatFileSize } from "../../helpers/format.helper";
 import slugify from 'slugify';
+import { domainCDN } from "../../config/variable.config";
 
 export const GETfileManager = async (req: Request, res: Response) => {
   const find: {
@@ -78,7 +79,7 @@ export const POSTuploadFile = async (req: Request, res: Response) => {
       })
     })
 
-    const response = await axios.post('http://localhost:4000/file-manager/upload', formData, {
+    const response = await axios.post(`${domainCDN}/file-manager/upload`, formData, {
       headers: {
         ...formData.getHeaders(),
       }
@@ -96,6 +97,69 @@ export const POSTuploadFile = async (req: Request, res: Response) => {
     res.json({
       code: 'error',
       message: 'Upload file thất bại',
+    })
+  }
+}
+
+export const PATCHchangeFileName = async (req: Request, res: Response) => {
+  try {
+    const { fileId, newFileName } = req.body;
+
+    if (!fileId || !newFileName) {
+      return res.json({
+        code: "error",
+        message: "Thiếu thông tin cần thiết",
+      });
+    }
+
+    const record = await Media.findOne({
+      _id: fileId 
+    });
+
+    if (!record) {
+      res.json({
+        code: 'error',
+        message: 'File không tồn tại',
+      });
+      return
+    }
+
+    const formData = new FormData();
+    formData.append('newFileName', newFileName);
+    formData.append('oldFileName', record.filename);
+    formData.append('folder', record.folder);
+
+    const response = await axios.patch(`${domainCDN}/file-manager/change-file-name`, formData, {
+      headers: {
+        ...formData.getHeaders(),
+      }
+    })
+
+    if (response.data.code == 'error') {
+      res.json({
+        code: 'error',
+        message: response.data.message,
+      })
+      return
+    }
+
+    await Media.updateOne({
+      _id: fileId
+    }, {
+      filename: newFileName
+    });
+    
+    res.json({
+      code: 'success',
+      message: 'Thay đổi tên file thành công',
+      fileName: newFileName,
+    })
+
+  } catch (error) {
+    console.error(error);
+    res.json({
+      code: 'error',
+      message: 'Thay đổi tên file thất bại',
     })
   }
 }
