@@ -163,3 +163,54 @@ export const PATCHchangeFileName = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const DELETEdeleteFile = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const record = await Media.findOne({
+      _id: id 
+    });
+
+    if (!record) {
+      res.json({
+        code: 'error',
+        message: 'File không tồn tại',
+      });
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('fileName', record.filename);
+    formData.append('folder', record.folder);
+
+    const response = await axios.patch(`${domainCDN}/file-manager/delete-file`, formData, {
+      headers: {
+        ...formData.getHeaders(),
+      }
+    })
+
+    if (response.data.code == 'error') {
+      res.json({
+        code: 'error',
+        message: response.data.message,
+      })
+      return
+    }
+
+    await Media.deleteOne({
+      _id: id
+    });
+
+    res.json({
+      code: 'success',
+      message: 'Xóa file thành công',
+    });
+  } catch (error) {
+    console.error(error);
+    res.json({
+      code: 'error',
+      message: 'Xóa file thất bại',
+    })
+  }
+}
