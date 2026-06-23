@@ -2,6 +2,50 @@ extends ../layouts/default.pug
 include ../mixins/pagination.pug
 
 block main
+  //- Danh sách thư mục
+  .card
+    .card-header
+      .row.align-items-center
+        .col-lg-8
+          h4.card-title Danh sách thư mục
+        .col-lg-4
+          form(form-create-folder)
+            .input-group
+              input.form-control(
+                placeholder="Tên thư mục" 
+                type="text"
+                name="folderName"
+                )
+              button.btn.btn-secondary Tạo thư mục
+    .card-header
+      .card-body.pt-0
+        .table-responsive
+          table.table.table-striped.mb-0
+            thead.table-light
+              tr
+                th Tên thư mục
+                th Ngày tạo
+                th.text-end Hành động
+            tbody
+              each item in listFolder
+                tr
+                  td 
+                    a(href="#")
+                      .d-inline-flex.justify-content-center.align-items-center.thumb-md.bg-blue-subtle.rounded.mx-auto.me-1(bis_skin_checked="1")
+                        i.fa-solid.fa-folder.fs-18.align-self-center.mb-0.text-blue
+                      span #{item.name}
+                  td #{item.createdAtFormatted}
+                  td.text-end
+                    a(
+                      href="javascript:;"
+                      button-delete-folder
+                      folderId=`${item._id}`
+                      folderName=`${item.name}`
+                      )
+                      i.las.la-trash-alt.text-secondary.fs-18.ms-1
+  //- Hết Danh sách thư mục
+
+  //- Danh sách file
   .card
     .card-header
       .row.align-items-center
@@ -84,7 +128,7 @@ block main
                     )
                     i.las.la-trash-alt.text-secondary.fs-18.ms-1
       +pagination()
-
+  //- Hết danh sách file
   #modalPreviewFile.modal.fade.bd-example-modal-lg(
     aria-hidden="true" 
     role="dialog" 
@@ -127,6 +171,7 @@ block main
               label(class="form-label") Tên file
               input(type="text" class="form-control" name="fileName")
             button.btn.btn-primary(type="submit") Lưu thay đổi
+  //- Upload file
   .card
     .card-header
       .row.align-items-center
@@ -134,3 +179,4 @@ block main
           h4.card-title.mb-0 Upload file
     .card-body.pt-0
       div#uppy-upload
+  //- Hết upload file

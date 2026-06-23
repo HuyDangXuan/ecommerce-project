@@ -8,6 +8,7 @@ import slugify from 'slugify';
 import { domainCDN } from "../../config/variable.config";
 
 export const GETfileManager = async (req: Request, res: Response) => {
+  // Danh sách file
   const find: {
     deleted: boolean,
     filename?: RegExp
@@ -60,10 +61,23 @@ export const GETfileManager = async (req: Request, res: Response) => {
     item.createdAtFormatted = moment(item.createdAt).format('DD/MM/YYYY HH:mm:ss');
     item.sizeFormatted = formatFileSize(item.size);
   }
+  
+  // Hết danh sách file
+  // Danh sách folder
+  let listFolder = [];
+  const response = await axios.get(`${domainCDN}/file-manager/folder/list`);
+  if (response.data.code == 'success') {
+    listFolder = response.data.folders;
+    for (const item of listFolder) {
+      item.createdAtFormatted = moment(item.createdAt).format('DD/MM/YYYY HH:mm:ss');
+    }
+  }
+  // Hết Danh sách folder
 
   res.render('admin/pages/file-manager', {
     title: 'Quản lý file',
     media: media,
+    listFolder: listFolder,
   })
 }
 
@@ -211,6 +225,39 @@ export const DELETEdeleteFile = async (req: Request, res: Response) => {
     res.json({
       code: 'error',
       message: 'Xóa file thất bại',
+    })
+  }
+}
+
+export const POSTcreateFolder = async (req: Request, res: Response) => {
+  try {
+    const { folderName } = req.body;
+
+    if (!folderName) {
+      return res.json({
+        code: "error",
+        message: "Thiếu thông tin cần thiết",
+      });
+    }
+
+    const formData = new FormData();
+    formData.append('folderName', folderName);
+
+    const response = await axios.post(`${domainCDN}/file-manager/folder/create`, formData, {
+      headers: {
+        ...formData.getHeaders(),
+      }
+    })
+
+    res.json({
+      code: 'success',
+      message: 'Tạo thư mục thành công',
+    })
+  } catch (error) {
+    console.error(error);
+    res.json({
+      code: 'error',
+      message: 'Tạo thư mục thất bại',
     })
   }
 }

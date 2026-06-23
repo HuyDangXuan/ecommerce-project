@@ -10,18 +10,24 @@ router.get('/', fileManagerController.GETfileManager)
 
 router.post(
   '/upload',
-   upload.array('files'),
-    fileManagerController.POSTuploadFile
-  )
+  upload.array('files'),
+  fileManagerController.POSTuploadFile
+)
 
 router.patch(
   '/change-file-name',
-   upload.array('files'),
-    fileManagerController.PATCHchangeFileName
-  )
+  upload.array('files'),
+  fileManagerController.PATCHchangeFileName
+)
 
 router.delete(
   '/delete-file/:id',
-   fileManagerController.DELETEdeleteFile
-  )
+  fileManagerController.DELETEdeleteFile
+)
+
+router.post(
+  '/folder/create',
+  fileManagerController.POSTcreateFolder
+)
+
 export default router;
