@@ -2,6 +2,10 @@ extends ../layouts/default.pug
 include ../mixins/pagination.pug
 
 block main
+  //- Breadcrumbs
+  ul.list-group.list-group-horizontal-md.mb-3(breadcrumb-folder)
+  //- End Breadcrumbs
+
   //- Danh sách thư mục
   .card
     .card-header
@@ -30,7 +34,11 @@ block main
               each item in listFolder
                 tr
                   td 
-                    a(href="#")
+                    a(
+                      href="javascript:;"
+                      button-open-folder
+                      data-folder-path=item.name
+                      )
                       .d-inline-flex.justify-content-center.align-items-center.thumb-md.bg-blue-subtle.rounded.mx-auto.me-1(bis_skin_checked="1")
                         i.fa-solid.fa-folder.fs-18.align-self-center.mb-0.text-blue
                       span #{item.name}

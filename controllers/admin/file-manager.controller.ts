@@ -10,10 +10,18 @@ import { domainCDN } from "../../config/variable.config";
 export const GETfileManager = async (req: Request, res: Response) => {
   // Danh sách file
   const find: {
+    folder?: string,
     deleted: boolean,
     filename?: RegExp
   } = {
     deleted: false,
+  }
+
+  // Filter by folder
+  const folderPath = req.query.folderPath;
+  find.folder = '/media';
+  if (folderPath) {
+    find.folder = find.folder + '/' + folderPath;
   }
 
   // Search
@@ -63,9 +71,10 @@ export const GETfileManager = async (req: Request, res: Response) => {
   }
   
   // Hết danh sách file
+
   // Danh sách folder
   let listFolder = [];
-  const response = await axios.get(`${domainCDN}/file-manager/folder/list`);
+  const response = await axios.get(`${domainCDN}/file-manager/folder/list?folderPath=${folderPath}`);
   if (response.data.code == 'success') {
     listFolder = response.data.folders;
     for (const item of listFolder) {
@@ -231,7 +240,7 @@ export const DELETEdeleteFile = async (req: Request, res: Response) => {
 
 export const POSTcreateFolder = async (req: Request, res: Response) => {
   try {
-    const { folderName } = req.body;
+    const { folderName, folderPath } = req.body;
 
     if (!folderName) {
       return res.json({
@@ -242,6 +251,10 @@ export const POSTcreateFolder = async (req: Request, res: Response) => {
 
     const formData = new FormData();
     formData.append('folderName', folderName);
+    
+    if (folderPath) {
+      formData.append('folderPath', folderPath);
+    }
 
     const response = await axios.post(`${domainCDN}/file-manager/folder/create`, formData, {
       headers: {
