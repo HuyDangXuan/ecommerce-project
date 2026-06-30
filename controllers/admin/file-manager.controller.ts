@@ -102,6 +102,13 @@ export const POSTuploadFile = async (req: Request, res: Response) => {
       })
     })
 
+    // Thêm folderPath
+    const folderPath = req.query.folderPath;
+    if (folderPath) {
+      formData.append('folderPath', folderPath);
+    }
+    // Hết Thêm folderPath
+
     const response = await axios.post(`${domainCDN}/file-manager/upload`, formData, {
       headers: {
         ...formData.getHeaders(),
