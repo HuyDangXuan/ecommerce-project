@@ -281,3 +281,51 @@ export const POSTcreateFolder = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const DELETEdeleteFolder = async (req: Request, res: Response) => {
+  try {
+    const { folderPath } = req.query;
+
+    if (!folderPath) {
+      return res.json({
+        code: "error",
+        message: "Thiếu thông tin cần thiết",
+      });
+    }
+
+    const formData = new FormData();
+    formData.append('folderPath', folderPath);
+
+    const response = await axios.patch(`${domainCDN}/file-manager/folder/delete`, formData, {
+      headers: {
+        ...formData.getHeaders(),
+      }
+    });
+    
+    if (response.data.code == 'error') {
+      res.json({
+        code: 'error',
+        message: response.data.message,
+      })
+      return
+    }
+
+    // Xóa các bản ghi liên quan trong thư mục khỏi cơ sở dữ liệu
+    const regexFolderPath = new RegExp(`^${folderPath}`);
+    await Media.deleteMany({
+      folder: regexFolderPath // Xóa tất cả các bản ghi có folder bắt đầu bằng folderPath
+    });
+
+    res.json({
+      code: 'success',
+      message: 'Xóa thư mục thành công',
+    });
+
+  } catch (error) {
+    console.error(error);
+    res.json({
+      code: 'error',
+      message: 'Xóa thư mục thất bại',
+    })
+  }
+}

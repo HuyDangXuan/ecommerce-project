@@ -30,4 +30,9 @@ router.post(
   fileManagerController.POSTcreateFolder
 )
 
+router.delete(
+  '/folder/delete',
+  fileManagerController.DELETEdeleteFolder
+)
+
 export default router;
