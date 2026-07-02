@@ -1,0 +1,85 @@
+doctype html
+html(
+  data-bs-theme="light" 
+  data-startbar="light" 
+  dir="ltr" 
+  lang="en"
+  )
+  head
+    script.
+      const pathAdmin = "#{pathAdmin}";
+    meta(charset="utf-8")
+    title #{title}
+    meta(
+      content="width=device-width, initial-scale=1, shrink-to-fit=no" 
+      name="viewport"
+      )
+    meta(
+      name="description" 
+      content="Premium Multipurpose Admin & Dashboard Template"
+      )
+    meta(
+      name="author" 
+      content=""
+      )
+    meta(
+      content="IE=edge" 
+      http-equiv="X-UA-Compatible"
+      )
+    link(
+      href="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.css"
+      rel="stylesheet"
+    )
+    link(
+      href="https://releases.transloadit.com/uppy/v5.2.1/uppy.min.css" rel="stylesheet"
+    )
+    // App favicon
+    link(
+      href="/admin/assets/images/favicon.ico" 
+      rel="shortcut icon"
+      )
+    link(
+      href="/admin/assets/libs/jsvectormap/css/jsvectormap.min.css" 
+      rel="stylesheet"
+      )
+    // App css
+    link(
+      type="text/css" 
+      rel="stylesheet" 
+      href="/admin/assets/css/bootstrap.min.css"
+      )
+    link(
+      type="text/css" 
+      rel="stylesheet" 
+      href="/admin/assets/css/icons.min.css"
+      )
+    link(
+      type="text/css" 
+      rel="stylesheet" 
+      href="/admin/assets/css/app.min.css"
+      )
+    link(
+      type="text/css" 
+      rel="stylesheet" 
+      href="/admin/assets/css/main.css"
+      )
+  body
+    //- MAIN
+    block main
+    //- END MAIN
+
+    // Javascript
+    // vendor js
+    script(src="/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js")
+    script(src="/admin/assets/libs/simplebar/simplebar.min.js")
+    script(src="/admin/assets/data/stock-prices.js")
+    script(src="/admin/assets/libs/jsvectormap/js/jsvectormap.min.js")
+    script(src="/admin/assets/libs/jsvectormap/maps/world.js")
+    script(src="https://cdn.jsdelivr.net/npm/notyf@3/notyf.min.js")
+    script(src="https://unpkg.com/just-validate@latest/dist/just-validate.production.min.js")
+    script(src="https://cdn.tiny.cloud/1/ade2g6brw53cryzs6e2vr3sbbg6yxdq6xisscdu382nwf38h/tinymce/6/tinymce.min.js" referrerpolicy="origin", crossorigin="anonymous")
+    block scripts
+    script(src="/admin/assets/js/app.js")
+    script(src="/admin/assets/js/main.js")
+    script(type="module" src="/admin/assets/js/uppy.js")
+  // end body

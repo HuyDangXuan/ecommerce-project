@@ -90,6 +90,12 @@ export const GETfileManager = async (req: Request, res: Response) => {
   })
 }
 
+export const GETfileManagerIframe = async (req: Request, res: Response) => {
+  res.render('admin/pages/file-manager-iframe', {
+    title: 'Quản lý file'
+  })
+}
+
 export const POSTuploadFile = async (req: Request, res: Response) => {
   try {
     const files = req.files as Express.Multer.File[];

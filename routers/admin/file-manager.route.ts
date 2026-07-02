@@ -8,6 +8,8 @@ const router = Router();
 
 router.get('/', fileManagerController.GETfileManager)
 
+router.get('/iframe', fileManagerController.GETfileManagerIframe)
+
 router.post(
   '/upload',
   upload.array('files'),
