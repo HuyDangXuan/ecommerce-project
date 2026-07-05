@@ -1,5 +1,6 @@
 extend ../../layouts/default.pug
 include ../../mixins/options.pug
+include ../../mixins/form-group.pug
 
 block main 
   .container
@@ -47,6 +48,14 @@ block main
                 +options(categories, 0)
           .col-md-12.col-lg-12
             .mb-3
+              +form-group-file(
+                "Ảnh đại diện", 
+                "avatar", 
+                "", 
+                "avatar"
+                )
+          .col-md-6.col-lg-6
+            .mb-3
               label.form-label(for="description") Mô tả bài viết
               textarea.form-control(
                 id="description"
@@ -56,3 +65,7 @@ block main
                 )
         button.btn.btn-primary(type="submit") Submit
         button.btn.btn-danger.ms-2(type="button") Cancel
+
+  //- Modal File Manager
+  
+  //- End Modal File Manager

@@ -100,6 +100,7 @@ block main
                           type="checkbox"
                           )
                     th.ps-0 STT
+                    th Avatar
                     th Tên bài viết
                     th Danh mục cha
                     th Trạng thái
@@ -115,6 +116,15 @@ block main
                             type="checkbox"
                             )
                       td #{pagination.skip + index + 1}
+                      td
+                        if post && post.avatar
+                          img(
+                            src=`${domainCDN}${post.avatar}` 
+                            alt="Avatar"
+                            width="50"
+                          )
+                        else
+                          img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
                       td #{post && post.name ? post.name : 'Không có'}
                       td #{post && post.parentName ? post.parentName : 'Không có'}
                       td

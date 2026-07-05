@@ -1,3 +1,16 @@
 .just-validate-error-label{
   width: 100%;
 }
+
+.preview-file {
+  width: 100%;
+}
+
+.preview-file img {
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}

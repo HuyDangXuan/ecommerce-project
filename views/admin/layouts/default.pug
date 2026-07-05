@@ -8,6 +8,7 @@ html(
   head
     script.
       const pathAdmin = "#{pathAdmin}";
+      const domainCDN = "#{domainCDN}";
     meta(charset="utf-8")
     title #{title}
     meta(
@@ -89,6 +90,11 @@ html(
         // end footer
       // end page content
     // end page-wrapper
+
+    //- Modal File Manager
+    include ../partials/model-file-manager
+    //- End Modal File Manager
+
     // Javascript
     // vendor js
     script(src="/admin/assets/libs/bootstrap/js/bootstrap.bundle.min.js")

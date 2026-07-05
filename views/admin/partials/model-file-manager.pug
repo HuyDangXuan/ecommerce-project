@@ -1,0 +1,21 @@
+#modalFileManager.modal.fade.bd-example-modal-lg(
+  aria-hidden="true" 
+  role="dialog" 
+  tabindex="-1"
+  )
+  .modal-dialog.modal-xl(role="document")
+    .modal-content
+      .modal-header
+        h6.modal-title.m-0 Chọn file
+        button.btn-close(
+          aria-label="Close" 
+          data-bs-dismiss="modal" 
+          type="button"
+          )
+      // end modal-header
+      .modal-body
+        iframe(
+          src=`/${pathAdmin}/file-manager`
+          frameborder="0"
+          style="width: 100%; height: 76vh; border: none;"
+        )
