@@ -42,8 +42,9 @@ block main
                 id="status"
                 name="status"
                 )
-                  option(value="active" selected=post && post.status === "active") Hoạt động
-                  option(value="inactive" selected=post && post.status === "inactive") Dừng hoạt động
+                  option(value="draft" selected=post && post.status === "draft") Nháp
+                  option(value="published" selected=post && post.status === "published") Công khai
+                  option(value="archived" selected=post && post.status === "archived") Lưu trữ
           .col-md-6.col-lg-6
             .mb-3
               label.form-label(for="category") Danh mục

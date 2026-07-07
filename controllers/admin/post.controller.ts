@@ -57,21 +57,11 @@ export const GETpostList = async (req: Request, res: Response) => {
     });
 
   for (const item of posts) {
-    const categoryIds = Array.isArray(item.category)
-      ? item.category.filter(Boolean)
-      : item.category
-        ? [item.category]
-        : [];
-
-    if (categoryIds.length > 0) {
-      const categories = await Category.find({ _id: { $in: categoryIds } });
-      item.category = categories.map((category: any) => ({
-        _id: category._id,
-        categoryName: category.name,
-      }));
-    } else {
-      item.category = [];
-    }
+    const categoryList = await Category.find({
+      _id: { $in: item.category }
+    })
+    const categoryListName = categoryList.map((item: any) => item.name);
+    item.categoryListName = categoryListName;
   }
 
   res.render('admin/pages/posts/post-list', {

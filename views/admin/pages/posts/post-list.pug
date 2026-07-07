@@ -128,8 +128,8 @@ block main
                           img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
                       td #{post && post.name ? post.name : 'Không có'}
                       td 
-                        each category in (post && post.category ? post.category : [])
-                          span.badge.bg-info.text-white.me-1 #{category.categoryName}
+                        each category in post.categoryListName
+                          span.badge.bg-info.text-white.me-1 #{category}
                       td
                         if post && post.status === 'draft'
                           span.badge.bg-success.text-white Nháp
