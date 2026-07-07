@@ -35,6 +35,7 @@ block main
                           type="checkbox"
                           )
                     th.ps-0 STT
+                    th Avatar
                     th Tên danh mục
                     th Danh mục cha
                     th Trạng thái
@@ -50,6 +51,15 @@ block main
                             type="checkbox"
                             )
                       td #{pagination.skip + index + 1}
+                      td
+                        if category && category.avatar
+                          img(
+                            src=`${domainCDN}${category.avatar}` 
+                            alt="Avatar"
+                            width="50"
+                          )
+                        else
+                          img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
                       td #{category && category.name ? category.name : 'Không có'}
                       td #{category && category.parentName ? category.parentName : 'Không có'}
                       td

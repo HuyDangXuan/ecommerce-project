@@ -1,6 +1,7 @@
 extend ../../layouts/default.pug
 include ../../mixins/options.pug
 include ../../mixins/form-group.pug
+include ../../mixins/checkbox.pug
 
 block main 
   .container
@@ -45,13 +46,9 @@ block main
                   option(value="inactive" selected=post && post.status === "inactive") Dừng hoạt động
           .col-md-6.col-lg-6
             .mb-3
-              label.form-label(for="parentCategory") Tên danh mục cha
-              select.form-control(
-                id="parentCategory"
-                name="parentCategory"
-                )
-                option(value="") -- Chọn danh mục cha --
-                +options(categories, 0, post.parentCategory)
+              label.form-label(for="category") Danh mục
+              div(class="checkbox-list" checkbox-list="category")
+                +checkbox(categories, post ? post.category : [])
           .col-md-12.col-lg-12
             .mb-3
               +form-group-file(
@@ -62,12 +59,21 @@ block main
                 )
           .col-md-12.col-lg-12
             .mb-3
-              label.form-label(for="description") Mô tả bài viết
+              label.form-label(for="description") Mô tả ngắn
               textarea.form-control(
                 id="description"
                 name="description"
                 rows="3"
                 textarea-mce
                 ) #{post ? post.description : ""}
+          .col-md-12.col-lg-12
+            .mb-3
+              label.form-label(for="content") Chi tiết bài viết
+              textarea.form-control(
+                id="content"
+                name="content"
+                rows="3"
+                textarea-mce
+                ) #{post ? post.content : ""}
         button.btn.btn-primary(type="submit") Câp nhật
         button.btn.btn-danger.ms-2(type="button") Hủy

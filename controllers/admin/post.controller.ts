@@ -57,9 +57,20 @@ export const GETpostList = async (req: Request, res: Response) => {
     });
 
   for (const item of posts) {
-    if (item.parentCategory) {
-      const parent = await Category.findById(item.parentCategory);
-      item.parentName = parent ? parent.name : "Không có";
+    const categoryIds = Array.isArray(item.category)
+      ? item.category.filter(Boolean)
+      : item.category
+        ? [item.category]
+        : [];
+
+    if (categoryIds.length > 0) {
+      const categories = await Category.find({ _id: { $in: categoryIds } });
+      item.category = categories.map((category: any) => ({
+        _id: category._id,
+        categoryName: category.name,
+      }));
+    } else {
+      item.category = [];
     }
   }
 
@@ -90,12 +101,18 @@ export const POSTcreatePost = async (req: Request, res: Response) => {
       return;
     }
 
+    req.body.category = JSON.parse(req.body.category);
+
     req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
       {
         replacement: '-',
         lower: true,
       }
     );
+
+    if (req.body.status === 'published') {
+      req.body.publishedAt = new Date();
+    }
 
     const newRecord = new Post(req.body);
     await newRecord.save();
@@ -155,6 +172,8 @@ export const PATCHeditPost = async (req: Request, res: Response) => {
       });
       return;
     }
+
+    req.body.category = JSON.parse(req.body.category);
 
     req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
       {

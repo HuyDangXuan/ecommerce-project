@@ -66,7 +66,7 @@ block main
                 textarea-mce
                 ) #{category ? category.description : ""}
         button.btn.btn-primary(type="submit") Tạo mới
-        button.btn.btn-danger.ms-2(type="button") Hủy
+        a.btn.btn-danger.ms-2(href=`/${pathAdmin}/posts/category-list`) Hủy
 
   //- Modal File Manager
 

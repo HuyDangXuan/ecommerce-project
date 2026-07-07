@@ -102,7 +102,7 @@ block main
                     th.ps-0 STT
                     th Avatar
                     th Tên bài viết
-                    th Danh mục cha
+                    th Danh mục
                     th Trạng thái
                     th Lượt xem
                     th.text-end Hành động
@@ -122,16 +122,21 @@ block main
                             src=`${domainCDN}${post.avatar}` 
                             alt="Avatar"
                             width="50"
+                            height="50"
                           )
                         else
                           img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
                       td #{post && post.name ? post.name : 'Không có'}
-                      td #{post && post.parentName ? post.parentName : 'Không có'}
+                      td 
+                        each category in (post && post.category ? post.category : [])
+                          span.badge.bg-info.text-white.me-1 #{category.categoryName}
                       td
-                        if post && post.status === 'active'
-                          span.badge.bg-success.text-white Hoạt động
-                        else if post && post.status === 'inactive'
-                          span.badge.bg-danger.text-white Dừng hoạt động
+                        if post && post.status === 'draft'
+                          span.badge.bg-success.text-white Nháp
+                        else if post && post.status === 'published'
+                          span.badge.bg-primary.text-white Công khai
+                        else if post && post.status === 'archived'
+                          span.badge.bg-danger.text-white Lưu trữ
                         else
                           span.badge.bg-light.text-dark Không xác định
                       td #{post && typeof post.views !== 'undefined' ? post.views : 0}

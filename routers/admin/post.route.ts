@@ -12,7 +12,7 @@ router.get('/post-create', postController.GETcreatePost)
 router.post('/post-create', upload.none(), postValidate.createPost, postController.POSTcreatePost)
 
 router.get('/post-edit/:id', postController.GETeditPost)
-router.patch('/post-edit/:id', upload.none(), postValidate.createPost, postController.PATCHeditPost)
+router.patch('/post-edit/:id', upload.none(), postValidate.editPost, postController.PATCHeditPost)
 router.patch('/post-delete/:id', postController.PATCHdeletePost)
 
 
