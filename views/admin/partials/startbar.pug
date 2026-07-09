@@ -81,6 +81,27 @@
               )
               i.iconoir-page-star.menu-icon
               span Quản lý file
+          li.nav-item
+            a.nav-link(
+              aria-controls="sidebarRoles" 
+              aria-expanded="false" 
+              role="button" 
+              data-bs-toggle="collapse" 
+              href="#sidebarRoles"
+              )
+              i.iconoir-view-grid.menu-icon
+              span Nhóm quyền
+            #sidebarRoles.collapse
+              ul.nav.flex-column
+                li.nav-item
+                  a.nav-link(href=`/${pathAdmin}/roles/role-create`) Tạo nhóm quyền
+                // end nav-item
+                li.nav-item
+                  a.nav-link(href=`/${pathAdmin}/roles/role-list`) Danh sách nhóm quyền
+                // end nav-item
+              // end nav
+            // end startbarRoles
+          // end nav-item
         //-   li.menu-label.mt-2
         //-     small.label-border
         //-       .hidden-xs(class="border_left")
