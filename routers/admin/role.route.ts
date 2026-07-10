@@ -9,9 +9,10 @@ const upload = multer();
 
 router.get('/role-list', roleController.GETroleList)
 
-
-
 router.get('/role-create', roleController.GETroleCreate)
 router.post('/role-create', upload.none(), roleValidate.createRole, roleController.POSTroleCreate)
+
+router.get('/role-edit/:id', roleController.GETroleEdit)
+router.patch('/role-edit/:id', upload.none(), roleValidate.createRole, roleController.PATCHroleEdit)
 
 export default router;

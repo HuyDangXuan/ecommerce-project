@@ -16,7 +16,6 @@ router.patch('/post-edit/:id', upload.none(), postValidate.editPost, postControl
 router.patch('/post-delete/:id', postController.PATCHdeletePost)
 
 
-
 router.get('/category-list', postController.GETcategoryList)
 router.get('/category-create', postController.GETcreateCategory)
 router.post('/category-create', upload.none(), postValidate.createCategory, postController.POSTcreateCategory)

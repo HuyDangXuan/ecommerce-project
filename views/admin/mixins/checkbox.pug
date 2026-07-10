@@ -1,4 +1,4 @@
-mixin checkbox(list = [], selectedIds = [], level = 0)
+mixin checkbox(list = [], level = 0, selectedIds = [])
   each item in list
     - const marginLeft = `${level * 20}px`
     - const isChecked = Array.isArray(selectedIds) && selectedIds.map(String).includes(String(item.id))
