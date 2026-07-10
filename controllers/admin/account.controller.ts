@@ -171,10 +171,6 @@ export const PATCHaccountEdit = async (req: Request, res: Response) => {
 
     req.body.roles = JSON.parse(req.body.roles);
 
-    if (req.body.password) {
-      req.body.password = await bcrypt.hash(req.body.password, 10);
-    }
-
     req.body.search = slugify(`${req.body.name} ${req.body.email}`, {
       replacement: ' ',
       lower: true,
@@ -191,6 +187,41 @@ export const PATCHaccountEdit = async (req: Request, res: Response) => {
     res.json({
       code: "error",
       message: "Đã xảy ra lỗi khi cập nhật tài khoản",
+    });
+  }
+}
+
+export const DELETEaccount = async (req: Request, res: Response) => {
+  try {
+    const accountId = req.params.id;
+
+    const account: any = await AccountAdmin.findOne({
+      _id: accountId,
+      deleted: false,
+    });
+
+    if (!account) {
+      res.json({
+        code: "error",
+        message: "Tài khoản không tồn tại",
+      });
+      return;
+    }
+
+    await AccountAdmin.findByIdAndUpdate(accountId, { 
+      deleted: true,
+      deletedAt: Date.now(),
+    });
+
+    res.json({
+      code: "success",
+      message: "Xóa tài khoản thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      code: "error",
+      message: "Đã xảy ra lỗi khi xóa tài khoản",
     });
   }
 }

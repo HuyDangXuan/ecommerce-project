@@ -22,5 +22,6 @@ router.patch('/account-edit/:id',
   accountValidate.editAccount, 
   accountController.PATCHaccountEdit)
 
+router.patch('/account-delete/:id', accountController.DELETEaccount)
 
 export default router;
