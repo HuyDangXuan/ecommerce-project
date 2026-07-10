@@ -15,4 +15,6 @@ router.post('/role-create', upload.none(), roleValidate.createRole, roleControll
 router.get('/role-edit/:id', roleController.GETroleEdit)
 router.patch('/role-edit/:id', upload.none(), roleValidate.createRole, roleController.PATCHroleEdit)
 
+router.patch('/role-delete/:id', roleController.PATCHroleDelete)
+
 export default router;

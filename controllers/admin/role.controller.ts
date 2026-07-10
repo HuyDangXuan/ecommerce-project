@@ -160,3 +160,42 @@ export const PATCHroleEdit = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const PATCHroleDelete = async (req: Request, res: Response) => {
+  try {
+    const roleId = req.params.id;
+
+    const role: any = await Role.findOne({
+      _id: roleId,
+      deleted: false,
+    });
+
+    if (!role) {
+      res.json({
+        code: "error",
+        message: 'Nhóm quyền không tồn tại',
+      })
+      return;
+    }
+
+    await Role.updateOne(
+      {
+        _id: roleId,
+        deleted: false,
+      },
+      {
+        deleted: true,
+      }
+    );
+
+    res.json({
+      code: "success",
+      message: 'Xóa nhóm quyền thành công',
+    })
+  } catch (error) {
+    res.json({
+      code: "error",
+      message: 'Xóa nhóm quyền thất bại',
+    })
+  }
+}
