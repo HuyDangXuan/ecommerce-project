@@ -7,7 +7,7 @@ const router = Router();
 
 const upload = multer();
 
-// router.get('/account-list', accountController.GETgetAccount)
+router.get('/account-list', accountController.GETgetAccount)
 
 router.get('/account-create', accountController.GETgetAccountCreate)
 router.post('/account-create', 
