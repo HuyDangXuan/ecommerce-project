@@ -3,8 +3,9 @@ import slugify from 'slugify';
 import bcrypt from 'bcryptjs';
 import Role from '../../models/roles.model';
 import AccountAdmin from '../../models/account-admin.model';
+import { pathAdmin } from '../../config/variable.config';
 
-export const GETgetAccount = async (req: Request, res: Response) => {
+export const GETaccount = async (req: Request, res: Response) => {
   const find: {
     deleted: boolean,
     search?: RegExp
@@ -66,7 +67,7 @@ export const GETgetAccount = async (req: Request, res: Response) => {
   });
 }
 
-export const GETgetAccountCreate = async (req: Request, res: Response) => {
+export const GETaccountCreate = async (req: Request, res: Response) => {
   const roleList = await Role.find({ 
     deleted: false,
     status: "active", 
@@ -78,7 +79,7 @@ export const GETgetAccountCreate = async (req: Request, res: Response) => {
   });
 }
 
-export const POSTpostAccountCreate = async (req: Request, res: Response) => {
+export const POSTaccountCreate = async (req: Request, res: Response) => {
   try {
     const existEmail = await AccountAdmin.findOne({ 
       email: req.body.email 
@@ -114,6 +115,82 @@ export const POSTpostAccountCreate = async (req: Request, res: Response) => {
     res.json({
       code: "error",
       message: "Đã xảy ra lỗi khi tạo tài khoản",
+    });
+  }
+}
+
+export const GETaccountEdit = async (req: Request, res: Response) => {
+  try {
+    const accountId = req.params.id;
+
+    const account: any = await AccountAdmin.findOne({
+      _id: accountId,
+      deleted: false,
+    });
+
+    if (!account) {
+      res.redirect(`/${pathAdmin}/accounts/account-list`);
+      return;
+    }
+
+    const roleList = await Role.find({
+      deleted: false,
+      status: "active",
+    });
+
+    res.render('admin/pages/accounts/account-admin-edit', {
+      title: 'Chỉnh sửa tài khoản',
+      account: account,
+      roleList: roleList
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      code: "error",
+      message: "Đã xảy ra lỗi khi lấy thông tin tài khoản",
+    });
+  }
+}
+
+export const PATCHaccountEdit = async (req: Request, res: Response) => {
+  try {
+    const accountId = req.params.id;
+
+    const account: any = await AccountAdmin.findOne({
+      _id: accountId,
+      deleted: false,
+    });
+
+    if (!account) {
+      res.json({
+        code: "error",
+        message: "Tài khoản không tồn tại",
+      });
+      return;
+    }
+
+    req.body.roles = JSON.parse(req.body.roles);
+
+    if (req.body.password) {
+      req.body.password = await bcrypt.hash(req.body.password, 10);
+    }
+
+    req.body.search = slugify(`${req.body.name} ${req.body.email}`, {
+      replacement: ' ',
+      lower: true,
+    });
+
+    await AccountAdmin.updateOne({ _id: accountId }, req.body);
+
+    res.json({
+      code: "success",
+      message: "Cập nhật tài khoản thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      code: "error",
+      message: "Đã xảy ra lỗi khi cập nhật tài khoản",
     });
   }
 }

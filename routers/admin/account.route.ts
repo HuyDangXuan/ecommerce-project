@@ -7,12 +7,20 @@ const router = Router();
 
 const upload = multer();
 
-router.get('/account-list', accountController.GETgetAccount)
+router.get('/account-list', accountController.GETaccount)
 
-router.get('/account-create', accountController.GETgetAccountCreate)
+router.get('/account-create', accountController.GETaccountCreate)
 router.post('/account-create', 
   upload.none(),
   accountValidate.createAccount, 
-  accountController.POSTpostAccountCreate)
+  accountController.POSTaccountCreate)
+
+
+router.get('/account-edit/:id', accountController.GETaccountEdit)
+router.patch('/account-edit/:id', 
+  upload.none(),
+  accountValidate.editAccount, 
+  accountController.PATCHaccountEdit)
+
 
 export default router;

@@ -61,3 +61,39 @@ export const createAccount = (req: Request, res: Response, next: NextFunction) =
   }
   next();
 }
+
+export const editAccount = (req: Request, res: Response, next: NextFunction) => {
+  const schema = Joi.object({
+    name: Joi.string()
+    .required()
+    .min(5)
+    .max(50)
+    .messages({
+      'string.empty': 'Tiêu đề bài viết không được để trống',
+      'string.min': 'Tiêu đề bài viết phải có ít nhất 5 ký tự',
+      'string.max': 'Tiêu đề bài viết không được vượt quá 50 ký tự',
+    }),
+    email: Joi.string()
+    .required()
+    .email()
+    .messages({
+      'string.empty': 'Email không được để trống',
+      'string.email': 'Email không đúng định dạng',
+    }),
+    status: Joi.string().allow(''),
+    avatar: Joi.string().allow(''),
+    roles: Joi.string().allow(''),
+  });
+
+  const { error } = schema.validate(req.body);
+  if (error) {
+    const errorMessage = error.details[0].message;
+
+    res.json({
+      code: "error",
+      message: errorMessage,
+    });
+    return;
+  }
+  next();
+}
