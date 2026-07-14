@@ -225,3 +225,66 @@ export const DELETEaccount = async (req: Request, res: Response) => {
     });
   }
 }
+
+export const GETaccountChangePassword = async (req: Request, res: Response) => {
+  try {
+    const accountId = req.params.id;
+
+    const account: any = await AccountAdmin.findOne({
+      _id: accountId,
+      deleted: false,
+    });
+
+    if (!account) {
+      res.redirect(`/${pathAdmin}/accounts/account-list`);
+      return;
+    }
+
+    res.render('admin/pages/accounts/account-admin-change-password', {
+      title: 'Đổi mật khẩu tài khoản',
+      account: account,
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      code: "error",
+      message: "Đã xảy ra lỗi khi lấy thông tin tài khoản",
+    });
+  }
+}
+
+export const PATCHaccountChangePassword = async (req: Request, res: Response) => {
+  try {
+    const accountId = req.params.id;
+
+    const account: any = await AccountAdmin.findOne({
+      _id: accountId,
+      deleted: false,
+    });
+
+    if (!account) {
+      res.json({
+        code: "error",
+        message: "Tài khoản không tồn tại",
+      });
+      return;
+    }
+
+    req.body.password = await bcrypt.hash(req.body.password, 10);
+
+    await AccountAdmin.updateOne({ 
+      _id: accountId 
+    }, req.body );
+
+    res.json({
+      code: "success",
+      message: "Cập nhật mật khẩu thành công",
+    });
+  } catch (error) {
+    console.log(error);
+    res.json({
+      code: "error",
+      message: "Đã xảy ra lỗi khi cập nhật mật khẩu",
+    });
+  }
+}

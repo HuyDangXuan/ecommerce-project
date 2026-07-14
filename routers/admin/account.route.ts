@@ -24,4 +24,11 @@ router.patch('/account-edit/:id',
 
 router.patch('/account-delete/:id', accountController.DELETEaccount)
 
+router.get('/account-change-password/:id', accountController.GETaccountChangePassword)
+router.patch('/account-change-password/:id',
+  upload.none(),
+  accountValidate.changePasswordAccount, 
+  accountController.PATCHaccountChangePassword)
+
+
 export default router;
