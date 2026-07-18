@@ -2,6 +2,7 @@ import express from 'express'
 import path from 'path'
 import { domainCDN, pathAdmin } from './config/variable.config'
 import connectDB from './config/database.config'
+import cookieParser from 'cookie-parser'
 import dotenv from 'dotenv'
 
 dotenv.config();
@@ -11,6 +12,8 @@ import clientRouter from './routers/client/index.route'
 
 const app = express()
 const port = 3000
+
+app.use(cookieParser())
 
 connectDB();
 

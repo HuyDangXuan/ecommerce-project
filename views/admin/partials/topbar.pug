@@ -6,7 +6,7 @@
           button#togglemenu.nav-link.mobile-menu-btn.nav-icon
             i.iconoir-menu-scale
         li.mx-3.welcome-text
-          h3.mb-0.fw-bold.text-truncate Good Morning, James!
+          h3.mb-0.fw-bold.text-truncate Xin chào #{accountAdmin.name}!
           // <h6 class="mb-0 fw-normal text-muted text-truncate fs-14">Here's your overview this week.</h6>
       ul.topbar-item.list-unstyled.d-inline-flex.align-items-center.mb-0
         li.hide-phone.app-search
@@ -45,7 +45,7 @@
             a.dropdown-item(href="#")
               img.me-2(
                 height="15" 
-                alt="" 
+                alt="" D
                 src="/admin/assets/images/flags/spain_flag.jpg"
                 )
               | Spanish
@@ -263,18 +263,18 @@
             )
             img.thumb-lg.rounded-circle(
               alt="" 
-              src="/admin/assets/images/users/avatar-1.jpg"
+              src=`${domainCDN}${accountAdmin.avatar}`
               )
           .dropdown-menu.dropdown-menu-end.py-0
             .d-flex.align-items-center.dropdown-item.py-2.bg-secondary-subtle
               .flex-shrink-0
                 img.thumb-md.rounded-circle(
                   alt="" 
-                  src="/admin/assets/images/users/avatar-1.jpg"
+                  src=`${domainCDN}${accountAdmin.avatar}`
                   )
               .flex-grow-1.ms-2.text-truncate.align-self-center
-                h6.my-0.fw-medium.text-dark.fs-13 William Martin
-                small.text-muted.mb-0 Front End Developer
+                h6.my-0.fw-medium.text-dark.fs-13 #{accountAdmin.name}
+                small.text-muted.mb-0 #{accountAdmin.email}
               // end media-body
             .dropdown-divider.mt-0
             small.text-muted.px-2.pb-1.d-block Account
@@ -295,9 +295,9 @@
               i.las.la-question-circle.fs-18.me-1.align-text-bottom
               | Help Center
             .dropdown-divider.mb-0
-            a.dropdown-item.text-danger(href="auth-login.html")
+            a.dropdown-item.text-danger(href="#")
               i.las.la-power-off.fs-18.me-1.align-text-bottom
-              | Logout
+              | Đăng xuất
       // end topbar-nav
     // end navbar
     

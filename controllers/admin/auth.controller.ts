@@ -52,9 +52,6 @@ export const POSTaccountLogin = async (req: Request, res: Response) => {
       return;
     }
 
-
-    
-
     const token = jwt.sign(
       {
         id: existAccount._id,
