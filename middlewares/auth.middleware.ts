@@ -13,20 +13,34 @@ export const verifyTokenAdmin = async (req: Request, res: Response, next: NextFu
 
     const decoded = jwt.verify(token, `${process.env.JWT_SECRET_KEY}`) as jwt.JwtPayload;
 
-    const existAccount = await AccountAdmin.findOne(
-      {
+    if (decoded.id === process.env.SUPER_ADMIN_ID && decoded.email === process.env.SUPER_ADMIN_EMAIL) {
+      res.locals.accountAdmin = {
         _id: decoded.id,
-        email: decoded.email,
-        deleted: false,
-        status: 'active'
+        email: process.env.SUPER_ADMIN_EMAIL,
+        fullName: 'Super Admin',
+        avatar: '',
       }
-    );
+    } else {
 
-    if (!existAccount) {
-      return res.redirect(`/${pathAdmin}/auth/account-login`);
-    }
+      const existAccount = await AccountAdmin.findOne(
+        {
+          _id: decoded.id,
+          email: decoded.email,
+          deleted: false,
+          status: 'active'
+        }
+      )
 
-    res.locals.accountAdmin = existAccount;
+      if (!existAccount) {
+        res.clearCookie('token');
+
+        res.redirect(`/${pathAdmin}/auth/account-login`);
+
+        return;
+      }
+
+      res.locals.accountAdmin = existAccount;
+    };
 
     next();
   } catch (error) {

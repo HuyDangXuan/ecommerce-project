@@ -19,57 +19,84 @@ export const POSTaccountLogin = async (req: Request, res: Response) => {
       deleted: false
     });
 
+    let token = "";
+
     if (!existAccount) {
-      res.json({
-        code: "error",
-        message: "Email hoặc mật khẩu không đúng.",
-      });
-      return;
-    }
-
-    const isMatch = await bcrypt.compare(password, `${existAccount.password}`);
-
-    if (!isMatch) {
-      res.json({
-        code: "error",
-        message: "Email hoặc mật khẩu không đúng.",
-      });
-      return;
-    }
-
-    if (existAccount.status === 'initial') {
-      res.json({
-        code: "error",
-        message: "Tài khoản chưa được kích hoạt.",
-      });
-      return;
-    }
-
-    if (existAccount.status === 'inactive') {
-      res.json({
-        code: "error",
-        message: "Tài khoản đã bị vô hiệu hóa.",
-      });
-      return;
-    }
-
-    const token = jwt.sign(
-      {
-        id: existAccount._id,
-        email: existAccount.email,
-      },
-        `${process.env.JWT_SECRET_KEY}`,
-      {
-        expiresIn: rememberMe ? '7d' : '1h',
+      if (email !== process.env.SUPER_ADMIN_EMAIL) {
+        res.json({
+          code: "error",
+          message: "Tài khoản không tồn tại!",
+        });
+        return;
       }
-    );
 
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production' ? true : false,
-      sameSite: 'strict',
-      maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 1 * 60 * 60 * 1000, // 7 days or 1 hour
-    });
+      const isMatch = password === process.env.SUPER_ADMIN_PASSWORD;
+
+      if (!isMatch) {
+        res.json({
+          code: "error",
+          message: "Mật khẩu không đúng!",
+        });
+        return;
+      }
+
+        token = jwt.sign(
+        {
+          id: process.env.SUPER_ADMIN_ID,
+          email: process.env.SUPER_ADMIN_EMAIL,
+        },
+          `${process.env.JWT_SECRET_KEY}`,
+        {
+          expiresIn: rememberMe ? '7d' : '1h',
+        }
+      );
+      return;
+    } else {
+
+      const isMatch = await bcrypt.compare(password, `${existAccount.password}`);
+
+      if (!isMatch) {
+        res.json({
+          code: "error",
+          message: "Email hoặc mật khẩu không đúng.",
+        });
+        return;
+      }
+
+      if (existAccount.status === 'initial') {
+        res.json({
+          code: "error",
+          message: "Tài khoản chưa được kích hoạt.",
+        });
+        return;
+      }
+
+      if (existAccount.status === 'inactive') {
+        res.json({
+          code: "error",
+          message: "Tài khoản đã bị vô hiệu hóa.",
+        });
+        return;
+      }
+
+      token = jwt.sign(
+        {
+          id: existAccount._id,
+          email: existAccount.email,
+        },
+          `${process.env.JWT_SECRET_KEY}`,
+        {
+          expiresIn: rememberMe ? '7d' : '1h',
+        }
+      );
+
+      res.cookie('token', token, {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production' ? true : false,
+        sameSite: 'strict',
+        maxAge: rememberMe ? 7 * 24 * 60 * 60 * 1000 : 1 * 60 * 60 * 1000, // 7 days or 1 hour
+      });
+    }
 
     res.json({
       code: "success",
@@ -90,3 +117,4 @@ export const POSTaccountLogout = (req: Request, res: Response) => {
 
   res.redirect(`/${pathAdmin}/auth/account-login`);
 }
+
