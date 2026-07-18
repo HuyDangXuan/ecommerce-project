@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 import AccountAdmin from '../../models/account-admin.model'
+import { pathAdmin } from '../../config/variable.config'
 
 export const GETaccountLogin = (req: Request, res: Response) => {
   res.render('admin/pages/auth/account-login', {
@@ -82,4 +83,10 @@ export const POSTaccountLogin = async (req: Request, res: Response) => {
       message: "Đã xảy ra lỗi trong quá trình đăng nhập. Vui lòng thử lại sau.",
     });
   }
+}
+
+export const POSTaccountLogout = (req: Request, res: Response) => {
+  res.clearCookie('token');
+
+  res.redirect(`/${pathAdmin}/auth/account-login`);
 }
