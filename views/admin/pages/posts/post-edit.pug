@@ -4,77 +4,78 @@ include ../../mixins/form-group.pug
 include ../../mixins/checkbox.pug
 
 block main 
-  .container
-    .row
-      .col-12
-        h1 Chỉnh sửa bài viết
-    .card-body.pt-0
-      form(id="editPostForm")
-        input(type="hidden" name="id" value=post ? post._id : "")
-        .row
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="name") Tên bài viết *
-              input.form-control(
-                id="name"
-                name="name"
-                type="text"
-                value=post ? post.name : ""
-                )
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="slug") Đường dẫn *
-              .input-group
-                span.btn.btn-outline-info(
-                  btn-generate-slug="Post"
-                  from="name"
-                  to="slug"
-                ) Tự động
+  if (permissions.includes('post-edit'))
+    .container
+      .row
+        .col-12
+          h1 Chỉnh sửa bài viết
+      .card-body.pt-0
+        form(id="editPostForm")
+          input(type="hidden" name="id" value=post ? post._id : "")
+          .row
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="name") Tên bài viết *
                 input.form-control(
-                  id="slug" 
-                  name="slug" 
-                  type="text" 
-                  value=post ? post.slug : "")
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="status") Trạng thái
-              select.form-control(
-                id="status"
-                name="status"
-                )
-                  option(value="draft" selected=post && post.status === "draft") Nháp
-                  option(value="published" selected=post && post.status === "published") Công khai
-                  option(value="archived" selected=post && post.status === "archived") Lưu trữ
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="category") Danh mục
-              div(class="checkbox-list" checkbox-list="category")
-                +checkbox(categories, post ? post.category : [])
-          .col-md-12.col-lg-12
-            .mb-3
-              +form-group-file(
-                "Ảnh đại diện", 
-                "avatar", 
-                "avatar",
-                post.avatar
-                )
-          .col-md-12.col-lg-12
-            .mb-3
-              label.form-label(for="description") Mô tả ngắn
-              textarea.form-control(
-                id="description"
-                name="description"
-                rows="3"
-                textarea-mce
-                ) #{post ? post.description : ""}
-          .col-md-12.col-lg-12
-            .mb-3
-              label.form-label(for="content") Chi tiết bài viết
-              textarea.form-control(
-                id="content"
-                name="content"
-                rows="3"
-                textarea-mce
-                ) #{post ? post.content : ""}
-        button.btn.btn-primary(type="submit") Câp nhật
-        button.btn.btn-danger.ms-2(type="button") Hủy
+                  id="name"
+                  name="name"
+                  type="text"
+                  value=post ? post.name : ""
+                  )
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="slug") Đường dẫn *
+                .input-group
+                  span.btn.btn-outline-info(
+                    btn-generate-slug="Post"
+                    from="name"
+                    to="slug"
+                  ) Tự động
+                  input.form-control(
+                    id="slug" 
+                    name="slug" 
+                    type="text" 
+                    value=post ? post.slug : "")
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="status") Trạng thái
+                select.form-control(
+                  id="status"
+                  name="status"
+                  )
+                    option(value="draft" selected=post && post.status === "draft") Nháp
+                    option(value="published" selected=post && post.status === "published") Công khai
+                    option(value="archived" selected=post && post.status === "archived") Lưu trữ
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="category") Danh mục
+                div(class="checkbox-list" checkbox-list="category")
+                  +checkbox(categories, post ? post.category : [])
+            .col-md-12.col-lg-12
+              .mb-3
+                +form-group-file(
+                  "Ảnh đại diện", 
+                  "avatar", 
+                  "avatar",
+                  post.avatar
+                  )
+            .col-md-12.col-lg-12
+              .mb-3
+                label.form-label(for="description") Mô tả ngắn
+                textarea.form-control(
+                  id="description"
+                  name="description"
+                  rows="3"
+                  textarea-mce
+                  ) #{post ? post.description : ""}
+            .col-md-12.col-lg-12
+              .mb-3
+                label.form-label(for="content") Chi tiết bài viết
+                textarea.form-control(
+                  id="content"
+                  name="content"
+                  rows="3"
+                  textarea-mce
+                  ) #{post ? post.content : ""}
+          button.btn.btn-primary(type="submit") Câp nhật
+          button.btn.btn-danger.ms-2(type="button") Hủy

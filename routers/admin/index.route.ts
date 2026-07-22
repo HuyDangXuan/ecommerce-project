@@ -19,4 +19,12 @@ router.use('/roles', verifyTokenAdmin, roleRoute)
 router.use('/accounts', verifyTokenAdmin, accountRoute)
 router.use('/auth', authRoute)
 
+// router.use('/dashboard', dashboardRoute)
+// router.use('/posts', postRoute)
+// router.use('/helper', helperRoute)
+// router.use('/file-manager', fileManagerRoute)
+// router.use('/roles', roleRoute)
+// router.use('/accounts', accountRoute)
+// router.use('/auth', authRoute)
+
 export default router;

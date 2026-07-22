@@ -6,6 +6,10 @@ export const permissionList = [
     name: "Trang tổng quan"
   },
   {
+    id: "post-management",
+    name: "Quản lý bài viết"
+  },
+  {
     id: "post-list",
     name: "Danh sách bài viết"
   },
@@ -22,6 +26,10 @@ export const permissionList = [
     name: "Xóa bài viết"
   },
   {
+    id: "post-category-management",
+    name: "Quản lý danh mục bài viết"
+  },
+  {
     id: "post-category",
     name: "Danh mục bài viết"
   },
@@ -36,6 +44,10 @@ export const permissionList = [
   {
     id: "post-category-delete",
     name: "Xóa danh mục bài viết"
+  },
+  {
+    id: "role-management",
+    name: "Quản lý nhóm quyền"
   },
   {
     id: "role-list",
@@ -56,5 +68,31 @@ export const permissionList = [
   {
     id: "file-manager",
     name: "Quản lý file"
-  }
+  },
+  
+  {
+    id: "account-admin-management",
+    name: "Quản lý tài khoản quản trị"
+  },
+  {
+    id: "account-admin-list",
+    name: "Danh sách tài khoản quản trị"
+  },
+  {
+    id: "account-admin-create",
+    name: "Tạo tài khoản quản trị"
+  },
+  {
+    id: "account-admin-edit",
+    name: "Sửa tài khoản quản trị"
+  },
+  {
+    id: "account-admin-delete",
+    name: "Xóa tài khoản quản trị"
+  },
+  {
+    id: "account-admin-change-password",
+    name: "Đổi mật khẩu tài khoản quản trị"
+  },
+
 ];

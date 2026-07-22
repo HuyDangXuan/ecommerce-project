@@ -30,99 +30,113 @@
                 <div class="border_right"></div>
                 </small>
             span Main Menu
-          li.nav-item
-            a.nav-link(
-              aria-controls="sidebarDashboards" 
-              aria-expanded="false" 
-              role="button" 
-              data-bs-toggle="collapse" 
-              href="#sidebarDashboards"
-              )
-              i.iconoir-home-simple.menu-icon
-              span Tổng quan
-            #sidebarDashboards.collapse
-              ul.nav.flex-column
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/dashboard`) Trang chủ
-                // end nav-item
-              // end nav
-            // end startbarDashboards
-          // end nav-item
-          li.nav-item
-            a.nav-link(
-              aria-controls="sidebarApplications" 
-              aria-expanded="false" 
-              role="button" 
-              data-bs-toggle="collapse" 
-              href="#sidebarApplications"
-              )
-              i.iconoir-view-grid.menu-icon
-              span Bài viết
-            #sidebarApplications.collapse
-              ul.nav.flex-column
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/posts/post-create`) Tạo bài viết
-                // end nav-item
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/posts/category-create`) Tạo danh mục bài viết
-                // end nav-item
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/posts/post-list`) Danh sách bài viết
-                // end nav-item
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/posts/category-list`) Danh mục bài viết
-                // end nav-item
-              // end nav
-            // end startbarApplications
-          // end nav-item
-          li.nav-item
-            a.nav-link(
-              href=`/${pathAdmin}/file-manager/iframe`
-              )
-              i.iconoir-page-star.menu-icon
-              span Quản lý file
-          li.nav-item
-            a.nav-link(
-              aria-controls="sidebarRoles" 
-              aria-expanded="false" 
-              role="button" 
-              data-bs-toggle="collapse" 
-              href="#sidebarRoles"
-              )
-              i.iconoir-view-grid.menu-icon
-              span Nhóm quyền
-            #sidebarRoles.collapse
-              ul.nav.flex-column
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/roles/role-create`) Tạo nhóm quyền
-                // end nav-item
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/roles/role-list`) Danh sách nhóm quyền
-                // end nav-item
-              // end nav
-            // end startbarRoles
-          // end nav-item
-          li.nav-item
-            a.nav-link(
-              aria-controls="sidebarAccounts" 
-              aria-expanded="false" 
-              role="button" 
-              data-bs-toggle="collapse" 
-              href="#sidebarAccounts"
-              )
-              i.iconoir-user-crown.menu-icon
-              span Tài khoản quản trị
-            #sidebarAccounts.collapse
-              ul.nav.flex-column
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/accounts/account-create`) Tạo tài khoản quản trị
-                // end nav-item
-                li.nav-item
-                  a.nav-link(href=`/${pathAdmin}/accounts/account-list`) Danh sách tài khoản quản trị
-                // end nav-item
-              // end nav
-            // end startbarAccounts
-          // end nav-item
+          if (permissions.includes('dashboard'))
+            li.nav-item
+              a.nav-link(
+                aria-controls="sidebarDashboards" 
+                aria-expanded="false" 
+                role="button" 
+                data-bs-toggle="collapse" 
+                href="#sidebarDashboards"
+                )
+                i.iconoir-home-simple.menu-icon
+                span Tổng quan
+              #sidebarDashboards.collapse
+                ul.nav.flex-column
+                  li.nav-item
+                    a.nav-link(href=`/${pathAdmin}/dashboard`) Trang chủ
+                  // end nav-item
+                // end nav
+              // end startbarDashboards
+            // end nav-item
+          if (permissions.includes('post-management') || permissions.includes('post-category-management'))
+            li.nav-item
+              a.nav-link(
+                aria-controls="sidebarApplications" 
+                aria-expanded="false" 
+                role="button" 
+                data-bs-toggle="collapse" 
+                href="#sidebarApplications"
+                )
+                i.iconoir-view-grid.menu-icon
+                span Bài viết
+              #sidebarApplications.collapse
+                ul.nav.flex-column
+                  if (permissions.includes('post-create'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/posts/post-create`) Tạo bài viết
+                    // end nav-item
+                  if (permissions.includes('post-category-create'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/posts/category-create`) Tạo danh mục bài viết
+                    // end nav-item
+                  if (permissions.includes('post-list'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/posts/post-list`) Danh sách bài viết
+                    // end nav-item
+                  if (permissions.includes('post-category'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/posts/category-list`) Danh mục bài viết
+                    // end nav-item
+                // end nav
+              // end startbarApplications
+            // end nav-item
+          if (permissions.includes('file-manager'))
+            li.nav-item
+              a.nav-link(
+                href=`/${pathAdmin}/file-manager/iframe`
+                )
+                i.iconoir-page-star.menu-icon
+                span Quản lý file
+            // end nav-item
+          if (permissions.includes('role-management'))
+            li.nav-item
+              a.nav-link(
+                aria-controls="sidebarRoles" 
+                aria-expanded="false" 
+                role="button" 
+                data-bs-toggle="collapse" 
+                href="#sidebarRoles"
+                )
+                i.iconoir-view-grid.menu-icon
+                span Nhóm quyền
+              #sidebarRoles.collapse
+                ul.nav.flex-column
+                  if (permissions.includes('role-create'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/roles/role-create`) Tạo nhóm quyền
+                    // end nav-item
+                  if (permissions.includes('role-list'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/roles/role-list`) Danh sách nhóm quyền
+                  // end nav-item
+                // end nav
+              // end startbarRoles
+            // end nav-item
+          if (permissions.includes('account-admin-management'))
+            li.nav-item
+              a.nav-link(
+                aria-controls="sidebarAccounts" 
+                aria-expanded="false" 
+                role="button" 
+                data-bs-toggle="collapse" 
+                href="#sidebarAccounts"
+                )
+                i.iconoir-user-crown.menu-icon
+                span Tài khoản quản trị
+              #sidebarAccounts.collapse
+                ul.nav.flex-column
+                  if (permissions.includes('account-admin-create'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/accounts/account-create`) Tạo tài khoản quản trị
+                    // end nav-item
+                  if (permissions.includes('account-admin-list'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/accounts/account-list`) Danh sách tài khoản quản trị
+                  // end nav-item
+                // end nav
+              // end startbarAccounts
+            // end nav-item
         //-   li.menu-label.mt-2
         //-     small.label-border
         //-       .hidden-xs(class="border_left")

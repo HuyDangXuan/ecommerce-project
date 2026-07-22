@@ -3,72 +3,73 @@ include ../../mixins/options.pug
 include ../../mixins/form-group.pug
 
 block main 
-  .container
-    .row
-      .col-12
-        h1 Chỉnh sửa danh mục bài viết
-    .card-body.pt-0
-      form(id="editCategoryForm")
-        input(type="hidden" name="id" value=category ? category._id : "")
-        .row
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="name") Tên danh mục *
-              input.form-control(
-                id="name"
-                name="name"
-                type="text"
-                value=category ? category.name : ""
-                )
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="slug") Đường dẫn *
-              .input-group
-                span.btn.btn-outline-info(
-                  btn-generate-slug="Category"
-                  from="name"
-                  to="slug"
-                  ) Tự động
+  if (permissions.includes('post-category-edit'))
+    .container
+      .row
+        .col-12
+          h1 Chỉnh sửa danh mục bài viết
+      .card-body.pt-0
+        form(id="editCategoryForm")
+          input(type="hidden" name="id" value=category ? category._id : "")
+          .row
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="name") Tên danh mục *
                 input.form-control(
-                  id="slug" 
-                  name="slug" 
+                  id="name"
+                  name="name"
                   type="text"
-                  value=category ? category.slug : ""
+                  value=category ? category.name : ""
                   )
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="status") Trạng thái
-              select.form-control(
-                id="status"
-                name="status"
-                )
-                  option(value="active" selected=category && category.status === 'active') Hoạt động
-                  option(value="inactive" selected=category && category.status === 'inactive') Dừng hoạt động
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="parentCategory") Tên danh mục cha
-              select.form-control(
-                id="parentCategory"
-                name="parentCategory"
-                )
-                option(value="") -- Chọn danh mục cha --
-                +options(categories, 0, category ? category.parentCategory : "")
-          .col-md-12.col-lg-12
-            .mb-3
-              +form-group-file(
-                "Ảnh đại diện", 
-                "avatar", 
-                "avatar",
-                category.avatar, 
-                )
-          .col-md-12.col-lg-12
-            .mb-3
-              label.form-label(for="description") Mô tả danh mục
-              textarea.form-control(
-                id="description"
-                name="description"
-                rows="3"
-                textarea-mce
-                ) #{category ? category.description : ""}
-        button.btn.btn-primary(type="submit") Cập nhật
-        button.btn.btn-danger.ms-2(type="button") Hủy
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="slug") Đường dẫn *
+                .input-group
+                  span.btn.btn-outline-info(
+                    btn-generate-slug="Category"
+                    from="name"
+                    to="slug"
+                    ) Tự động
+                  input.form-control(
+                    id="slug" 
+                    name="slug" 
+                    type="text"
+                    value=category ? category.slug : ""
+                    )
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="status") Trạng thái
+                select.form-control(
+                  id="status"
+                  name="status"
+                  )
+                    option(value="active" selected=category && category.status === 'active') Hoạt động
+                    option(value="inactive" selected=category && category.status === 'inactive') Dừng hoạt động
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="parentCategory") Tên danh mục cha
+                select.form-control(
+                  id="parentCategory"
+                  name="parentCategory"
+                  )
+                  option(value="") -- Chọn danh mục cha --
+                  +options(categories, 0, category ? category.parentCategory : "")
+            .col-md-12.col-lg-12
+              .mb-3
+                +form-group-file(
+                  "Ảnh đại diện", 
+                  "avatar", 
+                  "avatar",
+                  category.avatar, 
+                  )
+            .col-md-12.col-lg-12
+              .mb-3
+                label.form-label(for="description") Mô tả danh mục
+                textarea.form-control(
+                  id="description"
+                  name="description"
+                  rows="3"
+                  textarea-mce
+                  ) #{category ? category.description : ""}
+          button.btn.btn-primary(type="submit") Cập nhật
+          button.btn.btn-danger.ms-2(type="button") Hủy

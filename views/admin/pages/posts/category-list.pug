@@ -2,84 +2,85 @@ extends ../../layouts/default.pug
 include ../../mixins/pagination.pug
 
 block main 
-  .container
-    .row
-      .col-12
-        .card
-          .card-header
-            .row.align-items-center
-              .col
-                h4.card-title Danh mục
-              // end col
-              .col-auto
-                form.row.g-2
-              // end col
-            // end row
-          // end card-header
-          form.input-group.mb-3(form-search)
-            input.form-control(
-              placeholder="Tìm kiếm bài viết..." 
-              type="text"
-              name="keyword"
-              )
-            button.btn.btn-secondary Tìm kiếm
-          .card-body.pt-0
-            .table-responsive
-              table.table.mb-0.checkbox-all(id="datatable_1")
-                thead.table-light
-                  tr
-                    th(style="width: 16px;")
-                      .form-check.mb-0
-                        input#select-all.form-check-input(
-                          name="select-all" 
-                          type="checkbox"
-                          )
-                    th.ps-0 STT
-                    th Avatar
-                    th Tên danh mục
-                    th Danh mục cha
-                    th Trạng thái
-                    th Lượt xem
-                    th.text-end Hành động
-                tbody
-                  each category, index in (categories || [])
+  if (permissions.includes('post-category'))
+    .container
+      .row
+        .col-12
+          .card
+            .card-header
+              .row.align-items-center
+                .col
+                  h4.card-title Danh mục
+                // end col
+                .col-auto
+                  form.row.g-2
+                // end col
+              // end row
+            // end card-header
+            form.input-group.mb-3(form-search)
+              input.form-control(
+                placeholder="Tìm kiếm bài viết..." 
+                type="text"
+                name="keyword"
+                )
+              button.btn.btn-secondary Tìm kiếm
+            .card-body.pt-0
+              .table-responsive
+                table.table.mb-0.checkbox-all(id="datatable_1")
+                  thead.table-light
                     tr
-                      td
+                      th(style="width: 16px;")
                         .form-check.mb-0
-                          input.form-check-input(
-                            name="select-item" 
+                          input#select-all.form-check-input(
+                            name="select-all" 
                             type="checkbox"
                             )
-                      td #{pagination.skip + index + 1}
-                      td
-                        if category && category.avatar
-                          img(
-                            src=`${domainCDN}${category.avatar}` 
-                            alt="Avatar"
-                            width="50"
-                            height="50"
-                          )
-                        else
-                          img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
-                      td #{category && category.name ? category.name : 'Không có'}
-                      td #{category && category.parentName ? category.parentName : 'Không có'}
-                      td
-                        if category && category.status === 'active'
-                          span.badge.bg-success.text-white Hoạt động
-                        else if category && category.status === 'inactive'
-                          span.badge.bg-danger.text-white Dừng hoạt động
-                        else
-                          span.badge.bg-light.text-dark Không xác định
-                      td #{category && typeof category.views !== 'undefined' ? category.views : 0}
-                      td.text-end
-                        if category && category._id
-                          a.btn.btn-sm.btn-primary.me-1(href=`/admin/posts/category-edit/${category._id}`)
-                            i.fa-solid.fa-pen-to-square
-                          a.btn.btn-sm.btn-danger(
-                            href=`javascript:;`
-                            button-api
-                            data-method="PATCH"
-                            data-api=`/${pathAdmin}/posts/category-delete/${category._id}`
+                      th.ps-0 STT
+                      th Avatar
+                      th Tên danh mục
+                      th Danh mục cha
+                      th Trạng thái
+                      th Lượt xem
+                      th.text-end Hành động
+                  tbody
+                    each category, index in (categories || [])
+                      tr
+                        td
+                          .form-check.mb-0
+                            input.form-check-input(
+                              name="select-item" 
+                              type="checkbox"
+                              )
+                        td #{pagination.skip + index + 1}
+                        td
+                          if category && category.avatar
+                            img(
+                              src=`${domainCDN}${category.avatar}` 
+                              alt="Avatar"
+                              width="50"
+                              height="50"
                             )
-                            i.fa-solid.fa-trash
-            +pagination()
+                          else
+                            img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
+                        td #{category && category.name ? category.name : 'Không có'}
+                        td #{category && category.parentName ? category.parentName : 'Không có'}
+                        td
+                          if category && category.status === 'active'
+                            span.badge.bg-success.text-white Hoạt động
+                          else if category && category.status === 'inactive'
+                            span.badge.bg-danger.text-white Dừng hoạt động
+                          else
+                            span.badge.bg-light.text-dark Không xác định
+                        td #{category && typeof category.views !== 'undefined' ? category.views : 0}
+                        td.text-end
+                          if category && category._id
+                            a.btn.btn-sm.btn-primary.me-1(href=`/admin/posts/category-edit/${category._id}`)
+                              i.fa-solid.fa-pen-to-square
+                            a.btn.btn-sm.btn-danger(
+                              href=`javascript:;`
+                              button-api
+                              data-method="PATCH"
+                              data-api=`/${pathAdmin}/posts/category-delete/${category._id}`
+                              )
+                              i.fa-solid.fa-trash
+              +pagination()

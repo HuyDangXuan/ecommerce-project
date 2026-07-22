@@ -1,7 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import jwt from 'jsonwebtoken';
 import AccountAdmin from '../models/account-admin.model';
-import { pathAdmin } from '../config/variable.config';
+import { pathAdmin, permissionList } from '../config/variable.config';
+import Role from '../models/roles.model';
 
 export const verifyTokenAdmin = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -40,6 +41,20 @@ export const verifyTokenAdmin = async (req: Request, res: Response, next: NextFu
       }
 
       res.locals.accountAdmin = existAccount;
+
+      let permissions: string[] = [];
+      for (const roleId of existAccount.roles) {
+        const role = await Role.findOne({ 
+          _id: roleId, 
+          deleted: false, 
+          status: 'active' 
+        });
+
+        if (role) {
+          permissions = [...permissions, ...role.permissions];
+        }
+      }
+      res.locals.permissions = permissions;
     };
 
     next();
@@ -47,4 +62,17 @@ export const verifyTokenAdmin = async (req: Request, res: Response, next: NextFu
     console.error('Error in auth middleware:', error);
     res.redirect(`/${pathAdmin}/auth/account-login`);
   }
+};
+
+export const checkPermission = (permission: string) => {
+  return async (req: Request, res: Response, next: NextFunction) => {
+    if (res.locals.permissions.includes(permission)) {
+      next();
+    } else {
+      res.json({
+        status: 'error',
+        message: 'Bạn không có quyền truy cập vào chức năng này'
+      });
+    }
+  };
 };

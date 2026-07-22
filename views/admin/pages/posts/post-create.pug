@@ -4,75 +4,76 @@ include ../../mixins/form-group.pug
 include ../../mixins/checkbox.pug
 
 block main 
-  .container
-    .row
-      .col-12
-        h1 Tạo bài viết
-    .card-body.pt-0
-      form(id="createPostForm")
-        .row
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="name") Tên bài viết *
-              input.form-control(
-                id="name"
-                name="name"
-                type="text"
-                )
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="slug") Đường dẫn *
-              .input-group
-                span.btn.btn-outline-info(
-                  btn-generate-slug="Post"
-                  from="name"
-                  to="slug"
-                ) Tự động
-                input.form-control(id="slug" name="slug" type="text")
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="status") Trạng thái
-              select.form-control(
-                id="status"
-                name="status"
-                )
-                  option(value="draft") Nháp
-                  option(value="published") Công khai
-                  option(value="archived") Lưu trữ
-          .col-md-6.col-lg-6
-            .mb-3
-              label.form-label(for="category") Danh mục
-              div(class="checkbox-list" checkbox-list="category")
-                +checkbox(categories)
-          .col-md-12.col-lg-12
-            .mb-3
-              +form-group-file(
-                "Ảnh đại diện", 
-                "avatar", 
-                "", 
-                "avatar"
-                )
-          .col-md-12.col-lg-12
-            .mb-3
-              label.form-label(for="description") Mô tả ngắn
-              textarea.form-control(
-                id="description"
-                name="description"
-                rows="3"
-                textarea-mce
-                )
-          .col-md-12.col-lg-12
-            .mb-3
-              label.form-label(for="content") Chi tiết bài viết
-              textarea.form-control(
-                id="content"
-                name="content"
-                rows="3"
-                textarea-mce
-                )
-        button.btn.btn-primary(type="submit") Tạo mới
-        a.btn.btn-danger.ms-2(href=`/${pathAdmin}/posts/post-list`) Hủy
+  if (permissions.includes('post-create'))
+    .container
+      .row
+        .col-12
+          h1 Tạo bài viết
+      .card-body.pt-0
+        form(id="createPostForm")
+          .row
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="name") Tên bài viết *
+                input.form-control(
+                  id="name"
+                  name="name"
+                  type="text"
+                  )
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="slug") Đường dẫn *
+                .input-group
+                  span.btn.btn-outline-info(
+                    btn-generate-slug="Post"
+                    from="name"
+                    to="slug"
+                  ) Tự động
+                  input.form-control(id="slug" name="slug" type="text")
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="status") Trạng thái
+                select.form-control(
+                  id="status"
+                  name="status"
+                  )
+                    option(value="draft") Nháp
+                    option(value="published") Công khai
+                    option(value="archived") Lưu trữ
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="category") Danh mục
+                div(class="checkbox-list" checkbox-list="category")
+                  +checkbox(categories)
+            .col-md-12.col-lg-12
+              .mb-3
+                +form-group-file(
+                  "Ảnh đại diện", 
+                  "avatar", 
+                  "", 
+                  "avatar"
+                  )
+            .col-md-12.col-lg-12
+              .mb-3
+                label.form-label(for="description") Mô tả ngắn
+                textarea.form-control(
+                  id="description"
+                  name="description"
+                  rows="3"
+                  textarea-mce
+                  )
+            .col-md-12.col-lg-12
+              .mb-3
+                label.form-label(for="content") Chi tiết bài viết
+                textarea.form-control(
+                  id="content"
+                  name="content"
+                  rows="3"
+                  textarea-mce
+                  )
+          button.btn.btn-primary(type="submit") Tạo mới
+          a.btn.btn-danger.ms-2(href=`/${pathAdmin}/posts/post-list`) Hủy
 
-  //- Modal File Manager
-  
-  //- End Modal File Manager
+    //- Modal File Manager
+    
+    //- End Modal File Manager
