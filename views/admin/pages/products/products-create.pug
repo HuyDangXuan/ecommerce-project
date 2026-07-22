@@ -1,35 +1,34 @@
 extend ../../layouts/default.pug
 include ../../mixins/options.pug
 include ../../mixins/form-group.pug
+include ../../mixins/checkbox.pug
 
 block main 
-  if (permissions.includes('post-category-create'))
+  if (permissions.includes('product-create'))
     .container
       .row
         .col-12
-          h1 Tạo danh mục bài viết
+          h1 Tạo sản phẩm
       .card-body.pt-0
-        form(id="createCategoryForm")
+        form(id="createProductForm")
           .row
             .col-md-6.col-lg-6
               .mb-3
-                label.form-label(for="name") Tên danh mục *
+                label.form-label(for="name") Tên sản phẩm *
                 input.form-control(
                   id="name"
                   name="name"
                   type="text"
-                  value=category ? category.name : ""
                   )
             .col-md-6.col-lg-6
               .mb-3
                 label.form-label(for="slug") Đường dẫn *
                 .input-group
                   span.btn.btn-outline-info(
-                    btn-generate-slug="PostCategory"
+                    btn-generate-slug="Product"
                     from="name"
                     to="slug"
-                    value=category ? category.slug : ""
-                    ) Tự động
+                  ) Tự động
                   input.form-control(id="slug" name="slug" type="text")
             .col-md-6.col-lg-6
               .mb-3
@@ -38,17 +37,14 @@ block main
                   id="status"
                   name="status"
                   )
-                    option(value="active" selected=category && category.status === "active") Hoạt động
-                    option(value="inactive" selected=category && category.status === "inactive") Dừng hoạt động
+                    option(value="draft") Nháp
+                    option(value="published") Công khai
+                    option(value="archived") Lưu trữ
             .col-md-6.col-lg-6
               .mb-3
-                label.form-label(for="parentCategory") Tên danh mục cha
-                select.form-control(
-                  id="parentCategory"
-                  name="parentCategory"
-                  )
-                  option(value="") -- Chọn danh mục cha --
-                  +options(categories, 0, category ? category.parentCategory : "")
+                label.form-label(for="category") Danh mục
+                div(class="checkbox-list" checkbox-list="category")
+                  +checkbox(categories)
             .col-md-12.col-lg-12
               .mb-3
                 +form-group-file(
@@ -59,16 +55,25 @@ block main
                   )
             .col-md-12.col-lg-12
               .mb-3
-                label.form-label(for="description") Mô tả danh mục
+                label.form-label(for="description") Mô tả ngắn
                 textarea.form-control(
                   id="description"
                   name="description"
                   rows="3"
                   textarea-mce
-                  ) #{category ? category.description : ""}
+                  )
+            .col-md-12.col-lg-12
+              .mb-3
+                label.form-label(for="content") Chi tiết bài viết
+                textarea.form-control(
+                  id="content"
+                  name="content"
+                  rows="3"
+                  textarea-mce
+                  )
           button.btn.btn-primary(type="submit") Tạo mới
-          a.btn.btn-danger.ms-2(href=`/${pathAdmin}/posts/category-list`) Hủy
+          a.btn.btn-danger.ms-2(href=`/${pathAdmin}/products/product-list`) Hủy
 
     //- Modal File Manager
-
+    
     //- End Modal File Manager

@@ -3,13 +3,13 @@ include ../../mixins/options.pug
 include ../../mixins/form-group.pug
 
 block main 
-  if (permissions.includes('post-category-edit'))
+  if (permissions.includes('product-category-edit'))
     .container
       .row
         .col-12
-          h1 Chỉnh sửa danh mục bài viết
+          h1 Chỉnh sửa danh mục sản phẩm
       .card-body.pt-0
-        form(id="editCategoryForm")
+        form(id="editProductCategoryForm")
           input(type="hidden" name="id" value=category ? category._id : "")
           .row
             .col-md-6.col-lg-6
@@ -26,7 +26,7 @@ block main
                 label.form-label(for="slug") Đường dẫn *
                 .input-group
                   span.btn.btn-outline-info(
-                    btn-generate-slug="Category"
+                    btn-generate-slug="ProductCategory"
                     from="name"
                     to="slug"
                     ) Tự động
@@ -72,4 +72,4 @@ block main
                   textarea-mce
                   ) #{category ? category.description : ""}
           button.btn.btn-primary(type="submit") Cập nhật
-          a.btn.btn-danger.ms-2(href=`/${pathAdmin}/posts/post-categories`) Hủy
+          a.btn.btn-danger.ms-2(href=`/${pathAdmin}/products/product-category-list`) Hủy

@@ -1,14 +1,14 @@
 import { Request, Response } from 'express'
-import Post from '../../models/posts.model'
-import PostCategory from '../../models/post-categories.model'
+import Products from '../../models/products.model'
+import ProductCategory from '../../models/product-categories.model'
 import buildCategoryTree from '../../helpers/category.helper'
 import { pathAdmin } from '../../config/variable.config'
 import slugify from 'slugify';
 import { logAdminAction } from '../../helpers/log.helper';
 
-// POST
+// PRODUCTS
 
-export const GETpostList = async (req: Request, res: Response) => {
+export const GETproductList = async (req: Request, res: Response) => {
   const find: {
     deleted: boolean,
     search?: RegExp
@@ -36,7 +36,7 @@ export const GETpostList = async (req: Request, res: Response) => {
     page = parseInt(`${req.query.page}`);
   }
 
-  const totalRecord = await Post.countDocuments(find);
+  const totalRecord = await Products.countDocuments(find);
   const totalPage = Math.ceil(totalRecord / limitItem);
   const skip = (page - 1) * limitItem;
 
@@ -49,7 +49,7 @@ export const GETpostList = async (req: Request, res: Response) => {
   res.locals.pagination = pagination;
   // End Pagination
 
-  const posts: any = await Post
+  const products: any = await Products
     .find(find)
     .skip(skip)
     .limit(limitItem)
@@ -57,34 +57,34 @@ export const GETpostList = async (req: Request, res: Response) => {
        createdAt: "desc" 
     });
 
-  for (const item of posts) {
-    const categoryList = await PostCategory.find({
+  for (const item of products) {
+    const categoryList = await ProductCategory.find({
       _id: { $in: item.category }
     })
     const categoryListName = categoryList.map((item: any) => item.name);
     item.categoryListName = categoryListName;
   }
 
-  res.render('admin/pages/posts/post-list', {
-    title: 'Danh sách bài viết',
-    posts: posts
+  res.render('admin/pages/products/products-list', {
+    title: 'Danh sách sản phẩm',
+    products: products
   })
 }
 
-export const GETcreatePost = async (req: Request, res: Response) => {
-  const categories = await PostCategory.find();
+export const GETcreateProduct = async (req: Request, res: Response) => {
+  const categories = await ProductCategory.find();
   const categoryTree = buildCategoryTree(categories, "");
 
-  res.render('admin/pages/posts/post-create', {
-    title: 'Tạo bài viết',
+  res.render('admin/pages/products/products-create', {
+    title: 'Tạo sản phẩm',
     categories: categoryTree
   })
 }
 
-export const POSTcreatePost = async (req: Request, res: Response) => {
+export const POSTcreateProduct = async (req: Request, res: Response) => {
   try {
-    const existingPost = await Post.findOne({ slug: req.body.slug });
-    if (existingPost) {
+    const existingProduct = await Products.findOne({ slug: req.body.slug });
+    if (existingProduct) {
       res.json({
         code: "error",
         message: "Slug đã tồn tại, vui lòng chọn slug khác",
@@ -105,14 +105,14 @@ export const POSTcreatePost = async (req: Request, res: Response) => {
       req.body.publishedAt = new Date();
     }
 
-    const newRecord = new Post(req.body);
+    const newRecord = new Products(req.body);
     await newRecord.save();
 
-    logAdminAction(req, `Tạo bài viết: ${newRecord.name} (ID: ${newRecord.id})`);
+    logAdminAction(req, `Tạo sản phẩm: ${newRecord.name} (ID: ${newRecord.id})`);
 
     res.json({
       code: "success",
-      message: "Bài viết đã được tạo thành công",
+      message: "Sản phẩm đã được tạo thành công",
     })
   } catch (error) {
     res.json({
@@ -122,43 +122,43 @@ export const POSTcreatePost = async (req: Request, res: Response) => {
   }
 }
 
-export const GETeditPost = async (req: Request, res: Response) => {
-  const postId = req.params.id;
-  const post = await Post.findById(postId);
+export const GETeditProduct = async (req: Request, res: Response) => {
+  const productId = req.params.id;
+  const product = await Products.findById(productId);
 
-  if (!post) {
-    res.redirect(`${pathAdmin}/posts/post-list`);
+  if (!product) {
+    res.redirect(`${pathAdmin}/products/product-list`);
     return;
   }
 
-  const categories = await PostCategory.find();
+  const categories = await ProductCategory.find();
   const categoryTree = buildCategoryTree(categories, "");
 
-  res.render('admin/pages/posts/post-edit', {
-    title: 'Chỉnh sửa bài viết',
+  res.render('admin/pages/products/products-edit', {
+    title: 'Chỉnh sửa sản phẩm',
     categories: categoryTree,
-    post: post
+    product: product
   })
 }
 
-export const PATCHeditPost = async (req: Request, res: Response) => {
+export const PATCHeditProduct = async (req: Request, res: Response) => {
   try {
-    const postId = req.params.id;
-    const post = await Post.findById(postId);
+    const productId = req.params.id;
+    const product = await Products.findById(productId);
 
-    if (!post) {
+    if (!product) {
       res.json({
         code: "error",
-        message: "Bài viết không tồn tại",
+        message: "Sản phẩm không tồn tại",
       });
       return;
     }
 
-    const existingPost = await Post.findOne({
-      _id: { $ne: postId },
+    const existingProduct = await Products.findOne({
+      _id: { $ne: productId },
       slug: req.body.slug 
     });
-    if (existingPost) {
+    if (existingProduct) {
       res.json({
         code: "error",
         message: "Slug đã tồn tại, vui lòng chọn slug khác",
@@ -175,13 +175,13 @@ export const PATCHeditPost = async (req: Request, res: Response) => {
       }
     );
 
-    await Post.findByIdAndUpdate(postId, req.body);
+    await Products.findByIdAndUpdate(productId, req.body);
 
-    logAdminAction(req, `Cập nhật bài viết: ${post.name} (ID: ${post.id})`);
+    logAdminAction(req, `Cập nhật sản phẩm: ${product.name} (ID: ${product.id})`);
 
     res.json({
       code: "success",
-      message: "Bài viết đã được cập nhật thành công",
+      message: "Sản phẩm đã được cập nhật thành công",
     })
 
   } catch (error) {
@@ -192,29 +192,29 @@ export const PATCHeditPost = async (req: Request, res: Response) => {
   }
 }
 
-export const PATCHdeletePost = async (req: Request, res: Response) => {
+export const PATCHdeleteProduct = async (req: Request, res: Response) => {
   try {
-    const postId = req.params.id;
-    const post = await Post.findById(postId);
+    const productId = req.params.id;
+    const product = await Products.findById(productId);
 
-    if (!post) {
+    if (!product) {
       res.json({
         code: "error",
-        message: "Bài viết không tồn tại",
+        message: "Sản phẩm không tồn tại",
       });
       return;
     }
 
-    await Post.findByIdAndUpdate(postId, {
+    await Products.findByIdAndUpdate(productId, {
        deleted: true,
        deletedAt: new Date(),
       });
 
-    logAdminAction(req, `Xóa bài viết: ${post.name} (ID: ${post.id})`);
+    logAdminAction(req, `Xóa sản phẩm: ${product.name} (ID: ${product.id})`);
 
     res.json({
       code: "success",
-      message: "Đã xóa bài viết thành công",
+      message: "Đã xóa sản phẩm thành công",
     })
 
   } catch (error) {
@@ -225,11 +225,9 @@ export const PATCHdeletePost = async (req: Request, res: Response) => {
   }
 }
 
-// END POST
+// PRODUCT CATEGORIES
 
-// CATEGORY
-
-export const GETcategoryList = async (req: Request, res: Response) => {
+export const GETproductCategoryList = async (req: Request, res: Response) => {
   const find: {
     deleted: boolean,
     search?: RegExp
@@ -257,7 +255,7 @@ export const GETcategoryList = async (req: Request, res: Response) => {
     page = parseInt(`${req.query.page}`);
   }
 
-  const totalRecord = await PostCategory.countDocuments(find);
+  const totalRecord = await ProductCategory.countDocuments(find);
   const totalPage = Math.ceil(totalRecord / limitItem);
   const skip = (page - 1) * limitItem;
   const pagination = {
@@ -268,7 +266,7 @@ export const GETcategoryList = async (req: Request, res: Response) => {
   res.locals.pagination = pagination;
   // End Pagination
 
-  const categories: any = await PostCategory
+  const categories: any = await ProductCategory
     .find(find)
     .skip(skip)
     .limit(limitItem)
@@ -278,30 +276,30 @@ export const GETcategoryList = async (req: Request, res: Response) => {
 
   for (const item of categories) {
     if (item.parentCategory) {
-      const parent = await PostCategory.findById(item.parentCategory);
+      const parent = await ProductCategory.findById(item.parentCategory);
       item.parentName = parent ? parent.name : "Không có";
     }
   }
 
-  res.render('admin/pages/posts/category-list', {
+  res.render('admin/pages/products/products-category-list', {
     title: 'Danh sách danh mục',
     categories: categories
   })
 }
 
-export const GETcreateCategory = async (req: Request, res: Response) => {
-  const categories = await PostCategory.find();
+export const GETcreateProductCategory = async (req: Request, res: Response) => {
+  const categories = await ProductCategory.find();
   const categoryTree = buildCategoryTree(categories, "");
 
-  res.render('admin/pages/posts/category-create', {
-    title: 'Tạo danh mục bài viết',
+  res.render('admin/pages/products/products-category-create', {
+    title: 'Tạo danh mục sản phẩm',
     categories: categoryTree
   })
 }
 
-export const POSTcreateCategory = async (req: Request, res: Response) => {
+export const POSTcreateProductCategory = async (req: Request, res: Response) => {
   try {
-    const existingCategory = await PostCategory.findOne({ slug: req.body.slug });
+    const existingCategory = await ProductCategory.findOne({ slug: req.body.slug });
     if (existingCategory) {
       res.json({
         code: "error",
@@ -317,7 +315,7 @@ export const POSTcreateCategory = async (req: Request, res: Response) => {
       }
     );
 
-    const newRecord = new PostCategory(req.body);
+    const newRecord = new ProductCategory(req.body);
     await newRecord.save();
 
     logAdminAction(req, `Tạo danh mục: ${newRecord.name} (ID: ${newRecord.id})`);
@@ -334,29 +332,29 @@ export const POSTcreateCategory = async (req: Request, res: Response) => {
   }
 }
 
-export const GETeditCategory = async (req: Request, res: Response) => {
+export const GETeditProductCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.id;
-  const category = await PostCategory.findById(categoryId);
+  const category = await ProductCategory.findById(categoryId);
 
   if (!category) {
-    res.redirect(`${pathAdmin}/posts/category-list`);
+    res.redirect(`${pathAdmin}/products/products-category-list`);
     return;
   }
 
-  const categories = await PostCategory.find();
+  const categories = await ProductCategory.find();
   const categoryTree = buildCategoryTree(categories, "");
 
-  res.render('admin/pages/posts/category-edit', {
-    title: 'Chỉnh sửa danh mục bài viết',
+  res.render('admin/pages/products/products-category-edit', {
+    title: 'Chỉnh sửa danh mục sản phẩm',
     categories: categoryTree,
     category: category
   })
 }
 
-export const PATCHeditCategory = async (req: Request, res: Response) => {
+export const PATCHeditProductCategory = async (req: Request, res: Response) => {
   try {
     const categoryId = req.params.id;
-    const category = await PostCategory.findById(categoryId);
+    const category = await ProductCategory.findById(categoryId);
 
     if (!category) {
       res.json({
@@ -366,7 +364,7 @@ export const PATCHeditCategory = async (req: Request, res: Response) => {
       return;
     }
 
-    const existingCategory = await PostCategory.findOne({ 
+    const existingCategory = await ProductCategory.findOne({ 
       _id: { $ne: categoryId },
       slug: req.body.slug,
     });
@@ -385,7 +383,7 @@ export const PATCHeditCategory = async (req: Request, res: Response) => {
       }
     );
 
-    await PostCategory.findByIdAndUpdate(categoryId, req.body);
+    await ProductCategory.findByIdAndUpdate(categoryId, req.body);
 
     res.json({
       code: "success",
@@ -400,10 +398,10 @@ export const PATCHeditCategory = async (req: Request, res: Response) => {
   }
 }
 
-export const PATCHdeleteCategory = async (req: Request, res: Response) => {
+export const PATCHdeleteProductCategory = async (req: Request, res: Response) => {
   try {
     const categoryId = req.params.id;
-    const category = await PostCategory.findById(categoryId);
+    const category = await ProductCategory.findById(categoryId);
 
     if (!category) {
       res.json({
@@ -413,7 +411,7 @@ export const PATCHdeleteCategory = async (req: Request, res: Response) => {
       return;
     }
 
-    await PostCategory.findByIdAndUpdate(categoryId, {
+    await ProductCategory.findByIdAndUpdate(categoryId, {
       deleted: true,
       deletedAt: new Date()
     });
@@ -432,5 +430,3 @@ export const PATCHdeleteCategory = async (req: Request, res: Response) => {
     })
   }
 }
-
-// END CATEGORY

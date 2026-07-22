@@ -1,0 +1,155 @@
+extends ../../layouts/default.pug
+include ../../mixins/pagination.pug
+
+block main 
+  if (permissions.includes('product-list'))
+    .container
+      .row
+        .col-12
+          .card
+            .card-header
+              .row.align-items-center
+                .col
+                  h4.card-title Sản phẩm
+                // end col
+                .col-auto
+                  form.row.g-2
+                    //- .col-auto
+                    //-   a.btn.bg-primary-subtle.text-primary.dropdown-toggle.d-flex.align-items-center.arrow-none(
+                    //-     data-bs-auto-close="outside" 
+                    //-     aria-expanded="false" 
+                    //-     aria-haspopup="false" 
+                    //-     role="button" 
+                    //-     href="#" 
+                    //-     data-bs-toggle="dropdown"
+                    //-     )
+                    //-     i.iconoir-filter-alt.me-1
+                    //-     | Filter
+                    //-   .dropdown-menu.dropdown-menu-start
+                    //-     .p-2
+                    //-       .form-check.mb-2
+                    //-         input#filter-all.form-check-input(
+                    //-           checked="" 
+                    //-           type="checkbox"
+                    //-           )
+                    //-         label.form-check-label(for="filter-all") All
+                    //-       .form-check.mb-2
+                    //-         input#filter-one.form-check-input(
+                    //-           checked="" 
+                    //-           type="checkbox"
+                    //-           )
+                    //-         label.form-check-label(for="filter-one") Fashion
+                    //-       .form-check.mb-2
+                    //-         input#filter-two.form-check-input(
+                    //-           checked="" 
+                    //-           type="checkbox"
+                    //-           )
+                    //-         label.form-check-label(for="filter-two") Plants
+                    //-       .form-check.mb-2
+                    //-         input#filter-three.form-check-input(
+                    //-           checked="" 
+                    //-           type="checkbox"
+                    //-           )
+                    //-         label.form-check-label(for="filter-three") Toys
+                    //-       .form-check.mb-2
+                    //-         input#filter-four.form-check-input(
+                    //-           checked="" 
+                    //-           type="checkbox"
+                    //-           )
+                    //-         label.form-check-label(for="filter-four") Gadgets
+                    //-       .form-check.mb-2
+                    //-         input#filter-five.form-check-input(
+                    //-           checked="" 
+                    //-           type="checkbox"
+                    //-           )
+                    //-         label.form-check-label(for="filter-five") Food
+                    //-       .form-check
+                    //-         input#filter-six.form-check-input(
+                    //-           checked="" 
+                    //-           type="checkbox"
+                    //-           )
+                    //-         label.form-check-label(for="filter-six") Drinks
+                    //- // end col
+                    //- .col-auto
+                    //-   button.btn.btn-primary(
+                    //-     data-bs-target="#addBoard" 
+                    //-     data-bs-toggle="modal" 
+                    //-     type="button"
+                    //-     )
+                    //-     i.fa-solid.fa-plus.me-1
+                    //-     | Add Product
+                    //- // end col
+                // end col
+              // end row
+            // end card-header
+            form.input-group.mb-3(form-search)
+              input.form-control(
+                placeholder="Tìm kiếm sản phẩm..." 
+                type="text"
+                name="keyword"
+                )
+              button.btn.btn-secondary Tìm kiếm
+            .card-body.pt-0
+              .table-responsive
+                table.table.mb-0.checkbox-all(id="datatable_1")
+                  thead.table-light
+                    tr
+                      th(style="width: 16px;")
+                        .form-check.mb-0
+                          input#select-all.form-check-input(
+                            name="select-all" 
+                            type="checkbox"
+                            )
+                      th.ps-0 STT
+                      th Avatar
+                      th Tên sản phẩm
+                      th Danh mục
+                      th Trạng thái
+                      th Lượt xem
+                      th.text-end Hành động
+                  tbody
+                    each product, index in (products || [])
+                      tr
+                        td
+                          .form-check.mb-0
+                            input.form-check-input(
+                              name="select-item" 
+                              type="checkbox"
+                              )
+                        td #{pagination.skip + index + 1}
+                        td
+                          if product && product.avatar
+                            img(
+                              src=`${domainCDN}${product.avatar}` 
+                              alt="Avatar"
+                              width="50"
+                              height="50"
+                            )
+                          else
+                            img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
+                        td #{product && product.name ? product.name : 'Không có'}
+                        td 
+                          each category in product.categoryListName
+                            span.badge.bg-info.text-white.me-1 #{category}
+                        td
+                          if product && product.status === 'draft'
+                            span.badge.bg-success.text-white Nháp
+                          else if product && product.status === 'published'
+                            span.badge.bg-primary.text-white Công khai
+                          else if product && product.status === 'archived'
+                            span.badge.bg-danger.text-white Lưu trữ
+                          else
+                            span.badge.bg-light.text-dark Không xác định
+                        td #{product && typeof product.views !== 'undefined' ? product.views : 0}
+                        td.text-end
+                          if product && product._id
+                            a.btn.btn-sm.btn-primary.me-1(href=`/admin/products/product-edit/${product._id}`)
+                              i.fa-solid.fa-pen-to-square
+                            a.btn.btn-sm.btn-danger(
+                              href=`javascript:;`
+                              button-api
+                              data-method="PATCH"
+                              data-api=`/${pathAdmin}/products/product-delete/${product._id}`
+                              )
+                              i.fa-solid.fa-trash
+              +pagination()

@@ -1,13 +1,17 @@
 import { Request, Response } from "express";
 import slugify from "slugify";
 import Post from "../../models/posts.model";
-import Category from "../../models/categories.model";
+import PostCategory from "../../models/post-categories.model";
+import Product from "../../models/products.model";
+import ProductCategory from "../../models/product-categories.model";
 import { generateRandomString } from "../../helpers/generate.helper";
 
 // Khai báo map modelName với model tương ứng
 const modelMap: any = {
   Post: Post,
-  Category: Category,
+  PostCategory: PostCategory,
+  Product: Product,
+  ProductCategory: ProductCategory
 };
 
 export const POSTgenerateSlug = async (req: Request, res: Response) => {

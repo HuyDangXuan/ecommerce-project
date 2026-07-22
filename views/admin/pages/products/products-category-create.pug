@@ -3,14 +3,13 @@ include ../../mixins/options.pug
 include ../../mixins/form-group.pug
 
 block main 
-  if (permissions.includes('post-category-edit'))
+  if (permissions.includes('product-category-create'))
     .container
       .row
         .col-12
-          h1 Chỉnh sửa danh mục bài viết
+          h1 Tạo danh mục sản phẩm
       .card-body.pt-0
-        form(id="editCategoryForm")
-          input(type="hidden" name="id" value=category ? category._id : "")
+        form(id="createProductCategoryForm")
           .row
             .col-md-6.col-lg-6
               .mb-3
@@ -26,16 +25,12 @@ block main
                 label.form-label(for="slug") Đường dẫn *
                 .input-group
                   span.btn.btn-outline-info(
-                    btn-generate-slug="Category"
+                    btn-generate-slug="ProductCategory"
                     from="name"
                     to="slug"
-                    ) Tự động
-                  input.form-control(
-                    id="slug" 
-                    name="slug" 
-                    type="text"
                     value=category ? category.slug : ""
-                    )
+                    ) Tự động
+                  input.form-control(id="slug" name="slug" type="text")
             .col-md-6.col-lg-6
               .mb-3
                 label.form-label(for="status") Trạng thái
@@ -43,8 +38,8 @@ block main
                   id="status"
                   name="status"
                   )
-                    option(value="active" selected=category && category.status === 'active') Hoạt động
-                    option(value="inactive" selected=category && category.status === 'inactive') Dừng hoạt động
+                    option(value="active" selected=category && category.status === "active") Hoạt động
+                    option(value="inactive" selected=category && category.status === "inactive") Dừng hoạt động
             .col-md-6.col-lg-6
               .mb-3
                 label.form-label(for="parentCategory") Tên danh mục cha
@@ -59,8 +54,8 @@ block main
                 +form-group-file(
                   "Ảnh đại diện", 
                   "avatar", 
-                  "avatar",
-                  category.avatar, 
+                  "", 
+                  "avatar"
                   )
             .col-md-12.col-lg-12
               .mb-3
@@ -71,5 +66,9 @@ block main
                   rows="3"
                   textarea-mce
                   ) #{category ? category.description : ""}
-          button.btn.btn-primary(type="submit") Cập nhật
-          a.btn.btn-danger.ms-2(href=`/${pathAdmin}/posts/post-categories`) Hủy
+          button.btn.btn-primary(type="submit") Tạo mới
+          a.btn.btn-danger.ms-2(href=`/${pathAdmin}/products/product-category-list`) Hủy
+
+    //- Modal File Manager
+
+    //- End Modal File Manager

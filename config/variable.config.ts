@@ -95,4 +95,45 @@ export const permissionList = [
     name: "Đổi mật khẩu tài khoản quản trị"
   },
 
+  {
+    id: "product-management",
+    name: "Quản lý sản phẩm"
+  },
+  {
+    id: "product-list",
+    name: "Danh sách sản phẩm"
+  },
+  {
+    id: "product-create",
+    name: "Tạo sản phẩm"
+  },
+  {
+    id: "product-edit",
+    name: "Sửa sản phẩm"
+  },
+  {
+    id: "product-delete",
+    name: "Xóa sản phẩm"
+  },
+  {
+    id: "product-category-management",
+    name: "Quản lý danh mục sản phẩm"
+  },
+  {
+    id: "product-category-list",
+    name: "Danh sách danh mục sản phẩm"
+  },
+  {
+    id: "product-category-create",
+    name: "Tạo danh mục sản phẩm"
+  },
+  {
+    id: "product-category-edit",
+    name: "Sửa danh mục sản phẩm"
+  },
+  {
+    id: "product-category-delete",
+    name: "Xóa danh mục sản phẩm"
+  },
+
 ];

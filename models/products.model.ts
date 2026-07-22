@@ -4,13 +4,14 @@ const schema = new mongoose.Schema(
   {
     name: String,
     description: String,
-    parentCategory: String,
+    content: String,
+    category: [String],
     slug: String,
     avatar: String,
     status: {
       type: String,
-      enum: ['active', 'inactive'],
-      default: 'active',
+      enum: ['draft', 'published', 'archived'],
+      default: 'draft',
     },
     views: {
       type: Number,
@@ -22,12 +23,13 @@ const schema = new mongoose.Schema(
     },
     deletedAt: Date,
     search: String,
+    publishedAt: Date,
   },
   {
     timestamps: true,
   }
 );
 
-const Category = mongoose.model('Category', schema, "post-categories");
+const Products = mongoose.model('Products', schema, "products");
 
-export default Category;
+export default Products;

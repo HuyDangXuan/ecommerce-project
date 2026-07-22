@@ -81,6 +81,38 @@
                 // end nav
               // end startbarApplications
             // end nav-item
+          if (permissions.includes('product-management') || permissions.includes('product-category-management'))
+            li.nav-item
+              a.nav-link(
+                aria-controls="sidebarProducts" 
+                aria-expanded="false" 
+                role="button" 
+                data-bs-toggle="collapse" 
+                href="#sidebarProducts"
+                )
+                i.iconoir-shop-four-tiles.menu-icon
+                span Sản phẩm
+              #sidebarProducts.collapse
+                ul.nav.flex-column
+                  if (permissions.includes('product-create'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/products/product-create`) Tạo sản phẩm
+                    // end nav-item
+                  if (permissions.includes('product-category-create'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/products/product-category-create`) Tạo danh mục sản phẩm
+                    // end nav-item
+                  if (permissions.includes('product-list'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/products/product-list`) Danh sách sản phẩm
+                  // end nav-item
+                  if (permissions.includes('product-category-list'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/products/product-category-list`) Danh sách danh mục sản phẩm
+                  // end nav-item
+                // end nav
+              // end startbarProducts
+            // end nav-item
           if (permissions.includes('file-manager'))
             li.nav-item
               a.nav-link(
@@ -98,7 +130,7 @@
                 data-bs-toggle="collapse" 
                 href="#sidebarRoles"
                 )
-                i.iconoir-view-grid.menu-icon
+                i.iconoir-handbag.menu-icon
                 span Nhóm quyền
               #sidebarRoles.collapse
                 ul.nav.flex-column
