@@ -4,6 +4,7 @@ import Category from '../../models/categories.model'
 import buildCategoryTree from '../../helpers/category.helper'
 import { pathAdmin } from '../../config/variable.config'
 import slugify from 'slugify';
+import { logAdminAction } from '../../helpers/log.helper';
 
 // POST
 
@@ -107,6 +108,8 @@ export const POSTcreatePost = async (req: Request, res: Response) => {
     const newRecord = new Post(req.body);
     await newRecord.save();
 
+    logAdminAction(req, `Tạo bài viết: ${newRecord.name} (ID: ${newRecord.id})`);
+
     res.json({
       code: "success",
       message: "Bài viết đã được tạo thành công",
@@ -174,6 +177,8 @@ export const PATCHeditPost = async (req: Request, res: Response) => {
 
     await Post.findByIdAndUpdate(postId, req.body);
 
+    logAdminAction(req, `Cập nhật bài viết: ${post.name} (ID: ${post.id})`);
+
     res.json({
       code: "success",
       message: "Bài viết đã được cập nhật thành công",
@@ -204,6 +209,8 @@ export const PATCHdeletePost = async (req: Request, res: Response) => {
        deleted: true,
        deletedAt: new Date(),
       });
+
+    logAdminAction(req, `Xóa bài viết: ${post.name} (ID: ${post.id})`);
 
     res.json({
       code: "success",
@@ -313,6 +320,8 @@ export const POSTcreateCategory = async (req: Request, res: Response) => {
     const newRecord = new Category(req.body);
     await newRecord.save();
 
+    logAdminAction(req, `Tạo danh mục: ${newRecord.name} (ID: ${newRecord.id})`);
+
     res.json({
       code: "success",
       message: "Danh mục đã được tạo thành công",
@@ -408,6 +417,8 @@ export const PATCHdeleteCategory = async (req: Request, res: Response) => {
       deleted: true,
       deletedAt: new Date()
     });
+
+    logAdminAction(req, `Xóa danh mục: ${category.name} (ID: ${category.id})`);
 
     res.json({
       code: "success",

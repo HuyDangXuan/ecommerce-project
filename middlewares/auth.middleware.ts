@@ -3,8 +3,9 @@ import jwt from 'jsonwebtoken';
 import AccountAdmin from '../models/account-admin.model';
 import { pathAdmin, permissionList } from '../config/variable.config';
 import Role from '../models/roles.model';
+import { RequestAccount } from '../interfaces/request.interface';
 
-export const verifyTokenAdmin = async (req: Request, res: Response, next: NextFunction) => {
+export const verifyTokenAdmin = async (req: RequestAccount, res: Response, next: NextFunction) => {
   try {
     const token = req.cookies.token;
 
@@ -20,7 +21,12 @@ export const verifyTokenAdmin = async (req: Request, res: Response, next: NextFu
         email: process.env.SUPER_ADMIN_EMAIL,
         fullName: 'Super Admin',
         avatar: '',
-      }
+      };
+
+      res.locals.permissions = permissionList.map(item => item.id);
+
+      req.adminId = decoded.id;
+
     } else {
 
       const existAccount = await AccountAdmin.findOne(
@@ -55,6 +61,8 @@ export const verifyTokenAdmin = async (req: Request, res: Response, next: NextFu
         }
       }
       res.locals.permissions = permissions;
+
+      req.adminId = decoded.id;
     };
 
     next();
@@ -70,7 +78,7 @@ export const checkPermission = (permission: string) => {
       next();
     } else {
       res.json({
-        status: 'error',
+        code: 'error',
         message: 'Bạn không có quyền truy cập vào chức năng này'
       });
     }
