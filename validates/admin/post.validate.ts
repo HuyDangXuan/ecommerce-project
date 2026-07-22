@@ -62,6 +62,9 @@ export const editPost = (req: Request, res: Response, next: NextFunction) => {
 
 export const createCategory = (req: Request, res: Response, next: NextFunction) => {
   const schema = Joi.object({
+    name: Joi.string().required().messages({
+      'string.empty': 'Tên danh mục không được để trống',
+    }),
     description: Joi.string().allow(''),
     parentCategory: Joi.string().allow(''),
     slug: Joi.string().required().messages({
