@@ -83,3 +83,20 @@
   background-color: #C8EBFB;
 }
 /* End form-multi-file */
+
+/* option-list */
+.option-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-item {
+  display: flex;
+  gap: 10px;
+}
+
+.option-item input {
+  flex: 1;
+}
+/* End option-list */

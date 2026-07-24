@@ -1,0 +1,15 @@
+mixin box-option(name, options=[])
+  div(class="box-option" box-option=name)
+    div(class="option-list")
+      if (options.length > 0)
+        each option in options
+          div(class="option-item")
+            input.form-control(type="text" class="option-label" value=option.label placeholder="Tên lựa chọn")
+            input.form-control(type="text" class="option-value" value=option.value placeholder="Giá trị lựa chọn")
+            span(class="btn btn-outline-danger option-delete") Xóa
+      else
+        div(class="option-item")
+          input.form-control(type="text" class="option-label" placeholder="Tên lựa chọn")
+          input.form-control(type="text" class="option-value" placeholder="Giá trị lựa chọn")
+          span(class="btn btn-outline-danger option-delete") Xóa
+    span(class="btn btn-outline-info mt-2 option-create") Thêm lựa chọn

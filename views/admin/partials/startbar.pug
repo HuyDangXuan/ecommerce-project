@@ -110,6 +110,14 @@
                     li.nav-item
                       a.nav-link(href=`/${pathAdmin}/products/product-category-list`) Danh sách danh mục sản phẩm
                   // end nav-item
+                  if (permissions.includes('product-attribute'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/products/product-attribute-list`) Danh sách thuộc tính sản phẩm
+                  // end nav-item
+                  if (permissions.includes('product-attribute-create'))
+                    li.nav-item
+                      a.nav-link(href=`/${pathAdmin}/products/product-attribute-create`) Tạo thuộc tính sản phẩm
+                  // end nav-item
                 // end nav
               // end startbarProducts
             // end nav-item

@@ -1,0 +1,31 @@
+extends ../../layouts/default.pug
+include ../../mixins/box-option.pug
+
+block main
+  .card
+    .card-header
+      .row.align-items-center
+        .col
+          h4.card-title #{pageTitle}
+    .card-body.pt-0
+      form(id="productEditAttributeForm")
+        input(type="hidden" name="id" value=attribute.id)
+        .row
+          .col-md-6.col-lg-6
+            .mb-3
+              label.form-label(for="name") Tên thuộc tính *
+              input.form-control(id="name" type="text" name="name" value=attribute.name)
+          .col-md-6.col-lg-6
+            .mb-3
+              label.form-label(for="type") Kiểu hiển thị
+              select.form-select(id="type" name="type")
+                option(value="") -- Chọn kiểu hiển thị --
+                option(value="text" selected=attribute.type === "text") text
+                option(value="select" selected=attribute.type === "select") select
+                option(value="color" selected=attribute.type === "color") color
+          .col-md-12.col-lg-12
+            .mb-3
+              label.form-label(for="description") Danh sách lựa chọn
+              +box-option("options", attribute.options)
+        button.btn.btn-primary(type="submit") Cập nhật
+        a.btn.btn-danger.ms-1(href=`/${pathAdmin}/products/product-attribute-list`) Hủy

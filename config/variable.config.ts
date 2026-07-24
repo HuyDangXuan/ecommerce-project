@@ -135,5 +135,21 @@ export const permissionList = [
     id: "product-category-delete",
     name: "Xóa danh mục sản phẩm"
   },
+  {
+    id: "product-attribute",
+    name: "Quản lý thuộc tính sản phẩm"
+  },
+  {
+    id: "product-attribute-create",
+    name: "Tạo thuộc tính sản phẩm"
+  },
+  {
+    id: "product-attribute-edit",
+    name: "Sửa thuộc tính sản phẩm"
+  },
+  {
+    id: "product-attribute-delete",
+    name: "Xóa thuộc tính sản phẩm"
+  },
 
 ];

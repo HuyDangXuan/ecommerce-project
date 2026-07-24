@@ -28,4 +28,15 @@ router.get('/product-category-edit/:id', checkPermission('product-category-edit'
 router.patch('/product-category-edit/:id', checkPermission('product-category-edit'), upload.none(), productController.PATCHeditProductCategory);
 
 router.patch('/product-category-delete/:id', checkPermission('product-category-delete'), productController.PATCHdeleteProductCategory);
+
+
+router.get('/product-attribute-list', checkPermission('product-attribute'), productController.GETproductAttributeList);
+
+router.get('/product-attribute-create', checkPermission('product-attribute'), productValidate.createProductAttribute, productController.GETcreateProductAttribute);
+router.post('/product-attribute-create', checkPermission('product-attribute'), upload.none(), productController.POSTcreateProductAttribute);
+
+router.get('/product-attribute-edit/:id', checkPermission('product-attribute'), productValidate.createProductAttribute, productController.GETeditProductAttribute);
+router.patch('/product-attribute-edit/:id', checkPermission('product-attribute'), upload.none(), productController.PATCHeditProductAttribute);
+
+router.patch('/product-attribute-delete/:id', checkPermission('product-attribute'), productController.PATCHdeleteProductAttribute);
 export default router;
