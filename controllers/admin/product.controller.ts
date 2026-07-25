@@ -84,6 +84,7 @@ export const GETcreateProduct = async (req: Request, res: Response) => {
 
 export const POSTcreateProduct = async (req: Request, res: Response) => {
   try {
+
     const existingProduct = await Products.findOne({ slug: req.body.slug });
     if (existingProduct) {
       res.json({
@@ -96,6 +97,16 @@ export const POSTcreateProduct = async (req: Request, res: Response) => {
     req.body.category = JSON.parse(req.body.category);
 
     req.body.images = JSON.parse(req.body.images);
+
+    if (req.body.priceOld) {
+      req.body.priceOld = parseInt(`${req.body.priceOld}`);
+    }
+
+    if (req.body.priceNew) {
+      req.body.priceNew = parseInt(`${req.body.priceNew}`);
+    } else {
+      req.body.priceNew = parseInt(`${req.body.priceOld}`);
+    }
 
     req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
       {
@@ -434,6 +445,7 @@ export const PATCHdeleteProductCategory = async (req: Request, res: Response) =>
   }
 }
 
+// PRODUCT ATTRIBUTES
 
 export const GETproductAttributeList = async (req: Request, res: Response) => {
   const find: {

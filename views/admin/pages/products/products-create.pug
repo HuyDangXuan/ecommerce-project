@@ -45,6 +45,22 @@ block main
                 label.form-label(for="category") Danh mục
                 div(class="checkbox-list" checkbox-list="category")
                   +checkbox(categories)
+            .col-md-6.col-lg-6
+              .mb-3 
+                label.form-label(for="priceOld") Giá cũ *
+                input.form-control(
+                  id="priceOld"
+                  name="priceOld"
+                  type="number"
+                  )
+            .col-md-6.col-lg-6
+              .mb-3 
+                label.form-label(for="priceNew") Giá sản phẩm *
+                input.form-control(
+                  id="priceNew"
+                  name="priceNew"
+                  type="number"
+                  )
             .col-md-12.col-lg-12
               .mb-3
                 label.form-label Danh sách ảnh

@@ -6,8 +6,10 @@ const schema = new mongoose.Schema(
     description: String,
     content: String,
     category: [String],
+    priceOld: Number,
+    priceNew: Number,
     slug: String,
-    avatar: String,
+    images: [String],
     status: {
       type: String,
       enum: ['draft', 'published', 'archived'],

@@ -8,6 +8,8 @@ export const createProduct = (req: Request, res: Response, next: NextFunction) =
     }),
     description: Joi.string().allow(''),
     category: Joi.string().allow(''),
+    priceOld: Joi.string().allow(''),
+    priceNew: Joi.string().allow(''),
     content: Joi.string().allow(''),
     images: Joi.string().allow(''),
     slug: Joi.string().required().messages({
