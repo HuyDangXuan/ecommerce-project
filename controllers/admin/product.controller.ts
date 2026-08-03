@@ -76,9 +76,14 @@ export const GETcreateProduct = async (req: Request, res: Response) => {
   const categories = await ProductCategory.find();
   const categoryTree = buildCategoryTree(categories, "");
 
+  const attributeList = await AttributeProduct.find({
+    deleted: false
+  });
+
   res.render('admin/pages/products/products-create', {
     title: 'Tạo sản phẩm',
-    categories: categoryTree
+    categories: categoryTree,
+    attributeList: attributeList
   })
 }
 
@@ -114,6 +119,10 @@ export const POSTcreateProduct = async (req: Request, res: Response) => {
         lower: true,
       }
     );
+
+    req.body.attributes = JSON.parse(req.body.attributes);
+
+    req.body.variants = JSON.parse(req.body.variants);
 
     if (req.body.status === 'published') {
       req.body.publishedAt = new Date();

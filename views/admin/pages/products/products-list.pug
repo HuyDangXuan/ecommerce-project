@@ -126,7 +126,7 @@ block main
                               height="50"
                             )
                           else
-                            img.avatar-sm.rounded-circle(src="/admin/assets/images/default-avatar.png" alt="Avatar")
+                            img.avatar-sm.rounded-circle(src=`/${pathAdmin}/assets/images/default-avatar.png" alt="Avatar`)
                         td #{product && product.name ? product.name : 'Không có'}
                         td 
                           each category in product.categoryListName
@@ -143,7 +143,7 @@ block main
                         td #{product && typeof product.views !== 'undefined' ? product.views : 0}
                         td.text-end
                           if product && product._id
-                            a.btn.btn-sm.btn-primary.me-1(href=`/admin/products/product-edit/${product._id}`)
+                            a.btn.btn-sm.btn-primary.me-1(href=`/${pathAdmin}/products/product-edit/${product._id}`)
                               i.fa-solid.fa-pen-to-square
                             a.btn.btn-sm.btn-danger(
                               href=`javascript:;`

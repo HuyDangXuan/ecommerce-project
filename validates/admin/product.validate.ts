@@ -12,6 +12,8 @@ export const createProduct = (req: Request, res: Response, next: NextFunction) =
     priceNew: Joi.string().allow(''),
     content: Joi.string().allow(''),
     images: Joi.string().allow(''),
+    attributes: Joi.string().allow(''),
+    variants: Joi.string().allow(''),
     slug: Joi.string().required().messages({
       'string.empty': 'Slug không được để trống',
     }),
