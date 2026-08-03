@@ -147,7 +147,28 @@ export const POSTcreateProduct = async (req: Request, res: Response) => {
 
 export const GETeditProduct = async (req: Request, res: Response) => {
   const productId = req.params.id;
-  const product = await Products.findById(productId);
+  const product = await Products.findOne({ 
+    _id: productId,
+    deleted: false
+  });
+
+  if (!product) {
+    res.redirect(`${pathAdmin}/products/product-list`);
+    return;
+  }
+
+  const attributeList = await AttributeProduct.find({
+    deleted: false
+  });
+
+  const attributeNameList: string[] = [];
+
+  product.attributes.forEach((attribute: string) => {
+    const attributeInfo = attributeList.find(item => item.id == attribute);
+    if (attributeInfo) {
+      attributeNameList.push(`${attributeInfo.name}`);
+    }
+  });
 
   if (!product) {
     res.redirect(`${pathAdmin}/products/product-list`);
@@ -160,6 +181,8 @@ export const GETeditProduct = async (req: Request, res: Response) => {
   res.render('admin/pages/products/products-edit', {
     title: 'Chỉnh sửa sản phẩm',
     categories: categoryTree,
+    attributeList: attributeList,
+    attributeNameList: attributeNameList,
     product: product
   })
 }
@@ -167,7 +190,10 @@ export const GETeditProduct = async (req: Request, res: Response) => {
 export const PATCHeditProduct = async (req: Request, res: Response) => {
   try {
     const productId = req.params.id;
-    const product = await Products.findById(productId);
+    const product = await Products.findOne({ 
+      _id: productId,
+      deleted: false
+    });
 
     if (!product) {
       res.json({
@@ -218,7 +244,10 @@ export const PATCHeditProduct = async (req: Request, res: Response) => {
 export const PATCHdeleteProduct = async (req: Request, res: Response) => {
   try {
     const productId = req.params.id;
-    const product = await Products.findById(productId);
+    const product = await Products.findOne({ 
+      _id: productId,
+      deleted: false
+    });
 
     if (!product) {
       res.json({
@@ -357,7 +386,10 @@ export const POSTcreateProductCategory = async (req: Request, res: Response) => 
 
 export const GETeditProductCategory = async (req: Request, res: Response) => {
   const categoryId = req.params.id;
-  const category = await ProductCategory.findById(categoryId);
+  const category = await ProductCategory.findOne({ 
+    _id: categoryId,
+    deleted: false
+  });
 
   if (!category) {
     res.redirect(`${pathAdmin}/products/products-category-list`);
@@ -377,7 +409,10 @@ export const GETeditProductCategory = async (req: Request, res: Response) => {
 export const PATCHeditProductCategory = async (req: Request, res: Response) => {
   try {
     const categoryId = req.params.id;
-    const category = await ProductCategory.findById(categoryId);
+    const category = await ProductCategory.findOne({ 
+      _id: categoryId,
+      deleted: false
+    });
 
     if (!category) {
       res.json({
@@ -547,7 +582,10 @@ export const POSTcreateProductAttribute = async (req: Request, res: Response) =>
 
 export const GETeditProductAttribute = async (req: Request, res: Response) => {
   const attributeId = req.params.id;
-  const attribute = await AttributeProduct.findById(attributeId);
+  const attribute = await AttributeProduct.findOne({ 
+    _id: attributeId,
+    deleted: false
+  });
 
   if (!attribute) {
     res.redirect(`${pathAdmin}/products/product-attribute-list`);
@@ -563,7 +601,10 @@ export const GETeditProductAttribute = async (req: Request, res: Response) => {
 export const PATCHeditProductAttribute = async (req: Request, res: Response) => {
   try {
     const attributeId = req.params.id;
-    const attribute = await AttributeProduct.findById(attributeId);
+    const attribute = await AttributeProduct.findOne({ 
+      _id: attributeId,
+      deleted: false
+    });
 
     if (!attribute) {
       res.json({
@@ -605,7 +646,10 @@ export const PATCHeditProductAttribute = async (req: Request, res: Response) => 
 export const PATCHdeleteProductAttribute = async (req: Request, res: Response) => {
   try {
     const attributeId = req.params.id;
-    const attribute = await AttributeProduct.findById(attributeId);
+    const attribute = await AttributeProduct.findOne({ 
+      _id: attributeId,
+      deleted: false
+    });
 
     if (!attribute) {
       res.json({

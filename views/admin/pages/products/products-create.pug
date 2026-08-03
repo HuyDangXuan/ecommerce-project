@@ -22,6 +22,14 @@ block main
                   )
             .col-md-6.col-lg-6
               .mb-3
+                label.form-label(for="position") Vị trí
+                input.form-control(
+                  id="position"
+                  name="position"
+                  type="number"
+                  )
+            .col-md-6.col-lg-6
+              .mb-3
                 label.form-label(for="slug") Đường dẫn *
                 .input-group
                   span.btn.btn-outline-info(
@@ -30,6 +38,14 @@ block main
                     to="slug"
                   ) Tự động
                   input.form-control(id="slug" name="slug" type="text")
+            .col-md-6.col-lg-6
+              .mb-3
+                label.form-label(for="stock") Còn lại
+                input.form-control(
+                  id="stock"
+                  name="stock"
+                  type="number"
+                  )
             .col-md-6.col-lg-6
               .mb-3
                 label.form-label(for="status") Trạng thái

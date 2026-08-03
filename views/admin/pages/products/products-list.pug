@@ -103,12 +103,15 @@ block main
                       th.ps-0 STT
                       th Avatar
                       th Tên sản phẩm
+                      th Vị trí
+                      th Số biến thể
                       th Danh mục
+                      th Còn lại
                       th Trạng thái
                       th Lượt xem
                       th.text-end Hành động
                   tbody
-                    each product, index in (products || [])
+                    each product, index in products
                       tr
                         td
                           .form-check.mb-0
@@ -118,9 +121,9 @@ block main
                               )
                         td #{pagination.skip + index + 1}
                         td
-                          if product && product.avatar
+                          if product && product.images && product.images.length > 0
                             img(
-                              src=`${domainCDN}${product.avatar}` 
+                              src=`${domainCDN}${product.images[0]}` 
                               alt="Avatar"
                               width="50"
                               height="50"
@@ -128,9 +131,15 @@ block main
                           else
                             img.avatar-sm.rounded-circle(src=`/${pathAdmin}/assets/images/default-avatar.png" alt="Avatar`)
                         td #{product && product.name ? product.name : 'Không có'}
-                        td 
-                          each category in product.categoryListName
-                            span.badge.bg-info.text-white.me-1 #{category}
+                        td #{product && typeof product.position !== 'undefined' ? product.position : 0}
+                        td #{product && product.variants ? product.variants.length : 0}
+                        td
+                          if !product.categoryListName || product.categoryListName.length <= 0
+                            span.badge.bg-light.text-dark Không có
+                          else
+                            each category in product.categoryListName
+                              span.badge.bg-info.text-white.me-1 #{category}
+                        td #{product && product.stock !== 'undefined' ? product.stock : 0}
                         td
                           if product && product.status === 'draft'
                             span.badge.bg-success.text-white Nháp

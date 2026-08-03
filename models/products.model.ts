@@ -4,12 +4,14 @@ const schema = new mongoose.Schema(
   {
     name: String,
     description: String,
+    position: Number,
     content: String,
     category: [String],
     priceOld: Number,
     priceNew: Number,
     attributes: Array,
     variants: Array,
+    stock: Number,
     slug: String,
     images: [String],
     status: {

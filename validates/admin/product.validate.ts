@@ -7,6 +7,8 @@ export const createProduct = (req: Request, res: Response, next: NextFunction) =
       'string.empty': 'Tiêu đề sản phẩm không được để trống',
     }),
     description: Joi.string().allow(''),
+    position: Joi.number().allow(''),
+    stock: Joi.number().allow(''),
     category: Joi.string().allow(''),
     priceOld: Joi.string().allow(''),
     priceNew: Joi.string().allow(''),
