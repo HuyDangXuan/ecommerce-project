@@ -29,6 +29,7 @@ block main
                   id="position"
                   name="position"
                   type="number"
+                  value=product ? product.position : ""
                   )
             .col-md-6.col-lg-6
               .mb-3
@@ -94,7 +95,7 @@ block main
                   button-render-variant="attributes"
                 ) Tạo biến thể
                 script.
-                  const attributeList = !{JSON.stringify(attributeList)};
+                  const attributelist = !{JSON.stringify(attributeList)};
             .col-md-12.col-lg-12
               .mb-3
                 label.form-label Danh sách biến thể
@@ -118,7 +119,8 @@ block main
                                 type="checkbox"
                                 checked=variant.status
                                 )
-                          each attr in variant.attributeValue
+                            input.d-none(attribute-value value=JSON.stringify(variant.attributeValue || []))
+                          each attr in (variant.attributeValue || [])
                             td #{attr.label}
                           td
                             input.form-control(

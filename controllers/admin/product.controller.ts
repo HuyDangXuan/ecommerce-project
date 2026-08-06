@@ -101,6 +101,10 @@ export const POSTcreateProduct = async (req: Request, res: Response) => {
 
     req.body.category = JSON.parse(req.body.category);
 
+    req.body.stock = parseInt(`${req.body.stock}`);
+
+    req.body.position = parseInt(`${req.body.position}`);
+
     req.body.images = JSON.parse(req.body.images);
 
     if (req.body.priceOld) {
@@ -146,45 +150,50 @@ export const POSTcreateProduct = async (req: Request, res: Response) => {
 }
 
 export const GETeditProduct = async (req: Request, res: Response) => {
-  const productId = req.params.id;
-  const product = await Products.findOne({ 
-    _id: productId,
-    deleted: false
-  });
+  try {
+    const productId = req.params.id;
+    const product = await Products.findOne({ 
+      _id: productId,
+      deleted: false
+    });
 
-  if (!product) {
-    res.redirect(`${pathAdmin}/products/product-list`);
-    return;
-  }
-
-  const attributeList = await AttributeProduct.find({
-    deleted: false
-  });
-
-  const attributeNameList: string[] = [];
-
-  product.attributes.forEach((attribute: string) => {
-    const attributeInfo = attributeList.find(item => item.id == attribute);
-    if (attributeInfo) {
-      attributeNameList.push(`${attributeInfo.name}`);
+    if (!product) {
+      res.redirect(`${pathAdmin}/products/product-list`);
+      return;
     }
-  });
 
-  if (!product) {
+    const attributeList = await AttributeProduct.find({
+      deleted: false
+    });
+
+    const attributeNameList: string[] = [];
+
+    product.attributes.forEach((attribute: string) => {
+      const attributeInfo = attributeList.find(item => item.id == attribute);
+      if (attributeInfo) {
+        attributeNameList.push(`${attributeInfo.name}`);
+      }
+    });
+
+    if (!product) {
+      res.redirect(`${pathAdmin}/products/product-list`);
+      return;
+    }
+
+    const categories = await ProductCategory.find();
+    const categoryTree = buildCategoryTree(categories, "");
+
+    res.render('admin/pages/products/products-edit', {
+      title: 'Chỉnh sửa sản phẩm',
+      categories: categoryTree,
+      attributeList: attributeList,
+      attributeNameList: attributeNameList,
+      product: product
+    })
+  } catch (error) {
+    console.error(error);
     res.redirect(`${pathAdmin}/products/product-list`);
-    return;
   }
-
-  const categories = await ProductCategory.find();
-  const categoryTree = buildCategoryTree(categories, "");
-
-  res.render('admin/pages/products/products-edit', {
-    title: 'Chỉnh sửa sản phẩm',
-    categories: categoryTree,
-    attributeList: attributeList,
-    attributeNameList: attributeNameList,
-    product: product
-  })
 }
 
 export const PATCHeditProduct = async (req: Request, res: Response) => {
@@ -215,7 +224,43 @@ export const PATCHeditProduct = async (req: Request, res: Response) => {
       return;
     }
 
+    if (req.body.position) {
+      req.body.position = parseInt(`${req.body.position}`);
+    } else {
+      const maxPositionProduct = await Products
+        .findOne()
+        .sort({ 
+          position: "desc"
+        });
+
+      if (maxPositionProduct && maxPositionProduct.position) {
+        req.body.position = maxPositionProduct.position + 1;
+      } else {
+        req.body.position = 1;
+      }
+    }    
+
     req.body.category = JSON.parse(req.body.category);
+
+    req.body.images = JSON.parse(req.body.images);
+
+    if (req.body.stock) {
+      req.body.stock = parseInt(`${req.body.stock}`);
+    }
+
+    if (req.body.attributes) {
+      req.body.attributes = JSON.parse(req.body.attributes);
+    }
+
+    if (req.body.priceOld) {
+      req.body.priceOld = parseInt(`${req.body.priceOld}`);
+    }
+
+    if (req.body.priceNew) {
+      req.body.priceNew = parseInt(`${req.body.priceNew}`);
+    } else {
+      req.body.priceNew = parseInt(`${req.body.priceOld}`);
+    }
 
     req.body.search = slugify(`${req.body.name} ${req.body.slug}`, 
       {
@@ -224,7 +269,11 @@ export const PATCHeditProduct = async (req: Request, res: Response) => {
       }
     );
 
+    req.body.variants = JSON.parse(req.body.variants);
+
     await Products.findByIdAndUpdate(productId, req.body);
+
+    // console.log('req.body', req.body);
 
     logAdminAction(req, `Cập nhật sản phẩm: ${product.name} (ID: ${product.id})`);
 
