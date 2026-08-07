@@ -18,4 +18,6 @@ router.patch('/role-edit/:id', checkPermission('role-edit'), upload.none(), role
 
 router.patch('/role-delete/:id', checkPermission('role-delete'), roleController.PATCHroleDelete)
 
+router.get('/role/export/csv', checkPermission('role-export'), roleController.GETexportRoleCSV)
+
 export default router;

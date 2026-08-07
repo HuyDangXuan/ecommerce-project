@@ -15,6 +15,7 @@ router.post('/product-create', checkPermission('product-create'), upload.none(),
 router.get('/product-edit/:id', checkPermission('product-edit'), productValidate.createProduct, productController.GETeditProduct);
 router.patch('/product-edit/:id', checkPermission('product-edit'), upload.none(), productValidate.createProduct, productController.PATCHeditProduct);
 router.patch('/product-delete/:id', checkPermission('product-delete'), productController.PATCHdeleteProduct);
+router.get('/product/export/csv', checkPermission('product-export'), productController.GETexportProductCSV);
 
 // PRODUCT CATEGORY
 router.get('/product-category-list', checkPermission('product-category-list'), productController.GETproductCategoryList);
@@ -23,6 +24,7 @@ router.post('/product-category-create', checkPermission('product-category-create
 router.get('/product-category-edit/:id', checkPermission('product-category-edit'), productValidate.createProductCategory, productController.GETeditProductCategory);
 router.patch('/product-category-edit/:id', checkPermission('product-category-edit'), upload.none(), productValidate.createProductCategory, productController.PATCHeditProductCategory);
 router.patch('/product-category-delete/:id', checkPermission('product-category-delete'), productController.PATCHdeleteProductCategory);
+router.get('/product-category/export/csv', checkPermission('product-category-export'), productController.GETexportProductCategoryCSV);
 
 // PRODUCT ATTRIBUTE
 router.get('/product-attribute-list', checkPermission('product-attribute'), productController.GETproductAttributeList);
@@ -31,4 +33,6 @@ router.post('/product-attribute-create', checkPermission('product-attribute'), u
 router.get('/product-attribute-edit/:id', checkPermission('product-attribute'), productValidate.createProductAttribute, productController.GETeditProductAttribute);
 router.patch('/product-attribute-edit/:id', checkPermission('product-attribute'), upload.none(), productValidate.createProductAttribute, productController.PATCHeditProductAttribute);
 router.patch('/product-attribute-delete/:id', checkPermission('product-attribute'), productController.PATCHdeleteProductAttribute);
+router.get('/product-attribute/export/csv', checkPermission('product-attribute'), productController.GETexportProductAttributeCSV);
+
 export default router;

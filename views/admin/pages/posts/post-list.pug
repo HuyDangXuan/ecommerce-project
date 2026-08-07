@@ -10,86 +10,15 @@ block main
             .card-header
               .row.align-items-center
                 .col
-                  h4.card-title Bài viết
-                // end col
-                .col-auto
-                  form.row.g-2
-                    //- .col-auto
-                    //-   a.btn.bg-primary-subtle.text-primary.dropdown-toggle.d-flex.align-items-center.arrow-none(
-                    //-     data-bs-auto-close="outside" 
-                    //-     aria-expanded="false" 
-                    //-     aria-haspopup="false" 
-                    //-     role="button" 
-                    //-     href="#" 
-                    //-     data-bs-toggle="dropdown"
-                    //-     )
-                    //-     i.iconoir-filter-alt.me-1
-                    //-     | Filter
-                    //-   .dropdown-menu.dropdown-menu-start
-                    //-     .p-2
-                    //-       .form-check.mb-2
-                    //-         input#filter-all.form-check-input(
-                    //-           checked="" 
-                    //-           type="checkbox"
-                    //-           )
-                    //-         label.form-check-label(for="filter-all") All
-                    //-       .form-check.mb-2
-                    //-         input#filter-one.form-check-input(
-                    //-           checked="" 
-                    //-           type="checkbox"
-                    //-           )
-                    //-         label.form-check-label(for="filter-one") Fashion
-                    //-       .form-check.mb-2
-                    //-         input#filter-two.form-check-input(
-                    //-           checked="" 
-                    //-           type="checkbox"
-                    //-           )
-                    //-         label.form-check-label(for="filter-two") Plants
-                    //-       .form-check.mb-2
-                    //-         input#filter-three.form-check-input(
-                    //-           checked="" 
-                    //-           type="checkbox"
-                    //-           )
-                    //-         label.form-check-label(for="filter-three") Toys
-                    //-       .form-check.mb-2
-                    //-         input#filter-four.form-check-input(
-                    //-           checked="" 
-                    //-           type="checkbox"
-                    //-           )
-                    //-         label.form-check-label(for="filter-four") Gadgets
-                    //-       .form-check.mb-2
-                    //-         input#filter-five.form-check-input(
-                    //-           checked="" 
-                    //-           type="checkbox"
-                    //-           )
-                    //-         label.form-check-label(for="filter-five") Food
-                    //-       .form-check
-                    //-         input#filter-six.form-check-input(
-                    //-           checked="" 
-                    //-           type="checkbox"
-                    //-           )
-                    //-         label.form-check-label(for="filter-six") Drinks
-                    //- // end col
-                    //- .col-auto
-                    //-   button.btn.btn-primary(
-                    //-     data-bs-target="#addBoard" 
-                    //-     data-bs-toggle="modal" 
-                    //-     type="button"
-                    //-     )
-                    //-     i.fa-solid.fa-plus.me-1
-                    //-     | Add Product
-                    //- // end col
-                // end col
-              // end row
-            // end card-header
-            form.input-group.mb-3(form-search)
-              input.form-control(
-                placeholder="Tìm kiếm bài viết..." 
-                type="text"
-                name="keyword"
-                )
-              button.btn.btn-secondary Tìm kiếm
+                  h4.card-title #{title}
             .card-body.pt-0
+              .row
+                .col-lg-6
+                  +form-search()
+                .col-lg-2
+                  a.btn.w-100.btn-info(href=`/${pathAdmin}/posts/post/export/csv`)
+                    i.fa-solid.fa-download.me-1
+                    | Xuất Excel
               .table-responsive
                 table.table.mb-0.checkbox-all(id="datatable_1")
                   thead.table-light

@@ -6,6 +6,7 @@ import { pathAdmin } from '../../config/variable.config'
 import slugify from 'slugify';
 import { logAdminAction } from '../../helpers/log.helper';
 import AttributeProduct from '../../models/attribute-product.model'
+import { Parser } from 'json2csv';
 
 // PRODUCTS
 
@@ -273,8 +274,6 @@ export const PATCHeditProduct = async (req: Request, res: Response) => {
 
     await Products.findByIdAndUpdate(productId, req.body);
 
-    // console.log('req.body', req.body);
-
     logAdminAction(req, `Cập nhật sản phẩm: ${product.name} (ID: ${product.id})`);
 
     res.json({
@@ -325,6 +324,27 @@ export const PATCHdeleteProduct = async (req: Request, res: Response) => {
     })
   }
 }
+
+export const GETexportProductCSV = async (req: Request, res: Response) => {
+  try {
+    const products = await Products.find().lean();
+
+    const parser = new Parser();
+    const csv = parser.parse(products);
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=products.csv');
+
+    res.write('\uFEFF');
+
+    res.end(csv);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 
 // PRODUCT CATEGORIES
 
@@ -538,6 +558,26 @@ export const PATCHdeleteProductCategory = async (req: Request, res: Response) =>
   }
 }
 
+export const GETexportProductCategoryCSV = async (req: Request, res: Response) => {
+  try {
+    const products = await ProductCategory.find().lean();
+
+    const parser = new Parser();
+    const csv = parser.parse(products);
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=productCategories.csv');
+
+    res.write('\uFEFF');
+
+    res.end(csv);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // PRODUCT ATTRIBUTES
 
 export const GETproductAttributeList = async (req: Request, res: Response) => {
@@ -728,5 +768,25 @@ export const PATCHdeleteProductAttribute = async (req: Request, res: Response) =
       code: "error",
       message: "Dữ liệu không hợp lệ",
     });
+  }
+}
+
+export const GETexportProductAttributeCSV = async (req: Request, res: Response) => {
+  try {
+    const products = await AttributeProduct.find().lean();
+
+    const parser = new Parser();
+    const csv = parser.parse(products);
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=productsAttributes.csv');
+
+    res.write('\uFEFF');
+
+    res.end(csv);
+
+  } catch (error) {
+    console.error(error);
   }
 }

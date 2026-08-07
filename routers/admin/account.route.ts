@@ -34,5 +34,7 @@ router.patch('/account-change-password/:id',
   accountValidate.changePasswordAccount, 
   accountController.PATCHaccountChangePassword)
 
+router.get('/account/export/csv', checkPermission('account-admin-export'), accountController.GETexportAccountCSV)
+
 
 export default router;

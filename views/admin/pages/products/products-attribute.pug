@@ -9,7 +9,7 @@ block main
         .card-header
           .row.align-items-center
             .col
-              h4.card-title #{pageTitle}
+              h4.card-title #{title}
             // end col
             .col-auto
               a.btn.btn-primary(
@@ -25,6 +25,10 @@ block main
           .row
             .col-lg-6
               +form-search()
+            .col-lg-2
+              a.btn.w-100.btn-info(href=`/${pathAdmin}/products/product-attribute/export/csv`)
+                i.fa-solid.fa-download.me-1
+                | Xuất Excel
           .table-responsive
             table.table.table-striped.mb-0
               thead.table-light

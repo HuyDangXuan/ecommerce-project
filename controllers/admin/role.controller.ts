@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { pathAdmin, permissionList } from '../../config/variable.config'
 import slugify from 'slugify'
 import Role from '../../models/roles.model';
+import { Parser } from 'json2csv';
 
 export const GETroleList = async (req: Request, res: Response) => {
   const find: {
@@ -197,5 +198,25 @@ export const PATCHroleDelete = async (req: Request, res: Response) => {
       code: "error",
       message: 'Xóa nhóm quyền thất bại',
     })
+  }
+}
+
+export const GETexportRoleCSV = async (req: Request, res: Response) => {
+  try {
+    const roles = await Role.find({ deleted: false }).lean();
+
+    const parser = new Parser();
+    const csv = parser.parse(roles);
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=roles.csv');
+
+    res.write('\uFEFF');
+
+    res.end(csv);
+
+  } catch (error) {
+    console.error(error);
   }
 }

@@ -152,4 +152,34 @@ export const permissionList = [
     name: "Xóa thuộc tính sản phẩm"
   },
 
+  // Xuất file CSV
+  {
+    id: "product-export",
+    name: "Xuất file CSV sản phẩm"
+  },
+  {
+    id: "product-category-export",
+    name: "Xuất file CSV danh mục sản phẩm"
+  },
+  {
+    id: "product-attribute-export",
+    name: "Xuất file CSV thuộc tính sản phẩm"
+  },
+  {
+    id: "post-export",
+    name: "Xuất file CSV bài viết"
+  },
+  {
+    id: "post-category-export",
+    name: "Xuất file CSV danh mục bài viết"
+  },
+  {
+    id: "role-export",
+    name: "Xuất file CSV nhóm quyền"
+  },
+  {
+    id: "account-admin-export",
+    name: "Xuất file CSV tài khoản quản trị"
+  },
+
 ];

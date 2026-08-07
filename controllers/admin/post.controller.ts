@@ -5,6 +5,7 @@ import buildCategoryTree from '../../helpers/category.helper'
 import { pathAdmin } from '../../config/variable.config'
 import slugify from 'slugify';
 import { logAdminAction } from '../../helpers/log.helper';
+import { Parser } from 'json2csv'
 
 // POST
 
@@ -225,6 +226,26 @@ export const PATCHdeletePost = async (req: Request, res: Response) => {
   }
 }
 
+export const GETexportPostCSV = async (req: Request, res: Response) => {
+  try {
+    const posts = await Post.find({ deleted: false }).lean();
+
+    const parser = new Parser();
+    const csv = parser.parse(posts);
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=posts.csv');
+
+    res.write('\uFEFF');
+
+    res.end(csv);
+
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 // END POST
 
 // CATEGORY
@@ -430,6 +451,26 @@ export const PATCHdeleteCategory = async (req: Request, res: Response) => {
       code: "error",
       message: "Dữ liệu không hợp lệ",
     })
+  }
+}
+
+export const GETexportCategoryCSV = async (req: Request, res: Response) => {
+  try {
+    const categories = await PostCategory.find({ deleted: false }).lean();
+
+    const parser = new Parser();
+    const csv = parser.parse(categories);
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=categories.csv');
+
+    res.write('\uFEFF');
+
+    res.end(csv);
+
+  } catch (error) {
+    console.error(error);
   }
 }
 

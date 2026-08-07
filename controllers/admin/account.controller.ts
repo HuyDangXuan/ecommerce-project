@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import Role from '../../models/roles.model';
 import AccountAdmin from '../../models/account-admin.model';
 import { pathAdmin } from '../../config/variable.config';
+import { Parser } from 'json2csv';
 
 export const GETaccount = async (req: Request, res: Response) => {
   const find: {
@@ -286,5 +287,25 @@ export const PATCHaccountChangePassword = async (req: Request, res: Response) =>
       code: "error",
       message: "Đã xảy ra lỗi khi cập nhật mật khẩu",
     });
+  }
+}
+
+export const GETexportAccountCSV = async (req: Request, res: Response) => {
+  try {
+    const accounts = await AccountAdmin.find({ deleted: false }).lean();
+
+    const parser = new Parser();
+    const csv = parser.parse(accounts);
+
+    res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+    
+    res.setHeader('Content-Disposition', 'attachment; filename=accounts.csv');
+
+    res.write('\uFEFF');
+
+    res.end(csv);
+
+  } catch (error) {
+    console.error(error);
   }
 }
